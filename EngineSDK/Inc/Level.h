@@ -1,8 +1,8 @@
-#pragma once
+ï»¿#pragma once
 
 #include "Base.h"
 
-/* Å¬¶ó °³¹ßÀÚ°¡ ¸¸µé ·¹º§Å¬·¡½ºµéÀÇ ºÎ¸ð°¡ µÇ´Â Å¬·¡½º´Ù. */
+/* í´ë¼ ê°œë°œìžê°€ ë§Œë“¤ ë ˆë²¨í´ëž˜ìŠ¤ë“¤ì˜ ë¶€ëª¨ê°€ ë˜ëŠ” í´ëž˜ìŠ¤ë‹¤. */
 
 BEGIN(Engine)
 

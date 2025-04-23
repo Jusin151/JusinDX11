@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #define BEGIN(NAMESPACE) namespace NAMESPACE { 
 #define END }

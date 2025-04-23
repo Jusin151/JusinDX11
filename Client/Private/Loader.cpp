@@ -1,4 +1,4 @@
-#include "Loader.h"
+ï»¿#include "Loader.h"
 
 #include "GameInstance.h"
 
@@ -21,7 +21,7 @@ CLoader::CLoader(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 
 _uint APIENTRY LoadingMain(void* pArg)
 {
-	/* ÀÚ¿ø·ÎµùÇÑ´Ù. */
+	/* ìì›ë¡œë”©í•œë‹¤. */
 	CLoader*		pLoader = static_cast<CLoader*>(pArg);
 
 	if (FAILED(pLoader->Loading()))
@@ -52,11 +52,11 @@ HRESULT CLoader::Loading()
 
 	switch (m_eNextLevelID)
 	{
-	case LEVEL_LOGO:
+	case LEVEL::LEVEL_LOGO:
 		hr = Loading_For_Logo();
 		break;
 
-	case LEVEL_GAMEPLAY:
+	case LEVEL::LEVEL_GAMEPLAY:
 		hr = Loading_For_GamePlay();
 		break;
 	}
@@ -72,33 +72,33 @@ HRESULT CLoader::Loading()
 HRESULT CLoader::Loading_For_Logo()
 {
 	
-	lstrcpy(m_szLoadingText, TEXT("ÅØ½ºÃÄÀ»(¸¦) ·ÎµùÁßÀÔ´Ï´Ù."));
+	lstrcpy(m_szLoadingText, TEXT("í…ìŠ¤ì³ì„(ë¥¼) ë¡œë”©ì¤‘ì…ë‹ˆë‹¤."));
 	///* For.Prototype_Component_Texture_BackGround*/
 	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOGO, TEXT("Prototype_Component_Texture_BackGround"),
 	//	CTexture::Create(m_pGraphic_Device, CTexture::TYPE_2D, TEXT("../Bin/Resources/Textures/Default%d.jpg"), 2))))
 	//	return E_FAIL;
 
-	lstrcpy(m_szLoadingText, TEXT("¸ğµ¨À»(¸¦) ·ÎµùÁßÀÔ´Ï´Ù."));
+	lstrcpy(m_szLoadingText, TEXT("ëª¨ë¸ì„(ë¥¼) ë¡œë”©ì¤‘ì…ë‹ˆë‹¤."));
 
 
-	lstrcpy(m_szLoadingText, TEXT("¼ÎÀÌ´õÀ»(¸¦) ·ÎµùÁßÀÔ´Ï´Ù."));
+	lstrcpy(m_szLoadingText, TEXT("ì…°ì´ë”ì„(ë¥¼) ë¡œë”©ì¤‘ì…ë‹ˆë‹¤."));
 	///* For.Prototype_Component_Shader_Rect */
 	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOGO, TEXT("Prototype_Component_Shader_Rect"),
 	//	CShader::Create(m_pGraphic_Device, TEXT("../Bin/ShaderFiles/Shader_Rect.hlsl")))))
 	//	return E_FAIL;
 
 
-	lstrcpy(m_szLoadingText, TEXT("»ç¿îµåÀ»(¸¦) ·ÎµùÁßÀÔ´Ï´Ù."));
+	lstrcpy(m_szLoadingText, TEXT("ì‚¬ìš´ë“œì„(ë¥¼) ë¡œë”©ì¤‘ì…ë‹ˆë‹¤."));
 	
 
-	lstrcpy(m_szLoadingText, TEXT("¿øÇü°´Ã¼À»(¸¦) ·ÎµùÁßÀÔ´Ï´Ù."));
+	lstrcpy(m_szLoadingText, TEXT("ì›í˜•ê°ì²´ì„(ë¥¼) ë¡œë”©ì¤‘ì…ë‹ˆë‹¤."));
 
 	///* For.Prototype_GameObject_BackGround */
 	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOGO, TEXT("Prototype_GameObject_BackGround"),
 	//	CBackGround::Create(m_pGraphic_Device))))
 	//	return E_FAIL;
 	
-	lstrcpy(m_szLoadingText, TEXT("·ÎµùÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù."));
+	lstrcpy(m_szLoadingText, TEXT("ë¡œë”©ì´ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤."));
 
 	m_isFinished = true;
 
@@ -107,7 +107,7 @@ HRESULT CLoader::Loading_For_Logo()
 
 HRESULT CLoader::Loading_For_GamePlay()
 {
-	lstrcpy(m_szLoadingText, TEXT("ÅØ½ºÃÄÀ»(¸¦) ·ÎµùÁßÀÔ´Ï´Ù."));
+	lstrcpy(m_szLoadingText, TEXT("í…ìŠ¤ì³ì„(ë¥¼) ë¡œë”©ì¤‘ì…ë‹ˆë‹¤."));
 	///* For.Prototype_Component_Texture_Terrain */
 	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Terrain"),
 	//	CTexture::Create(m_pGraphic_Device, CTexture::TYPE_2D, TEXT("../Bin/Resources/Textures/Terrain/Tile0.jpg"), 1))))
@@ -129,7 +129,7 @@ HRESULT CLoader::Loading_For_GamePlay()
 	//	CTexture::Create(m_pGraphic_Device, CTexture::TYPE_2D, TEXT("../Bin/Resources/Textures/Explosion/Explosion%d.png"), 90))))
 	//	return E_FAIL;
 
-	lstrcpy(m_szLoadingText, TEXT("¸ğµ¨À»(¸¦) ·ÎµùÁßÀÔ´Ï´Ù."));
+	lstrcpy(m_szLoadingText, TEXT("ëª¨ë¸ì„(ë¥¼) ë¡œë”©ì¤‘ì…ë‹ˆë‹¤."));
 	/* For.Prototype_Component_VIBuffer_Terrain */
 	/*if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_VIBuffer_Terrain"),
 		CVIBuffer_Terrain::Create(m_pGraphic_Device, 256, 256))))
@@ -144,10 +144,10 @@ HRESULT CLoader::Loading_For_GamePlay()
 	//	return E_FAIL;
 
 
-	lstrcpy(m_szLoadingText, TEXT("»ç¿îµåÀ»(¸¦) ·ÎµùÁßÀÔ´Ï´Ù."));
+	lstrcpy(m_szLoadingText, TEXT("ì‚¬ìš´ë“œì„(ë¥¼) ë¡œë”©ì¤‘ì…ë‹ˆë‹¤."));
 
 
-	//lstrcpy(m_szLoadingText, TEXT("¿øÇü°´Ã¼À»(¸¦) ·ÎµùÁßÀÔ´Ï´Ù."));
+	//lstrcpy(m_szLoadingText, TEXT("ì›í˜•ê°ì²´ì„(ë¥¼) ë¡œë”©ì¤‘ì…ë‹ˆë‹¤."));
 	///* For.Prototype_GameObject_Terrain */
 	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Terrain"),
 	//	CTerrain::Create(m_pGraphic_Device))))
@@ -173,7 +173,7 @@ HRESULT CLoader::Loading_For_GamePlay()
 	//	CEffect::Create(m_pGraphic_Device))))
 	//	return E_FAIL;
 
-	lstrcpy(m_szLoadingText, TEXT("·ÎµùÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù."));
+	lstrcpy(m_szLoadingText, TEXT("ë¡œë”©ì´ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤."));
 
 	m_isFinished = true;
 

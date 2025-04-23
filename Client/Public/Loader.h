@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "Client_Defines.h"
 #include "Base.h"
@@ -32,7 +32,7 @@ public:
 private:
 	ID3D11Device* m_pDevice = { nullptr };
 	ID3D11DeviceContext* m_pContext = { nullptr };
-	LEVEL						m_eNextLevelID = { LEVEL_END };
+	LEVEL						m_eNextLevelID = { LEVEL::LEVEL_END };
 	_bool						m_isFinished = { false };
 	CGameInstance*				m_pGameInstance = { nullptr };
 

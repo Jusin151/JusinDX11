@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 namespace Engine
 {
 	typedef unsigned char				_ubyte;
@@ -23,7 +23,7 @@ namespace Engine
 	typedef bool						_bool;
 
 
-	/* SIMD ¿¬»ê */
+	/* SIMD Â¿Â¬Â»Ãª */
 	typedef XMFLOAT2					_float2;
 	typedef XMFLOAT3					_float3;
 	typedef XMFLOAT4					_float4;

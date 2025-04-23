@@ -1,4 +1,4 @@
-#include "GameInstance.h"
+ï»¿#include "GameInstance.h"
 
 //#include "Picking.h"
 //#include "Renderer.h"
@@ -64,7 +64,7 @@ void CGameInstance::Update_Engine(_float fTimeDelta)
 	m_pLevel_Manager->Update(fTimeDelta);
 }
 
-HRESULT CGameInstance::Draw()
+HRESULT CGameInstance::Begin_Draw()
 {
 	if (nullptr == m_pGraphic_Device)
 		return E_FAIL;
@@ -72,8 +72,21 @@ HRESULT CGameInstance::Draw()
 	m_pGraphic_Device->Clear_BackBuffer_View(_float4(0.f, 0.f, 1.f, 1.f));
 	m_pGraphic_Device->Clear_DepthStencil_View();
 
+	return S_OK;
+}
+
+HRESULT CGameInstance::Draw()
+{
+	if (nullptr == m_pGraphic_Device)
+		return E_FAIL;
+
 	m_pLevel_Manager->Render();
 
+	return S_OK;
+}
+
+HRESULT CGameInstance::End_Draw()
+{
 	m_pGraphic_Device->Present();
 
 	return S_OK;
@@ -81,14 +94,15 @@ HRESULT CGameInstance::Draw()
 
 void CGameInstance::Clear(_uint iLevelIndex)
 {
-	///* Æ¯Á¤ ·¹º§ÀÇ ÀÚ¿øÀ» »èÁ¦ÇÑ´Ù. */
+	///* íŠ¹ì • ë ˆë²¨ì˜ ìžì›ì„ ì‚­ì œí•œë‹¤. */
 	//
-	///* Æ¯Á¤ ·¹º§ÀÇ °´Ã¼À» »èÁ¦ÇÑ´Ù. */
+	///* íŠ¹ì • ë ˆë²¨ì˜ ê°ì²´ì„ ì‚­ì œí•œë‹¤. */
 	//m_pObject_Manager->Clear(iLevelIndex);
 
-	///* Æ¯Á¤ ·¹º§ÀÇ ¿øÇü°´À» »èÁ¦ÇÑ´Ù. */
+	///* íŠ¹ì • ë ˆë²¨ì˜ ì›í˜•ê°ì„ ì‚­ì œí•œë‹¤. */
 	//m_pPrototype_Manager->Clear(iLevelIndex);
 }
+
 
 _float CGameInstance::Compute_Random_Normal()
 {

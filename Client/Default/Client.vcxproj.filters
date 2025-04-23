@@ -57,6 +57,9 @@
     <ClInclude Include="..\Public\Level_Logo.h">
       <Filter>00.Levels\Logo</Filter>
     </ClInclude>
+    <ClInclude Include="..\public\MainApp.h">
+      <Filter>00.MainApp</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Client.ico">
@@ -86,6 +89,9 @@
     </ClCompile>
     <ClCompile Include="..\Private\Level_Logo.cpp">
       <Filter>00.Levels\Logo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\MainApp.cpp">
+      <Filter>00.MainApp</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

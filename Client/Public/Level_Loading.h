@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "Client_Defines.h"
 #include "Level.h"
@@ -17,7 +17,7 @@ public:
 	virtual HRESULT Render() override;
 
 private:
-	LEVEL				m_eNextLevelID = { LEVEL_END };
+	LEVEL				m_eNextLevelID = { LEVEL::LEVEL_END };
 	class CLoader*		m_pLoader = { nullptr };
 
 

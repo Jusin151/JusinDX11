@@ -1,8 +1,8 @@
-#pragma once
+ï»¿#pragma once
 
-/* ¿£Áø°ú Å¬¶óÀÌ¾ğÆ® °£ÀÇ ¸µÅ©ÀÇ ¿ªÈ°À» ¼öÇàÇÑ´Ù. */
-/* ¿£Áø ³»¿¡ Á¸ÀçÇÏ´Â À¯ÀÏÇÑ ½Ì±ÛÅæ Å¬·¡½ºÀÌ´Ù. */
-/* ¿£Áø °³¹ßÀÚ°¡ Å¬¶ó°³“TÀÚ¿¡°Ô º¸¿©ÁÖ°í½ÍÀº ÇÔ¼ö¸¦ ... */
+/* ì—”ì§„ê³¼ í´ë¼ì´ì–¸íŠ¸ ê°„ì˜ ë§í¬ì˜ ì—­í™œì„ ìˆ˜í–‰í•œë‹¤. */
+/* ì—”ì§„ ë‚´ì— ì¡´ì¬í•˜ëŠ” ìœ ì¼í•œ ì‹±ê¸€í†¤ í´ë˜ìŠ¤ì´ë‹¤. */
+/* ì—”ì§„ ê°œë°œìê°€ í´ë¼ê°œë°«ìì—ê²Œ ë³´ì—¬ì£¼ê³ ì‹¶ì€ í•¨ìˆ˜ë¥¼ ... */
 #include "Base.h"
 
 BEGIN(Engine)
@@ -19,8 +19,11 @@ private:
 public:
 	HRESULT Initialize_Engine(const ENGINE_DESC& EngineDesc, _Out_ ID3D11Device** ppDeviceOut, ID3D11DeviceContext** ppContextOut);
 	void Update_Engine(_float fTimeDelta);
-	HRESULT Draw();	
 	void Clear(_uint iLevelIndex);
+	HRESULT Begin_Draw();
+	HRESULT Draw();
+	HRESULT End_Draw();
+
 	_float Compute_Random_Normal();
 	_float Compute_Random(_float fMin, _float fMax);
 

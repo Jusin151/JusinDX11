@@ -1,4 +1,4 @@
-#include "..\public\Graphic_Device.h"
+ï»¿#include "..\public\Graphic_Device.h"
 
 CGraphic_Device::CGraphic_Device()
 	: m_pDevice{ nullptr }
@@ -16,35 +16,35 @@ HRESULT CGraphic_Device::Initialize(HWND hWnd, _bool isWindowed, _uint iWinSizeX
 #endif
 	D3D_FEATURE_LEVEL			FeatureLV;
 
-	/* dx9 : ÀåÄ¡ ÃÊ±âÈ­¸¦ ÇÏ±âÀ§ÇÑ ¼³Á¤À» ÂŞ¿í ÇÏ°í³ª¼­ ÃÖÁ¾ÀûÀ¸·Î ÀåÄ¡°´Ã¼¸¦ »ı¼ºÇÑ´Ù. */
-	/* dx11 : ¿ì¼±ÀûÀ¸·Î ÀåÄ¡ °´Ã¼¸¦ »ı¼ºÇÏ°í ÀåÄ¡°´Ã¼¸¦ ÅëÇØ¼­ ±âÅ¸ ÃÊ±âÈ­ÀÛ¾÷ ¹× ¼³Á¤À» ÇØ³ª°£´Ù. */
+	/* dx9 : ì¥ì¹˜ ì´ˆê¸°í™”ë¥¼ í•˜ê¸°ìœ„í•œ ì„¤ì •ì„ ì­ˆìš± í•˜ê³ ë‚˜ì„œ ìµœì¢…ì ìœ¼ë¡œ ì¥ì¹˜ê°ì²´ë¥¼ ìƒì„±í•œë‹¤. */
+	/* dx11 : ìš°ì„ ì ìœ¼ë¡œ ì¥ì¹˜ ê°ì²´ë¥¼ ìƒì„±í•˜ê³  ì¥ì¹˜ê°ì²´ë¥¼ í†µí•´ì„œ ê¸°íƒ€ ì´ˆê¸°í™”ì‘ì—… ë° ì„¤ì •ì„ í•´ë‚˜ê°„ë‹¤. */
 
-	/* ±×·¡ÇÈ ÀåÄ¡¸¦ ÃÊ±âÈ­ÇÑ´Ù. */
+	/* ê·¸ë˜í”½ ì¥ì¹˜ë¥¼ ì´ˆê¸°í™”í•œë‹¤. */
 	if (FAILED(D3D11CreateDevice(nullptr, D3D_DRIVER_TYPE_HARDWARE, 0, iFlag, nullptr, 0, D3D11_SDK_VERSION, &m_pDevice, &FeatureLV, &m_pDeviceContext)))
 		return E_FAIL;
 
-	/* SwapChain : ´õºí¹öÆÛ¸µ. Àü¸é°ú ÈÄ¸é¹öÆÛ¸¦ ¹ø°¥¾Æ°¡¸ç È­¸é¿¡ º¸¿©ÁØ´Ù.(Present) */
+	/* SwapChain : ë”ë¸”ë²„í¼ë§. ì „ë©´ê³¼ í›„ë©´ë²„í¼ë¥¼ ë²ˆê°ˆì•„ê°€ë©° í™”ë©´ì— ë³´ì—¬ì¤€ë‹¤.(Present) */
 
 
-	/* ½º¿ÒÃ¼ÀÎ°´Ã¼¸¦ »ı¼ºÇÏ¿´°í »ı¼ºÇÑ ½º¿ÒÃ¼ÀÎ °´Ã¼°¡ ¹é¹öÆÛ¸¦ ³»ÀåÇÑ´Ù. ¹é¹öÆÛ¸¦ »ı¼ºÇÏ±â À§ÇÑ ID3D11Texture2D ¸¸µç°Å¾ß. */
-	/* ½º¿ÒÃ¼ÀÎ °´Ã¼¸¦ ¸¸µé¸é¼­ ¹é¹öÆÛ¿¡ ÇØ´çÇÏ´Â ID3D11Texture2D°´Ã¼¸¦ ¸¸µé¾î ½º¿ÒÃ¼ÀÎ °´Ã¼°¡ ³»ÀåÇÑ´Ù. */
+	/* ìŠ¤ì™‘ì²´ì¸ê°ì²´ë¥¼ ìƒì„±í•˜ì˜€ê³  ìƒì„±í•œ ìŠ¤ì™‘ì²´ì¸ ê°ì²´ê°€ ë°±ë²„í¼ë¥¼ ë‚´ì¥í•œë‹¤. ë°±ë²„í¼ë¥¼ ìƒì„±í•˜ê¸° ìœ„í•œ ID3D11Texture2D ë§Œë“ ê±°ì•¼. */
+	/* ìŠ¤ì™‘ì²´ì¸ ê°ì²´ë¥¼ ë§Œë“¤ë©´ì„œ ë°±ë²„í¼ì— í•´ë‹¹í•˜ëŠ” ID3D11Texture2Dê°ì²´ë¥¼ ë§Œë“¤ì–´ ìŠ¤ì™‘ì²´ì¸ ê°ì²´ê°€ ë‚´ì¥í•œë‹¤. */
 	if (FAILED(Ready_SwapChain(hWnd, isWindowed, iWinSizeX, iWinSizeY)))
 		return E_FAIL;
 
-	/* ½º¿ÒÃ¼ÀÎÀÌ µé°í ÀÖ´Â ÅØ½ºÃÄ 2D¸¦ °¡Á®¿Í¼­ ÀÌ¸¦ ¹ÙÅÁÀ¸·Î ¹é¹öÆÛ ·»´õÅ¸°Ù ºä¸¦ ¸¸µç´Ù.*/
+	/* ìŠ¤ì™‘ì²´ì¸ì´ ë“¤ê³  ìˆëŠ” í…ìŠ¤ì³ 2Dë¥¼ ê°€ì ¸ì™€ì„œ ì´ë¥¼ ë°”íƒ•ìœ¼ë¡œ ë°±ë²„í¼ ë Œë”íƒ€ê²Ÿ ë·°ë¥¼ ë§Œë“ ë‹¤.*/
 	if (FAILED(Ready_BackBufferRenderTargetView()))
 		return E_FAIL;
 
 	if (FAILED(Ready_DepthStencilView(iWinSizeX, iWinSizeY)))
 		return E_FAIL;
 
-	/* ÀåÄ¡¿¡ ¹ÙÀÎµåÇØ³õÀ» ·»´õ Å¸°Ùµé°ú µª½º½ºÅÙ½Çºä¸¦ ¼¼ÆÃÇÑ´Ù. */
-	/* ÀåÄ¡´Â µ¿½Ã¿¡ ÃÖ´ë 8°³ÀÇ ·»´õÅ¸°ÙÀ» µé°í ÀÖÀ» ¼ö ÀÖ´Ù. */
+	/* ì¥ì¹˜ì— ë°”ì¸ë“œí•´ë†“ì„ ë Œë” íƒ€ê²Ÿë“¤ê³¼ ëìŠ¤ìŠ¤í…ì‹¤ë·°ë¥¼ ì„¸íŒ…í•œë‹¤. */
+	/* ì¥ì¹˜ëŠ” ë™ì‹œì— ìµœëŒ€ 8ê°œì˜ ë Œë”íƒ€ê²Ÿì„ ë“¤ê³  ìˆì„ ìˆ˜ ìˆë‹¤. */
 	ID3D11RenderTargetView*		pRTVs[] = {
 		m_pBackBufferRTV, 	
 	};
 
-	/* ·»´õÅ¸°ÙÀÇ ÇÈ¼¿ ¼ö¿Í ±íÀÌ½ºÅÙ½Ç¹öÆÛÀÇ ÇÈ¼¿¼ö°¡ ¼­·Î ´Ù¸£´Ù¸é Àı´ë ·»´õ¸µÀÌ ºÒ°¡´ÉÇØÁø´Ù. */
+	/* ë Œë”íƒ€ê²Ÿì˜ í”½ì…€ ìˆ˜ì™€ ê¹Šì´ìŠ¤í…ì‹¤ë²„í¼ì˜ í”½ì…€ìˆ˜ê°€ ì„œë¡œ ë‹¤ë¥´ë‹¤ë©´ ì ˆëŒ€ ë Œë”ë§ì´ ë¶ˆê°€ëŠ¥í•´ì§„ë‹¤. */
 	m_pDeviceContext->OMSetRenderTargets(1, pRTVs,
 		m_pDepthStencilView);		
 	
@@ -73,10 +73,10 @@ HRESULT CGraphic_Device::Clear_BackBuffer_View(_float4 vClearColor)
 	if (nullptr == m_pDeviceContext)
 		return E_FAIL;
 
-	/* DX9±âÁØ : ClearÇÔ¼ö´Â ¹é¹öÆÛ, ±íÀÌ½ºÅÙ½Ç¹öÆÛ¸¦ ÇÑ²¨¹ø¿¡ Áö¿î´Ù.  */
-	// m_pGraphic_Device->Clear(¾î¶² ¿µ¿ª¸¸Å­ Áö¿ï±î, ¾î¶² °ÍµéÀ» Áö¿ï±î? , ¹»·Î Áö¿ï°¡. );	
+	/* DX9ê¸°ì¤€ : Clearí•¨ìˆ˜ëŠ” ë°±ë²„í¼, ê¹Šì´ìŠ¤í…ì‹¤ë²„í¼ë¥¼ í•œêº¼ë²ˆì— ì§€ìš´ë‹¤.  */
+	// m_pGraphic_Device->Clear(ì–´ë–¤ ì˜ì—­ë§Œí¼ ì§€ìš¸ê¹Œ, ì–´ë–¤ ê²ƒë“¤ì„ ì§€ìš¸ê¹Œ? , ë­˜ë¡œ ì§€ìš¸ê°€. );	
 
-	/* ¹é¹öÆÛ¸¦ ÃÊ±âÈ­ÇÑ´Ù.  */
+	/* ë°±ë²„í¼ë¥¼ ì´ˆê¸°í™”í•œë‹¤.  */
 	m_pDeviceContext->ClearRenderTargetView(m_pBackBufferRTV, (_float*)&vClearColor);
 
  	return S_OK;
@@ -97,8 +97,8 @@ HRESULT CGraphic_Device::Present()
 	if (nullptr == m_pSwapChain)
 		return E_FAIL;
 	
-	/* Àü¸é ¹öÆÛ¿Í ÈÄ¸é ¹öÆÛ¸¦ ±³Ã¼ÇÏ¿© ÈÄ¸é ¹öÆÛ¸¦ Àü¸éÀ¸·Î º¸¿©ÁÖ´Â ¿ªÇÒÀ» ÇÑ´Ù. */
-	/* ÈÄ¸é ¹öÆÛ¸¦ Á÷Á¢ È­¸é¿¡ º¸¿©ÁÙ°Ô. */	
+	/* ì „ë©´ ë²„í¼ì™€ í›„ë©´ ë²„í¼ë¥¼ êµì²´í•˜ì—¬ í›„ë©´ ë²„í¼ë¥¼ ì „ë©´ìœ¼ë¡œ ë³´ì—¬ì£¼ëŠ” ì—­í• ì„ í•œë‹¤. */
+	/* í›„ë©´ ë²„í¼ë¥¼ ì§ì ‘ í™”ë©´ì— ë³´ì—¬ì¤„ê²Œ. */	
 	return m_pSwapChain->Present(0, 0);	
 }
 
@@ -114,32 +114,32 @@ HRESULT CGraphic_Device::Ready_SwapChain(HWND hWnd, _bool isWindowed, _uint iWin
 	IDXGIFactory*			pFactory = nullptr;
 	pAdapter->GetParent(__uuidof(IDXGIFactory), (void**)&pFactory);
 
-	/* ½º¿ÒÃ¼ÀÎÀ» »ı¼ºÇÑ´Ù. = ÅØ½ºÃÄ¸¦ »ı¼ºÇÏ´Â ÇàÀ§ + ½º¿ÒÇÏ´Â ÇüÅÂ  */
+	/* ìŠ¤ì™‘ì²´ì¸ì„ ìƒì„±í•œë‹¤. = í…ìŠ¤ì³ë¥¼ ìƒì„±í•˜ëŠ” í–‰ìœ„ + ìŠ¤ì™‘í•˜ëŠ” í˜•íƒœ  */
 	DXGI_SWAP_CHAIN_DESC		SwapChain;
 	ZeroMemory(&SwapChain, sizeof(DXGI_SWAP_CHAIN_DESC));
 			
-	/* ¹é¹öÆÛ == ÅØ½ºÃÄ */
-	/*ÅØ½ºÃ³(¹é¹öÆÛ == ID3D11Texture2D)¸¦ »ı¼ºÇÏ´Â ÇàÀ§*/
-	SwapChain.BufferDesc.Width = iWinCX;	/* °¡·Î ÇÈ¼¿ ¼ö */
-	SwapChain.BufferDesc.Height = iWinCY;	/* ¼¼·Î ÇÈ¼¿ ¼ö */
+	/* ë°±ë²„í¼ == í…ìŠ¤ì³ */
+	/*í…ìŠ¤ì²˜(ë°±ë²„í¼ == ID3D11Texture2D)ë¥¼ ìƒì„±í•˜ëŠ” í–‰ìœ„*/
+	SwapChain.BufferDesc.Width = iWinCX;	/* ê°€ë¡œ í”½ì…€ ìˆ˜ */
+	SwapChain.BufferDesc.Height = iWinCY;	/* ì„¸ë¡œ í”½ì…€ ìˆ˜ */
 
 	/* float4(1.f, 1.f, 1.f, 1.f) */
 	/* float4(1.f, 0.f, 0.f, 1.f) */
-	SwapChain.BufferDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM; /* ¸¸µç ÇÈ¼¿ÇÏ³ªÀÇ µ¥ÀÌÅÍ Á¤º¸ : 32BITÇÈ¼¿»ı¼ºÇÏµÇ ºÎÈ£°¡ ¾ø´Â Á¤±ÔÈ­µÈ ¼ö¸¦ ÀúÀåÇÒ²² */
+	SwapChain.BufferDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM; /* ë§Œë“  í”½ì…€í•˜ë‚˜ì˜ ë°ì´í„° ì •ë³´ : 32BITí”½ì…€ìƒì„±í•˜ë˜ ë¶€í˜¸ê°€ ì—†ëŠ” ì •ê·œí™”ëœ ìˆ˜ë¥¼ ì €ì¥í• ê»˜ */
 	SwapChain.BufferDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
 	SwapChain.BufferDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
 
-	/* ½ºÄÉÄ¡ºÏ¿¡ »ç°ú¸¦ ±×¸±²¨¾ß. */
-	/* RENDER_TARGET : ±×¸²À» ´çÇÏ´Â ´ë»ó. ½ºÄÉÄ¡ºÏ */
+	/* ìŠ¤ì¼€ì¹˜ë¶ì— ì‚¬ê³¼ë¥¼ ê·¸ë¦´êº¼ì•¼. */
+	/* RENDER_TARGET : ê·¸ë¦¼ì„ ë‹¹í•˜ëŠ” ëŒ€ìƒ. ìŠ¤ì¼€ì¹˜ë¶ */
 	SwapChain.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
 	SwapChain.BufferCount = 1;
 
-	/*½º¿ÒÇÏ´Â ÇüÅÂ : ¸ğ´ÏÅÍ ÁÖ»çÀ²¿¡ µû¶ó Á¶ÀıÇØµµ µÊ. */
+	/*ìŠ¤ì™‘í•˜ëŠ” í˜•íƒœ : ëª¨ë‹ˆí„° ì£¼ì‚¬ìœ¨ì— ë”°ë¼ ì¡°ì ˆí•´ë„ ë¨. */
 	SwapChain.BufferDesc.RefreshRate.Numerator = 60;
 	SwapChain.BufferDesc.RefreshRate.Denominator = 1;
 
-	/* ¸ÖÆ¼»ùÇÃ¸µ : ¾ÈÆ¼¾ó¶óÀÌÂ¡ (°è´ÜÇö»ó¹æÁö) */
-	/* ³ªÁß¿¡ ÈÄÃ³¸® ·»´õ¸µ : ¸ÖÆ¼»ùÇÃ¸µ Áö¿ø(x) */
+	/* ë©€í‹°ìƒ˜í”Œë§ : ì•ˆí‹°ì–¼ë¼ì´ì§• (ê³„ë‹¨í˜„ìƒë°©ì§€) */
+	/* ë‚˜ì¤‘ì— í›„ì²˜ë¦¬ ë Œë”ë§ : ë©€í‹°ìƒ˜í”Œë§ ì§€ì›(x) */
 	SwapChain.SampleDesc.Quality = 0;
 	SwapChain.SampleDesc.Count = 1;	
 
@@ -147,7 +147,7 @@ HRESULT CGraphic_Device::Ready_SwapChain(HWND hWnd, _bool isWindowed, _uint iWin
 	SwapChain.Windowed = isWindowed;
 	SwapChain.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
 
-	/* ¹é¹öÆÛ¶ó´Â ÅØ½ºÃ³¸¦ »ı¼ºÇß´Ù. */
+	/* ë°±ë²„í¼ë¼ëŠ” í…ìŠ¤ì²˜ë¥¼ ìƒì„±í–ˆë‹¤. */
 	if (FAILED(pFactory->CreateSwapChain(m_pDevice, &SwapChain, &m_pSwapChain)))
 		return E_FAIL;
 
@@ -168,15 +168,15 @@ HRESULT CGraphic_Device::Ready_BackBufferRenderTargetView()
 
 	
 
-	/* ³»°¡ ¾ÕÀ¸·Î »ç¿ë ÇÏ±âÀ§ÇÑ ¿ëµµÀÇ ÅØ½ºÃÄ¸¦ »ı¼ºÇÏ±âÀ§ÇÑ º£ÀÌ½º µ¥ÀÌÅÍ¸¦ °¡Áö°í ÀÖ´Â °´Ã¼ÀÌ´Ù. */
-	/* ³»°¡ ¾ÕÀ¸·Î »ç¿ë ÇÏ±âÀ§ÇÑ ¿ëµµÀÇ ÅØ½ºÃÄ : ID3D11RenderTargetView, ID3D11ShaderResoureView, ID3D11DepthStencilView */
+	/* ë‚´ê°€ ì•ìœ¼ë¡œ ì‚¬ìš© í•˜ê¸°ìœ„í•œ ìš©ë„ì˜ í…ìŠ¤ì³ë¥¼ ìƒì„±í•˜ê¸°ìœ„í•œ ë² ì´ìŠ¤ ë°ì´í„°ë¥¼ ê°€ì§€ê³  ìˆëŠ” ê°ì²´ì´ë‹¤. */
+	/* ë‚´ê°€ ì•ìœ¼ë¡œ ì‚¬ìš© í•˜ê¸°ìœ„í•œ ìš©ë„ì˜ í…ìŠ¤ì³ : ID3D11RenderTargetView, ID3D11ShaderResoureView, ID3D11DepthStencilView */
 	ID3D11Texture2D*		pBackBufferTexture = nullptr;
 
-	/* ½º¿ÒÃ¼ÀÎÀÌ µé°íÀÖ´ø ÅØ½ºÃ³¸¦ °¡Á®¿ÍºÁ. */
+	/* ìŠ¤ì™‘ì²´ì¸ì´ ë“¤ê³ ìˆë˜ í…ìŠ¤ì²˜ë¥¼ ê°€ì ¸ì™€ë´. */
 	if (FAILED(m_pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&pBackBufferTexture)))
 		return E_FAIL;
 
-	/* ½ÇÁ¦ ·»´õÅ¸°Ù¿ëµµ·Î »ç¿ëÇÒ ¼ö ÀÖ´Â ÅØ½ºÃÄ Å¸ÀÔ(ID3D11RenderTargetView)ÀÇ °´Ã¼¸¦ »ı¼º¤¾³ª´Ù. */
+	/* ì‹¤ì œ ë Œë”íƒ€ê²Ÿìš©ë„ë¡œ ì‚¬ìš©í•  ìˆ˜ ìˆëŠ” í…ìŠ¤ì³ íƒ€ì…(ID3D11RenderTargetView)ì˜ ê°ì²´ë¥¼ ìƒì„±ã…ë‚˜ë‹¤. */
 	if (FAILED(m_pDevice->CreateRenderTargetView(pBackBufferTexture, nullptr, &m_pBackBufferRTV)))
 		return E_FAIL;	
 
@@ -195,8 +195,8 @@ HRESULT CGraphic_Device::Ready_DepthStencilView(_uint iWinCX, _uint iWinCY)
 	D3D11_TEXTURE2D_DESC	TextureDesc;
 	ZeroMemory(&TextureDesc, sizeof(D3D11_TEXTURE2D_DESC));
 
-	/* ±íÀÌ ¹öÆÛÀÇ ÇÈ¼¿Àº ¹é¹öÆÛÀÇ ÇÈ¼¿°ú °¹¼ö°¡ µ¿ÀÏÇØ¾ß¸¸ ±íÀÌ ÅØ½ºÆ®°¡ °¡´ÉÇØÁø´Ù. */
-	/* ÇÈ¼¿ÀÇ ¼ö°¡ ´Ù¸£¸é ¾Æ¿¡ ·»´õ¸µÀ» ¸øÇÔ. */
+	/* ê¹Šì´ ë²„í¼ì˜ í”½ì…€ì€ ë°±ë²„í¼ì˜ í”½ì…€ê³¼ ê°¯ìˆ˜ê°€ ë™ì¼í•´ì•¼ë§Œ ê¹Šì´ í…ìŠ¤íŠ¸ê°€ ê°€ëŠ¥í•´ì§„ë‹¤. */
+	/* í”½ì…€ì˜ ìˆ˜ê°€ ë‹¤ë¥´ë©´ ì•„ì— ë Œë”ë§ì„ ëª»í•¨. */
 	TextureDesc.Width = iWinCX;
 	TextureDesc.Height = iWinCY;
 	TextureDesc.MipLevels = 1;
@@ -206,9 +206,9 @@ HRESULT CGraphic_Device::Ready_DepthStencilView(_uint iWinCX, _uint iWinCY)
 	TextureDesc.SampleDesc.Quality = 0;
 	TextureDesc.SampleDesc.Count = 1;
 
-	/* µ¿Àû? Á¤Àû?  */
-	TextureDesc.Usage = D3D11_USAGE_DEFAULT /* Á¤Àû */;
-	/* ÃßÈÄ¿¡ ¾î¶² ¿ëµµ·Î ¹ÙÀÎµù µÉ ¼ö ÀÖ´Â ViewÅ¸ÀÔÀÇ ÅØ½ºÃÄ¸¦ ¸¸µé±âÀ§ÇÑ Texture2DÀÔ´Ï±î? */
+	/* ë™ì ? ì •ì ?  */
+	TextureDesc.Usage = D3D11_USAGE_DEFAULT /* ì •ì  */;
+	/* ì¶”í›„ì— ì–´ë–¤ ìš©ë„ë¡œ ë°”ì¸ë”© ë  ìˆ˜ ìˆëŠ” Viewíƒ€ì…ì˜ í…ìŠ¤ì³ë¥¼ ë§Œë“¤ê¸°ìœ„í•œ Texture2Dì…ë‹ˆê¹Œ? */
 	TextureDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL
 		/*| D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE*/;
 	TextureDesc.CPUAccessFlags = 0;
