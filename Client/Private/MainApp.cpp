@@ -2,6 +2,8 @@
 
 #include "GameInstance.h"
 
+#include "Level_Loading.h"
+
 CMainApp::CMainApp()
 	: m_pGameInstance { CGameInstance::Get_Instance() }
 {
@@ -21,11 +23,15 @@ HRESULT CMainApp::Initialize()
 	if (FAILED(m_pGameInstance->Initialize_Engine(EngineDesc, &m_pDevice, &m_pContext)))
 		return E_FAIL;
 
+	if (FAILED(Start_Level(LEVEL::LEVEL_LOGO)))
+		return E_FAIL;
+
     return S_OK;
 }
 
 void CMainApp::Update(_float fTimeDelta)
 {
+	m_pGameInstance->Update_Engine(fTimeDelta);
 }
 
 HRESULT CMainApp::Render()
@@ -38,6 +44,14 @@ HRESULT CMainApp::Render()
 
 
     return S_OK;
+}
+
+HRESULT CMainApp::Start_Level(LEVEL eStartLevel)
+{
+	if (FAILED(m_pGameInstance->Change_Level(static_cast<_uint>(LEVEL::LEVEL_LOADING), CLevel_Loading::Create(m_pDevice, m_pContext, eStartLevel))))
+		return E_FAIL;
+
+	return S_OK;
 }
 
 CMainApp* CMainApp::Create()

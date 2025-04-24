@@ -46,6 +46,8 @@ HRESULT CLoader::Initialize(LEVEL eNextLevelID)
 
 HRESULT CLoader::Loading()
 {
+	CoInitializeEx(nullptr, 0);	
+
 	EnterCriticalSection(&m_CriticalSection);
 
 	HRESULT		hr = {};
@@ -65,6 +67,8 @@ HRESULT CLoader::Loading()
 		return E_FAIL;
 
 	LeaveCriticalSection(&m_CriticalSection);
+
+
 
 	return S_OK;
 }
@@ -209,6 +213,7 @@ void CLoader::Free()
 	Safe_Release(m_pContext);
 	Safe_Release(m_pDevice);
 
+	CoUninitialize();
 
 	DeleteCriticalSection(&m_CriticalSection);
 }

@@ -40,6 +40,15 @@
     <ClInclude Include="..\Public\Base.h">
       <Filter>01.Utility\99.SuperClass</Filter>
     </ClInclude>
+    <ClInclude Include="..\public\GameObject.h">
+      <Filter>01.Utility\02.GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Component.h">
+      <Filter>01.Utility\03.Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Transform.h">
+      <Filter>01.Utility\03.Components\Transform</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Private\Timer.cpp">
@@ -62,6 +71,15 @@
     </ClCompile>
     <ClCompile Include="..\Private\Base.cpp">
       <Filter>01.Utility\99.SuperClass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\GameObject.cpp">
+      <Filter>01.Utility\02.GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Component.cpp">
+      <Filter>01.Utility\03.Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Transform.cpp">
+      <Filter>01.Utility\03.Components\Transform</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -94,6 +112,15 @@
     </Filter>
     <Filter Include="01.Utility\99.SuperClass">
       <UniqueIdentifier>{c5c38433-b538-4e7b-891b-4809c69188f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\02.GameObject">
+      <UniqueIdentifier>{8542546c-1517-43a4-a3ed-c7e1ed5245ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\03.Components">
+      <UniqueIdentifier>{c8ff5966-2bbf-4633-88d4-dec210ad2207}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\03.Components\Transform">
+      <UniqueIdentifier>{6b3d22a0-5c82-4ff4-a7fe-543e619d38f6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
