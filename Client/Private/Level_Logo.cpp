@@ -3,6 +3,8 @@
 #include "GameInstance.h"
 #include "Level_Loading.h"
 
+#include "BackGround.h"
+
 CLevel_Logo::CLevel_Logo(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 		: CLevel { pDevice, pContext }
 {
@@ -11,7 +13,8 @@ CLevel_Logo::CLevel_Logo(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 
 HRESULT CLevel_Logo::Initialize()
 {
-
+	if (FAILED(Ready_Layer_BackGround(TEXT("Layer_BackGround"))))
+		return E_FAIL;
 
 	return S_OK;
 }
@@ -24,12 +27,27 @@ void CLevel_Logo::Update(_float fTimeDelta)
 			CLevel_Loading::Create(m_pDevice, m_pContext, LEVEL::LEVEL_GAMEPLAY))))
 			return;
 	}
-
 }
 
 HRESULT CLevel_Logo::Render()
 {
 	SetWindowText(g_hWnd, TEXT("로고레벨입니다."));
+
+	return S_OK;
+}
+
+HRESULT CLevel_Logo::Ready_Layer_BackGround(const _wstring strLayerTag)
+{
+	CBackGround::BACKGROUND_DESC				BackGroundDesc{};
+
+	BackGroundDesc.fX = g_iWinSizeX * 0.5f;
+	BackGroundDesc.fY = g_iWinSizeY * 0.5f;
+	BackGroundDesc.fSizeX = g_iWinSizeX;
+	BackGroundDesc.fSizeY = g_iWinSizeY;	
+
+	if (FAILED(m_pGameInstance->Add_GameObject(static_cast<_uint>(LEVEL::LEVEL_LOGO), TEXT("Prototype_GameObject_BackGround"),
+		static_cast<_uint>(LEVEL::LEVEL_LOGO), strLayerTag, &BackGroundDesc)))
+		return E_FAIL;
 
 	return S_OK;
 }

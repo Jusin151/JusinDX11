@@ -16,6 +16,8 @@ public:
 	virtual void Update(_float fTimeDelta) override;
 	virtual HRESULT Render() override;
 
+private:
+	HRESULT Ready_Layer_BackGround(const _wstring strLayerTag);
 
 
 public:

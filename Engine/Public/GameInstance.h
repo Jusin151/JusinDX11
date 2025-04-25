@@ -3,7 +3,7 @@
 /* 엔진과 클라이언트 간의 링크의 역활을 수행한다. */
 /* 엔진 내에 존재하는 유일한 싱글톤 클래스이다. */
 /* 엔진 개발자가 클라개밫자에게 보여주고싶은 함수를 ... */
-#include "Base.h"
+#include "Prototype_Manager.h"
 
 BEGIN(Engine)
 
@@ -31,20 +31,20 @@ public:
 public:
 	HRESULT Change_Level(_uint iLevelIndex, class CLevel* pNewLevel);
 #pragma endregion
-//
-//#pragma region PROTOTYPE_MANAGER
-//	HRESULT Add_Prototype(_uint iPrototypeLevelIndex, const _wstring& strPrototypeTag, class CBase* pPrototype);
-//	CBase* Clone_Prototype(PROTOTYPE ePrototypeType, _uint iPrototypeLevelIndex, const _wstring& strPrototypeTag, void* pArg = nullptr);
-//#pragma endregion
-//
-//#pragma region OBJECT_MANAGER
-//	HRESULT Add_GameObject(_uint iPrototypeLevelIndex, const _wstring& strPrototypeTag, _uint iLevelIndex, const _wstring& strLayerTag, void* pArg = nullptr);
-//	CComponent* Get_Component(_uint iLevelIndex, const _wstring& strLayerTag, const _wstring& strComponentTag, _uint iIndex = 0);
-//#pragma endregion
-//
-//#pragma region RENDERER
-//	HRESULT Add_RenderGroup(CRenderer::RENDERGROUP eRenderGroup, class CGameObject* pRenderObject);
-//#pragma endregion
+
+#pragma region PROTOTYPE_MANAGER
+	HRESULT Add_Prototype(_uint iPrototypeLevelIndex, const _wstring& strPrototypeTag, class CBase* pPrototype);
+	CBase* Clone_Prototype(PROTOTYPE ePrototypeType, _uint iPrototypeLevelIndex, const _wstring& strPrototypeTag, void* pArg = nullptr);
+#pragma endregion
+
+#pragma region OBJECT_MANAGER
+	HRESULT Add_GameObject(_uint iPrototypeLevelIndex, const _wstring& strPrototypeTag, _uint iLevelIndex, const _wstring& strLayerTag, void* pArg = nullptr);
+	CComponent* Get_Component(_uint iLevelIndex, const _wstring& strLayerTag, const _wstring& strComponentTag, _uint iIndex = 0);
+#pragma endregion
+
+#pragma region RENDERER
+	HRESULT Add_RenderGroup(RENDERGROUP eRenderGroup, class CGameObject* pRenderObject);
+#pragma endregion
 
 #pragma region TIMER_MANAGER
 	_float Get_TimeDelta(const _wstring& strTimerTag);
@@ -61,9 +61,9 @@ public:
 private:
 	class CGraphic_Device*		m_pGraphic_Device = { nullptr };
 	class CLevel_Manager*		m_pLevel_Manager = { nullptr };
-	/*class CPrototype_Manager*	m_pPrototype_Manager = { nullptr };
+	class CPrototype_Manager*	m_pPrototype_Manager = { nullptr };
 	class CObject_Manager*		m_pObject_Manager = { nullptr };
-	class CRenderer*			m_pRenderer = { nullptr };*/
+	class CRenderer*			m_pRenderer = { nullptr };
 	class CTimer_Manager*		m_pTimer_Manager = { nullptr };
 	// class CPicking*				m_pPicking = { nullptr };
 

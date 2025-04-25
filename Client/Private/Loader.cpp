@@ -3,7 +3,7 @@
 #include "GameInstance.h"
 
 //#include "Camera_Free.h"
-//#include "BackGround.h"
+#include "BackGround.h"
 //#include "Terrain.h"
 //#include "player.h"
 //#include "Effect.h"
@@ -97,10 +97,10 @@ HRESULT CLoader::Loading_For_Logo()
 
 	lstrcpy(m_szLoadingText, TEXT("원형객체을(를) 로딩중입니다."));
 
-	///* For.Prototype_GameObject_BackGround */
-	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_LOGO, TEXT("Prototype_GameObject_BackGround"),
-	//	CBackGround::Create(m_pGraphic_Device))))
-	//	return E_FAIL;
+	/* For.Prototype_GameObject_BackGround */
+	if (FAILED(m_pGameInstance->Add_Prototype(static_cast<_uint>(LEVEL::LEVEL_LOGO), TEXT("Prototype_GameObject_BackGround"),
+		CBackGround::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
 	
 	lstrcpy(m_szLoadingText, TEXT("로딩이 완료되었습니다."));
 

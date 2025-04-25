@@ -25,6 +25,12 @@
     <Filter Include="00.MainApp">
       <UniqueIdentifier>{ffac1f7d-cb22-4ce8-a7fd-43cfb62fb4db}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.GameObjects">
+      <UniqueIdentifier>{db82fc83-d01c-41cf-8115-cfc65328ad5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.GameObjects\00.BackGround">
+      <UniqueIdentifier>{2a95d670-b78b-4365-888f-45a6815fed54}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -60,6 +66,9 @@
     <ClInclude Include="..\public\MainApp.h">
       <Filter>00.MainApp</Filter>
     </ClInclude>
+    <ClInclude Include="..\public\BackGround.h">
+      <Filter>01.GameObjects\00.BackGround</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Client.ico">
@@ -92,6 +101,9 @@
     </ClCompile>
     <ClCompile Include="..\private\MainApp.cpp">
       <Filter>00.MainApp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\BackGround.cpp">
+      <Filter>01.GameObjects\00.BackGround</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
