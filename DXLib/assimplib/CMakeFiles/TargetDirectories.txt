@@ -1,0 +1,17 @@
+D:/정의훈/150/DXLib/assimplib/CMakeFiles/uninstall.dir
+D:/정의훈/150/DXLib/assimplib/CMakeFiles/UpdateAssimpLibsDebugSymbolsAndDLLs.dir
+D:/정의훈/150/DXLib/assimplib/CMakeFiles/INSTALL.dir
+D:/정의훈/150/DXLib/assimplib/CMakeFiles/ALL_BUILD.dir
+D:/정의훈/150/DXLib/assimplib/CMakeFiles/ZERO_CHECK.dir
+D:/정의훈/150/DXLib/assimplib/contrib/zlib/CMakeFiles/zlibstatic.dir
+D:/정의훈/150/DXLib/assimplib/contrib/zlib/CMakeFiles/INSTALL.dir
+D:/정의훈/150/DXLib/assimplib/contrib/zlib/CMakeFiles/ALL_BUILD.dir
+D:/정의훈/150/DXLib/assimplib/code/CMakeFiles/assimp.dir
+D:/정의훈/150/DXLib/assimplib/code/CMakeFiles/INSTALL.dir
+D:/정의훈/150/DXLib/assimplib/tools/assimp_view/CMakeFiles/assimp_viewer.dir
+D:/정의훈/150/DXLib/assimplib/tools/assimp_view/CMakeFiles/INSTALL.dir
+D:/정의훈/150/DXLib/assimplib/tools/assimp_cmd/CMakeFiles/assimp_cmd.dir
+D:/정의훈/150/DXLib/assimplib/tools/assimp_cmd/CMakeFiles/INSTALL.dir
+D:/정의훈/150/DXLib/assimplib/test/CMakeFiles/unit.dir
+D:/정의훈/150/DXLib/assimplib/test/CMakeFiles/INSTALL.dir
+D:/정의훈/150/DXLib/assimplib/test/headercheck/CMakeFiles/INSTALL.dir

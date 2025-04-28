@@ -4,7 +4,8 @@
 
 #include <d3d11.h>
 #include <DirectXMath.h>
-
+#include "DirectXTK/DDSTextureLoader.h"
+#include "DirectXTK/WICTextureLoader.h"
 using namespace DirectX;
 
 #include <string>
@@ -12,6 +13,8 @@ using namespace DirectX;
 #include <list>
 #include <vector>
 using namespace std;
+
+
 
 #include "Engine_Struct.h"
 #include "Engine_Enum.h"

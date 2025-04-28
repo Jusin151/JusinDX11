@@ -1,0 +1,14 @@
+# CMake generation dependency list for this directory.
+C:/Program Files/CMake/share/cmake-3.22/Modules/CheckCSourceCompiles.cmake
+C:/Program Files/CMake/share/cmake-3.22/Modules/CheckFunctionExists.c
+C:/Program Files/CMake/share/cmake-3.22/Modules/CheckFunctionExists.cmake
+C:/Program Files/CMake/share/cmake-3.22/Modules/CheckIncludeFile.c.in
+C:/Program Files/CMake/share/cmake-3.22/Modules/CheckIncludeFile.cmake
+C:/Program Files/CMake/share/cmake-3.22/Modules/CheckIncludeFileCXX.cmake
+C:/Program Files/CMake/share/cmake-3.22/Modules/CheckTypeSize.c.in
+C:/Program Files/CMake/share/cmake-3.22/Modules/CheckTypeSize.cmake
+C:/Program Files/CMake/share/cmake-3.22/Modules/Internal/CheckSourceCompiles.cmake
+C:/Users/Administrator/Desktop/assimp-5.2.4/contrib/zlib/CMakeLists.txt
+C:/Users/Administrator/Desktop/assimp-5.2.4/contrib/zlib/zconf.h.cmakein
+C:/Users/Administrator/Desktop/assimp-5.2.4/contrib/zlib/zlib.pc.cmakein
+D:/정의훈/150/DXLib/assimplib/CMakeFiles/CheckTypeSize/OFF64_T.c

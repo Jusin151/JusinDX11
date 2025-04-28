@@ -4,7 +4,7 @@
 //#include "VIBuffer_Cube.h"
 //#include "VIBuffer_Rect.h"
 #include "Transform.h"
-//#include "Texture.h"
+#include "Texture.h"
 //#include "Shader.h"
 
 /* 1. 원형객체를 보관한다. */

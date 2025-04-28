@@ -64,6 +64,9 @@
     <ClInclude Include="..\Public\Renderer.h">
       <Filter>01.Utility\05.Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="..\public\Texture.h">
+      <Filter>01.Utility\04.Components\Texture</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Private\Timer.cpp">
@@ -110,6 +113,9 @@
     </ClCompile>
     <ClCompile Include="..\Private\Renderer.cpp">
       <Filter>01.Utility\05.Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Texture.cpp">
+      <Filter>01.Utility\04.Components\Texture</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -181,6 +187,15 @@
     </Filter>
     <Filter Include="01.Utility\05.Renderer">
       <UniqueIdentifier>{da92f69a-6467-48a6-8b8e-a6742f918351}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\04.Components\VIBuffer">
+      <UniqueIdentifier>{a867d1c1-de32-414c-8d79-d4bfc9827474}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\04.Components\Texture">
+      <UniqueIdentifier>{b47138cc-bcff-4762-b883-18aefaf06efe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\04.Components\Shader">
+      <UniqueIdentifier>{b28320a0-3358-4482-adbd-83fc1492c376}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
