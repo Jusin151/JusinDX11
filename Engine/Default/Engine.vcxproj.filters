@@ -67,6 +67,15 @@
     <ClInclude Include="..\public\Texture.h">
       <Filter>01.Utility\04.Components\Texture</Filter>
     </ClInclude>
+    <ClInclude Include="..\public\VIBuffer_Rect.h">
+      <Filter>01.Utility\04.Components\VIBuffer\Rect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\VIBuffer.h">
+      <Filter>01.Utility\04.Components\VIBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Shader.h">
+      <Filter>01.Utility\04.Components\Shader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Private\Timer.cpp">
@@ -116,6 +125,15 @@
     </ClCompile>
     <ClCompile Include="..\private\Texture.cpp">
       <Filter>01.Utility\04.Components\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\VIBuffer_Rect.cpp">
+      <Filter>01.Utility\04.Components\VIBuffer\Rect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\VIBuffer.cpp">
+      <Filter>01.Utility\04.Components\VIBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Shader.cpp">
+      <Filter>01.Utility\04.Components\Shader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -196,6 +214,12 @@
     </Filter>
     <Filter Include="01.Utility\04.Components\Shader">
       <UniqueIdentifier>{b28320a0-3358-4482-adbd-83fc1492c376}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\04.Components\VIBuffer\Rect">
+      <UniqueIdentifier>{6ac2eaed-00c7-4957-b995-528170281560}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\04.Components\VIBuffer\Terrain">
+      <UniqueIdentifier>{9ddf86be-2abe-4eef-85e6-440fb5c17013}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
