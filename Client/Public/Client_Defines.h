@@ -22,6 +22,8 @@ extern HINSTANCE g_hInst;
 
 using namespace Client;
 
+
+
 /* 1. 똥싼놈(남). */
 /* 1. 피해의식갑.(여) */
 /* 1. 추천빌런.(여) */

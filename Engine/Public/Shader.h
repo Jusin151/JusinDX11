@@ -16,6 +16,13 @@ public:
 	virtual HRESULT Initialize(void* pArg) override;
 
 public:
+	HRESULT Begin();
+
+private:
+	ID3DX11Effect* m_pEffect = { nullptr };
+	ID3D11InputLayout
+
+public:
 	static CShader* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, const _tchar* pShaderFilePath);
 	virtual CComponent* Clone(void* pArg) override;
 	virtual void Free() override;

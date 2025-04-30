@@ -4,7 +4,10 @@
 
 #include <d3d11.h>
 #include <DirectXMath.h>
-
+#include <DirectXCollision.h>
+#include "DirectXTK/DDSTextureLoader.h"
+#include "DirectXTK/WICTextureLoader.h"
+#include "Fx11/d3dx11effect.h"
 using namespace DirectX;
 
 #include <string>
@@ -12,6 +15,8 @@ using namespace DirectX;
 #include <list>
 #include <vector>
 using namespace std;
+
+
 
 #include "Engine_Struct.h"
 #include "Engine_Enum.h"
