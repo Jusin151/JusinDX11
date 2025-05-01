@@ -28,16 +28,21 @@ public:
 	virtual void Late_Update(_float fTimeDelta);
 	virtual HRESULT Render();
 
+	
+
 protected:
 	ID3D11Device*				m_pDevice = { nullptr };
 	ID3D11DeviceContext*		m_pContext = { nullptr };
 
-	class CGameInstance* m_pGameInstance = { nullptr };
+	class CGameInstance*		m_pGameInstance = { nullptr };
 
 protected:
 	_tchar										m_szName[MAX_PATH] = {};
 	map<const _wstring, class CComponent*>		m_Components;
 	class CTransform*							m_pTransformCom = { nullptr };
+
+protected:
+	HRESULT Add_Component(_uint iPrototypeLevelIndex, const _wstring& strPrototypeTag, const _wstring& strComponentTag, CComponent** ppOut, void* pArg = nullptr);
 
 public:
 	virtual CGameObject* Clone(void* pArg) = 0;

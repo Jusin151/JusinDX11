@@ -62,13 +62,13 @@ HRESULT CVIBuffer::Bind_Buffers()
     D3D11_INPUT_CLASSIFICATION InputSlotClass;
     UINT InstanceDataStepRate;
 	*/
-	D3D11_INPUT_ELEMENT_DESC		Elements[6] =
+	/*D3D11_INPUT_ELEMENT_DESC		Elements[6] =
 	{
 		{"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
 		{"TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0},
 	};
 
-	_uint		iNumElements = 2;
+	_uint		iNumElements = 2;*/
 
 	//m_pDevice->CreateInputLayout(Elements, iNumElements, );
 

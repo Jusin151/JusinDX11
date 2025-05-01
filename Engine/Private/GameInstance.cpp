@@ -68,7 +68,7 @@ HRESULT CGameInstance::Begin_Draw()
 	if (nullptr == m_pGraphic_Device)
 		return E_FAIL;
 
-	m_pGraphic_Device->Clear_BackBuffer_View(_float4(0.f, 0.f, 1.f, 1.f));
+	m_pGraphic_Device->Clear_BackBuffer_View(_float4(1.f, 1.f, 1.f, 1.f));
 	m_pGraphic_Device->Clear_DepthStencil_View();
 
 	return S_OK;

@@ -17,7 +17,7 @@ HRESULT CRenderer::Add_RenderGroup(RENDERGROUP eRenderGroup, CGameObject* pRende
 		nullptr == pRenderObject)
 		return E_FAIL;
 
-	m_RenderObjects[ENUM_CAST(eRenderGroup)].push_back(pRenderObject);
+	m_RenderObjects[ENUM_CLASS(eRenderGroup)].push_back(pRenderObject);
 
 	Safe_AddRef(pRenderObject);
 
@@ -41,28 +41,28 @@ HRESULT CRenderer::Draw()
 
 HRESULT CRenderer::Render_Priority()
 {
-	for (auto& pGameObject : m_RenderObjects[ENUM_CAST(RENDERGROUP::RG_PRIORITY)])
+	for (auto& pGameObject : m_RenderObjects[ENUM_CLASS(RENDERGROUP::RG_PRIORITY)])
 	{
 		if (nullptr != pGameObject)
 			pGameObject->Render();
 
 		Safe_Release(pGameObject);
 	}
-	m_RenderObjects[ENUM_CAST(RENDERGROUP::RG_PRIORITY)].clear();
+	m_RenderObjects[ENUM_CLASS(RENDERGROUP::RG_PRIORITY)].clear();
 
 	return S_OK;
 }
 
 HRESULT CRenderer::Render_NonBlend()
 {
-	for (auto& pGameObject : m_RenderObjects[ENUM_CAST(RENDERGROUP::RG_NONBLEND)])
+	for (auto& pGameObject : m_RenderObjects[ENUM_CLASS(RENDERGROUP::RG_NONBLEND)])
 	{
 		if (nullptr != pGameObject)
 			pGameObject->Render();
 
 		Safe_Release(pGameObject);
 	}
-	m_RenderObjects[ENUM_CAST(RENDERGROUP::RG_NONBLEND)].clear();
+	m_RenderObjects[ENUM_CLASS(RENDERGROUP::RG_NONBLEND)].clear();
 
 	return S_OK;
 }
@@ -79,28 +79,28 @@ HRESULT CRenderer::Render_Blend()
 		return dynamic_cast<CBlendObject*>(pSour)->Get_Depth() > dynamic_cast<CBlendObject*>(pDest)->Get_Depth();
 	});*/
 
-	for (auto& pGameObject : m_RenderObjects[ENUM_CAST(RENDERGROUP::RG_BLEND)])
+	for (auto& pGameObject : m_RenderObjects[ENUM_CLASS(RENDERGROUP::RG_BLEND)])
 	{
 		if (nullptr != pGameObject)
 			pGameObject->Render();
 
 		Safe_Release(pGameObject);
 	}
-	m_RenderObjects[ENUM_CAST(RENDERGROUP::RG_BLEND)].clear();
+	m_RenderObjects[ENUM_CLASS(RENDERGROUP::RG_BLEND)].clear();
 
 	return S_OK;
 }
 
 HRESULT CRenderer::Render_UI()
 {
-	for (auto& pGameObject : m_RenderObjects[ENUM_CAST(RENDERGROUP::RG_UI)])
+	for (auto& pGameObject : m_RenderObjects[ENUM_CLASS(RENDERGROUP::RG_UI)])
 	{
 		if (nullptr != pGameObject)
 			pGameObject->Render();
 
 		Safe_Release(pGameObject);
 	}
-	m_RenderObjects[ENUM_CAST(RENDERGROUP::RG_UI)].clear();
+	m_RenderObjects[ENUM_CLASS(RENDERGROUP::RG_UI)].clear();
 
 	return S_OK;
 }

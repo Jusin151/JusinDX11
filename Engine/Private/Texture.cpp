@@ -1,4 +1,5 @@
 ﻿#include "Texture.h"
+#include "Shader.h"
 
 CTexture::CTexture(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CComponent { pDevice, pContext }
@@ -57,9 +58,12 @@ HRESULT CTexture::Initialize(void* pArg)
 	return S_OK;
 }
 
-HRESULT CTexture::Bind_ShaderResource()
+HRESULT CTexture::Bind_ShaderResource(CShader* pShader, const _char* pConstantName, _uint iTextureIndex)
 {
-	return S_OK;
+	if (iTextureIndex >= m_iNumTextures)
+		return E_FAIL;
+
+	return pShader->Bind_SRV(pConstantName, m_SRVs[iTextureIndex]);	
 }
 
 CTexture* CTexture::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, const _tchar* pTextureFilePath, _uint iNumTextures)

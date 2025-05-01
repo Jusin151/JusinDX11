@@ -3,7 +3,7 @@
 #define BEGIN(NAMESPACE) namespace NAMESPACE { 
 #define END }
 
-#define ENUM_CAST(ENUM) static_cast<unsigned int>(ENUM)
+#define ENUM_CLASS(ENUM) static_cast<unsigned int>(ENUM)
 
 #ifdef ENGINE_EXPORTS
 #define ENGINE_DLL _declspec(dllexport)

@@ -27,11 +27,19 @@ HRESULT CUIObject::Initialize(void* pArg)
 	m_fSizeX = pDesc->fSizeX;
 	m_fSizeY = pDesc->fSizeY;
 
-#pragma message("///////////////////////////////////////////////")
-#pragma message("///////////////////////////////////////////////")
-#pragma message("TODO:UIObject.cpp32/* 직교투영을 위한 뷰와 투영행렬을 생성한다. */ ")
-#pragma message("/////////////////////////////////////////////// ")
-#pragma message("/////////////////////////////////////////////// ")
+	D3D11_VIEWPORT			ViewportDesc{};
+	_uint					iNumViewports = { 1 };
+
+	m_pContext->RSGetViewports(&iNumViewports, &ViewportDesc);
+	
+	XMStoreFloat4x4(&m_ViewMatrix, XMMatrixIdentity());
+	XMStoreFloat4x4(&m_ProjMatrix, XMMatrixOrthographicLH(ViewportDesc.Width, ViewportDesc.Height, 0.0f, 1.f));
+
+//#pragma message("///////////////////////////////////////////////")
+//#pragma message("///////////////////////////////////////////////")
+//#pragma message("TODO:UIObject.cpp32/* 직교투영을 위한 뷰와 투영행렬을 생성한다. */ ")
+//#pragma message("/////////////////////////////////////////////// ")
+//#pragma message("/////////////////////////////////////////////// ")
 	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 

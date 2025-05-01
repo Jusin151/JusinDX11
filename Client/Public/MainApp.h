@@ -26,6 +26,8 @@ private:
 	ID3D11DeviceContext*		m_pContext = { nullptr };
 
 public:
+	HRESULT Ready_Prototype_Component();
+
 	HRESULT Start_Level(LEVEL eStartLevel);
 
 public:
