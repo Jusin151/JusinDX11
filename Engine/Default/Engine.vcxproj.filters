@@ -50,7 +50,7 @@
       <Filter>01.Utility\04.Components\Transform</Filter>
     </ClInclude>
     <ClInclude Include="..\public\UIObject.h">
-      <Filter>01.Utility\03.GameObject\Manager\Layer\UIObject</Filter>
+      <Filter>01.Utility\03.GameObject\UIObject</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Prototype_Manager.h">
       <Filter>01.Utility\02.Prototypes\Manager</Filter>
@@ -109,7 +109,7 @@
       <Filter>01.Utility\04.Components\Transform</Filter>
     </ClCompile>
     <ClCompile Include="..\private\UIObject.cpp">
-      <Filter>01.Utility\03.GameObject\Manager\Layer\UIObject</Filter>
+      <Filter>01.Utility\03.GameObject\UIObject</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Prototype_Manager.cpp">
       <Filter>01.Utility\02.Prototypes\Manager</Filter>
@@ -188,21 +188,6 @@
     <Filter Include="01.Utility\03.GameObject\Manager\Layer">
       <UniqueIdentifier>{93c98eaf-40e7-4a00-931e-326aee0dbe94}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01.Utility\03.GameObject\Manager\Layer\AlphaObject">
-      <UniqueIdentifier>{ef57a2eb-e00e-4060-9ac7-b37657577e39}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01.Utility\03.GameObject\Manager\Layer\ContainerObject">
-      <UniqueIdentifier>{0cd9f2b4-9f44-40c6-aae6-17dcdf0a1551}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01.Utility\03.GameObject\Manager\Layer\LandObject">
-      <UniqueIdentifier>{d8865f37-fbd9-481c-b923-62d1ea007274}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01.Utility\03.GameObject\Manager\Layer\PartObject">
-      <UniqueIdentifier>{555d19d9-169e-4fc4-9d50-96e03f3e281c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01.Utility\03.GameObject\Manager\Layer\UIObject">
-      <UniqueIdentifier>{514e7d77-7e75-4725-9b62-8b73f0a15645}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01.Utility\05.Renderer">
       <UniqueIdentifier>{da92f69a-6467-48a6-8b8e-a6742f918351}</UniqueIdentifier>
     </Filter>
@@ -220,6 +205,21 @@
     </Filter>
     <Filter Include="01.Utility\04.Components\VIBuffer\Terrain">
       <UniqueIdentifier>{9ddf86be-2abe-4eef-85e6-440fb5c17013}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\03.GameObject\AlphaObject">
+      <UniqueIdentifier>{ef57a2eb-e00e-4060-9ac7-b37657577e39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\03.GameObject\ContainerObject">
+      <UniqueIdentifier>{0cd9f2b4-9f44-40c6-aae6-17dcdf0a1551}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\03.GameObject\LandObject">
+      <UniqueIdentifier>{d8865f37-fbd9-481c-b923-62d1ea007274}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\03.GameObject\PartObject">
+      <UniqueIdentifier>{555d19d9-169e-4fc4-9d50-96e03f3e281c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\03.GameObject\UIObject">
+      <UniqueIdentifier>{514e7d77-7e75-4725-9b62-8b73f0a15645}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
