@@ -4,7 +4,7 @@
 
 /* 클라 개발자가 만들 레벨클래스들의 부모가 되는 클래스다. */
 
-BEGIN(Engine)
+NS_BEGIN(Engine)
 
 class ENGINE_DLL CLevel abstract : public CBase
 {
@@ -27,4 +27,4 @@ public:
 
 };
 
-END
+NS_END

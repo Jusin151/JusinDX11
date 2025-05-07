@@ -1,7 +1,7 @@
 ﻿#pragma once
 
-#define BEGIN(NAMESPACE) namespace NAMESPACE { 
-#define END }
+#define NS_BEGIN(NAMESPACE) namespace NAMESPACE { 
+#define NS_END }
 
 #define ENUM_CLASS(ENUM) static_cast<unsigned int>(ENUM)
 

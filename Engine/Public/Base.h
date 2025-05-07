@@ -4,7 +4,7 @@
 
 /* 모든 클래스들의 부모가 되는 클래스다. */
 /* 레퍼런스카운트를 관리하기위한 기능을 부여한다. (AddRef, Release) */
-BEGIN(Engine)
+NS_BEGIN(Engine)
 
 class ENGINE_DLL CBase
 {
@@ -27,6 +27,6 @@ public:
 
 };
 
-END
+NS_END
 
 

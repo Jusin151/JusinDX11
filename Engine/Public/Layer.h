@@ -4,7 +4,7 @@
 
 /* 객체들을 모아놓는다. */
 
-BEGIN(Engine)
+NS_BEGIN(Engine)
 
 class CLayer final : public CBase
 {
@@ -28,4 +28,4 @@ public:
 	virtual void Free();
 };
 
-END
+NS_END

@@ -5,7 +5,7 @@
 /* 레벨별로 구분하여 사본객체를 보관한다. */
 /* 리스트들로 보관한다. 리스트 == 객체들 == 내가 나누고 싶은 기준에따라 그룹짓는다. */
 
-BEGIN(Engine)
+NS_BEGIN(Engine)
 
 class CObject_Manager final : public CBase
 {
@@ -36,4 +36,4 @@ public:
 	virtual void Free() override;
 };
 
-END
+NS_END

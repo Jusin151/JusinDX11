@@ -76,6 +76,12 @@
     <ClInclude Include="..\public\Shader.h">
       <Filter>01.Utility\04.Components\Shader</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\VIBuffer_Terrain.h">
+      <Filter>01.Utility\04.Components\VIBuffer\Terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\PipeLine.h">
+      <Filter>01.Utility\06.PipeLine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Private\Timer.cpp">
@@ -134,6 +140,15 @@
     </ClCompile>
     <ClCompile Include="..\private\Shader.cpp">
       <Filter>01.Utility\04.Components\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\VIBuffer_Terrain.cpp">
+      <Filter>01.Utility\04.Components\VIBuffer\Terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Engine_Struct.cpp">
+      <Filter>99.Defines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\PipeLine.cpp">
+      <Filter>01.Utility\06.PipeLine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -220,6 +235,9 @@
     </Filter>
     <Filter Include="01.Utility\03.GameObject\UIObject">
       <UniqueIdentifier>{514e7d77-7e75-4725-9b62-8b73f0a15645}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\06.PipeLine">
+      <UniqueIdentifier>{a9bff44e-0513-4881-b2e8-07d7cf188f43}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

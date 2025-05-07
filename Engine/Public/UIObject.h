@@ -5,7 +5,7 @@
 /* CUIObject_2D */
 /* CUIObject_3D */
 
-BEGIN(Engine)
+NS_BEGIN(Engine)
 
 class ENGINE_DLL CUIObject abstract : public CGameObject
 {
@@ -39,4 +39,4 @@ public:
 	virtual void Free() override;
 };
 
-END
+NS_END

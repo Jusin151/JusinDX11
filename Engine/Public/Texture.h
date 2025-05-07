@@ -2,7 +2,7 @@
 
 #include "Component.h"
 
-BEGIN(Engine)
+NS_BEGIN(Engine)
 
 class ENGINE_DLL CTexture final : public CComponent
 {
@@ -29,4 +29,4 @@ public:
 	virtual void Free() override;
 };
 
-END
+NS_END

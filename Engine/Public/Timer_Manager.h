@@ -2,7 +2,7 @@
 
 #include "Base.h"
 
-BEGIN(Engine)
+NS_BEGIN(Engine)
 
 class CTimer_Manager final : public CBase
 {
@@ -29,4 +29,4 @@ public:
 	virtual void Free() override;
 };
 
-END
+NS_END

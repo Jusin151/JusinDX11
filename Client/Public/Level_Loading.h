@@ -3,7 +3,7 @@
 #include "Client_Defines.h"
 #include "Level.h"
 
-BEGIN(Client)
+NS_BEGIN(Client)
 
 class CLevel_Loading final : public CLevel
 {
@@ -17,7 +17,7 @@ public:
 	virtual HRESULT Render() override;
 
 private:
-	LEVEL				m_eNextLevelID = { LEVEL::LEVEL_END };
+	LEVEL				m_eNextLevelID = { LEVEL::END };
 	class CLoader*		m_pLoader = { nullptr };
 
 
@@ -27,4 +27,4 @@ public:
 	virtual void Free() override;
 };
 
-END
+NS_END

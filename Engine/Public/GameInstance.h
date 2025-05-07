@@ -5,7 +5,7 @@
 /* 엔진 개발자가 클라개밫자에게 보여주고싶은 함수를 ... */
 #include "Prototype_Manager.h"
 
-BEGIN(Engine)
+NS_BEGIN(Engine)
 
 
 class ENGINE_DLL CGameInstance final : public CBase
@@ -51,6 +51,14 @@ public:
 	HRESULT Add_Timer(const _wstring& strTimerTag);
 	void Update_Timer(const _wstring& strTimerTag);
 #pragma endregion
+
+
+#pragma region 	
+	void Set_Transform(D3DTS eState, _fmatrix TransformMatrix);
+	const _float4x4* Get_Transform_Float4x4(D3DTS eState) const;
+	_matrix Get_Transform_Matrix(D3DTS eState) const;
+	const _float4* Get_CamPosition() const;
+#pragma endregion
 //
 //#pragma region PICKING
 //	void Transform_Picking_ToLocalSpace(const _float4x4& WorldMatrixInverse);
@@ -65,6 +73,7 @@ private:
 	class CObject_Manager*		m_pObject_Manager = { nullptr };
 	class CRenderer*			m_pRenderer = { nullptr };
 	class CTimer_Manager*		m_pTimer_Manager = { nullptr };
+	class CPipeLine*			m_pPipeLine = { nullptr };
 	// class CPicking*				m_pPicking = { nullptr };
 
 public:
@@ -72,4 +81,4 @@ public:
 	virtual void Free() override;
 };
 
-END
+NS_END

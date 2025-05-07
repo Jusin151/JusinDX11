@@ -3,7 +3,7 @@
 #include "Client_Defines.h"
 #include "Level.h"
 
-BEGIN(Client)
+NS_BEGIN(Client)
 
 class CLevel_Logo final : public CLevel
 {
@@ -25,4 +25,4 @@ public:
 	virtual void Free() override;
 };
 
-END
+NS_END

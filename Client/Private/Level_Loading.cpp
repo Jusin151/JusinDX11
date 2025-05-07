@@ -40,10 +40,10 @@ void CLevel_Loading::Update(_float fTimeDelta)
 
 			switch (m_eNextLevelID)
 			{
-			case LEVEL::LEVEL_LOGO:
+			case LEVEL::LOGO:
 				pLevel = CLevel_Logo::Create(m_pDevice, m_pContext);
 				break;
-			case LEVEL::LEVEL_GAMEPLAY:
+			case LEVEL::GAMEPLAY:
 				pLevel = CLevel_GamePlay::Create(m_pDevice, m_pContext);
 				break;
 			}

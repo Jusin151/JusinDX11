@@ -3,11 +3,11 @@
 #include "Client_Defines.h"
 #include "Base.h"
 
-BEGIN(Engine)
+NS_BEGIN(Engine)
 class CGameInstance;
-END
+NS_END
 
-BEGIN(Client)
+NS_BEGIN(Client)
 
 class CLoader final : public CBase
 {
@@ -32,7 +32,7 @@ public:
 private:
 	ID3D11Device* m_pDevice = { nullptr };
 	ID3D11DeviceContext* m_pContext = { nullptr };
-	LEVEL						m_eNextLevelID = { LEVEL::LEVEL_END };
+	LEVEL						m_eNextLevelID = { LEVEL::END };
 	_bool						m_isFinished = { false };
 	CGameInstance*				m_pGameInstance = { nullptr };
 
@@ -51,4 +51,4 @@ public:
 	virtual void Free() override;
 };
 
-END
+NS_END

@@ -2,7 +2,7 @@
 
 #include "Component.h"
 
-BEGIN(Engine)
+NS_BEGIN(Engine)
 
 class ENGINE_DLL CVIBuffer abstract : public CComponent
 {
@@ -40,4 +40,4 @@ public:
 
 };
 
-END
+NS_END

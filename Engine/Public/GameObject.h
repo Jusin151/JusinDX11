@@ -2,7 +2,7 @@
 
 #include "Transform.h"
 
-BEGIN(Engine)
+NS_BEGIN(Engine)
 
 class ENGINE_DLL CGameObject abstract : public CBase
 {
@@ -49,4 +49,4 @@ public:
 	virtual void Free() override;
 };
 
-END
+NS_END

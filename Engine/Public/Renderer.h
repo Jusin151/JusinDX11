@@ -2,7 +2,7 @@
 
 #include "Base.h"
 
-BEGIN(Engine)
+NS_BEGIN(Engine)
 
 class CRenderer final : public CBase
 {
@@ -32,4 +32,4 @@ public:
 	virtual void Free() override;
 };
 
-END
+NS_END

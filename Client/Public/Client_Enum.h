@@ -3,7 +3,7 @@
 
 namespace Client
 {
-	enum class LEVEL { LEVEL_STATIC, LEVEL_LOADING, LEVEL_LOGO, LEVEL_GAMEPLAY, LEVEL_END };
+	enum class LEVEL { STATIC, LOADING, LOGO, GAMEPLAY, END };
 }
 
 
