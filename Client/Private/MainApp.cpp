@@ -9,6 +9,8 @@ CMainApp::CMainApp()
 {
 	Safe_AddRef(m_pGameInstance);
 
+//	D3D11_SAMPLER_DESC
+
 
 }
 
@@ -16,6 +18,7 @@ HRESULT CMainApp::Initialize()
 {
 	ENGINE_DESC			EngineDesc{};
 
+	EngineDesc.hInstance = g_hInst;
 	EngineDesc.hWnd = g_hWnd;
 	EngineDesc.iWinSizeX = g_iWinSizeX;
 	EngineDesc.iWinSizeY = g_iWinSizeY;

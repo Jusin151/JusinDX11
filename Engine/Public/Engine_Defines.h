@@ -6,6 +6,9 @@
 #include <DirectXMath.h>
 #include <DirectXCollision.h>
 
+#define DIRECTINPUT_VERSION  0x0800
+#include <dinput.h>
+
 #include "DirectXTK/DDSTextureLoader.h"
 #include "DirectXTK/WICTextureLoader.h"
 #include "DirectXTK/VertexTypes.h"

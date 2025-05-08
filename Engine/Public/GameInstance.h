@@ -53,11 +53,17 @@ public:
 #pragma endregion
 
 
-#pragma region 	
+#pragma region 	PIPELINE
 	void Set_Transform(D3DTS eState, _fmatrix TransformMatrix);
 	const _float4x4* Get_Transform_Float4x4(D3DTS eState) const;
 	_matrix Get_Transform_Matrix(D3DTS eState) const;
 	const _float4* Get_CamPosition() const;
+#pragma endregion
+
+#pragma region INPUT_DEVICE
+	_byte	Get_DIKeyState(_ubyte byKeyID);
+	_byte	Get_DIMouseState(DIM eMouse);	
+	_long	Get_DIMouseMove(DIMM eMouseState);
 #pragma endregion
 //
 //#pragma region PICKING
@@ -68,6 +74,7 @@ public:
 
 private:
 	class CGraphic_Device*		m_pGraphic_Device = { nullptr };
+	class CInput_Device*		m_pInput_Device = { nullptr };
 	class CLevel_Manager*		m_pLevel_Manager = { nullptr };
 	class CPrototype_Manager*	m_pPrototype_Manager = { nullptr };
 	class CObject_Manager*		m_pObject_Manager = { nullptr };
