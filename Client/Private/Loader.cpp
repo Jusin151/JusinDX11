@@ -5,6 +5,7 @@
 #include "Camera_Free.h"
 #include "BackGround.h"
 #include "Terrain.h"
+#include "Monster.h"
 //#include "player.h"
 //#include "Effect.h"
 //#include "Sky.h"
@@ -140,6 +141,13 @@ HRESULT CLoader::Loading_For_GamePlay()
 	//	CVIBuffer_Cube::Create(m_pGraphic_Device))))
 	//	return E_FAIL;
 
+		/* For.Prototype_Component_Model_Fiona */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Fiona"),
+		CModel::Create(m_pDevice, m_pContext, "../Bin/Resources/Models/Fiona/Fiona.fbx"))))
+		return E_FAIL;
+
+	
+
 
 	lstrcpy(m_szLoadingText, TEXT("사운드을(를) 로딩중입니다."));
 
@@ -153,6 +161,11 @@ HRESULT CLoader::Loading_For_GamePlay()
 	/* For.Prototype_GameObject_Camera_Free */
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Camera_Free"),
 		CCamera_Free::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* For.Prototype_GameObject_Monster */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Monster"),
+		CMonster::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	///* For.Prototype_GameObject_Player */

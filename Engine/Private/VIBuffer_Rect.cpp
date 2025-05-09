@@ -1,18 +1,18 @@
 ﻿#include "VIBuffer_Rect.h"
 
 CVIBuffer_Rect::CVIBuffer_Rect(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
-    : CVIBuffer { pDevice, pContext }
+	: CVIBuffer{ pDevice, pContext }
 {
 }
 
 CVIBuffer_Rect::CVIBuffer_Rect(const CVIBuffer_Rect& Prototype)
-    : CVIBuffer{ Prototype }
+	: CVIBuffer{ Prototype }
 {
 }
 
 HRESULT CVIBuffer_Rect::Initialize_Prototype()
 {
-	
+
 	m_iNumVertexBuffers = 1;
 	m_iNumVertices = 4;
 	m_iVertexStride = sizeof(VTXPOSTEX);
@@ -89,12 +89,12 @@ HRESULT CVIBuffer_Rect::Initialize_Prototype()
 
 
 
-    return S_OK;
+	return S_OK;
 }
 
 HRESULT CVIBuffer_Rect::Initialize(void* pArg)
 {
-    return S_OK;
+	return S_OK;
 }
 
 CVIBuffer_Rect* CVIBuffer_Rect::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
@@ -125,7 +125,7 @@ CComponent* CVIBuffer_Rect::Clone(void* pArg)
 
 void CVIBuffer_Rect::Free()
 {
-    __super::Free();
+	__super::Free();
 
 
 }

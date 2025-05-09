@@ -88,6 +88,12 @@
     <ClInclude Include="..\Public\Input_Device.h">
       <Filter>00.System\01.Device\Input</Filter>
     </ClInclude>
+    <ClInclude Include="..\public\Model.h">
+      <Filter>01.Utility\04.Components\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Mesh.h">
+      <Filter>01.Utility\04.Components\Model\Mesh</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Private\Timer.cpp">
@@ -161,6 +167,12 @@
     </ClCompile>
     <ClCompile Include="..\Private\Input_Device.cpp">
       <Filter>00.System\01.Device\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Model.cpp">
+      <Filter>01.Utility\04.Components\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Mesh.cpp">
+      <Filter>01.Utility\04.Components\Model\Mesh</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -259,6 +271,12 @@
     </Filter>
     <Filter Include="00.System\01.Device\Input">
       <UniqueIdentifier>{a7671a81-f279-47ec-a074-dcf19882e2ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\04.Components\Model">
+      <UniqueIdentifier>{8275b32b-6033-42c6-9062-9c8a2681a054}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\04.Components\Model\Mesh">
+      <UniqueIdentifier>{aeb439ba-420d-42b2-8fb7-b1d2323b7627}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
