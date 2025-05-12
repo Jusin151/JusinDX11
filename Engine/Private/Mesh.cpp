@@ -12,6 +12,7 @@ CMesh::CMesh(const CMesh& Prototype)
 
 HRESULT CMesh::Initialize_Prototype(const aiMesh* pAIMesh)
 {
+	m_iMaterialIndex = pAIMesh->mMaterialIndex;
 	m_iNumVertexBuffers = 1;
 	m_iNumVertices = pAIMesh->mNumVertices;
 

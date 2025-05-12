@@ -94,6 +94,9 @@
     <ClInclude Include="..\public\Mesh.h">
       <Filter>01.Utility\04.Components\Model\Mesh</Filter>
     </ClInclude>
+    <ClInclude Include="..\public\Material.h">
+      <Filter>01.Utility\04.Components\Model\Material</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Private\Timer.cpp">
@@ -173,6 +176,9 @@
     </ClCompile>
     <ClCompile Include="..\private\Mesh.cpp">
       <Filter>01.Utility\04.Components\Model\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Material.cpp">
+      <Filter>01.Utility\04.Components\Model\Material</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -277,6 +283,9 @@
     </Filter>
     <Filter Include="01.Utility\04.Components\Model\Mesh">
       <UniqueIdentifier>{aeb439ba-420d-42b2-8fb7-b1d2323b7627}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\04.Components\Model\Material">
+      <UniqueIdentifier>{ae85330d-538b-4ff9-82b3-a93aac9dfa82}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
