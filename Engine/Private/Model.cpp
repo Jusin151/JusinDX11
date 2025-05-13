@@ -17,6 +17,8 @@ CModel::CModel(const CModel& Prototype)
 	, m_Meshes { Prototype.m_Meshes }
 	, m_iNumMaterials { Prototype.m_iNumMaterials }
 	, m_Materials { Prototype.m_Materials }
+	, m_eType { Prototype.m_eType }
+	, m_PreTransformMatrix { Prototype.m_PreTransformMatrix }
 {
 	for (auto& pMaterial : m_Materials)
 		Safe_AddRef(pMaterial);
@@ -39,14 +41,24 @@ HRESULT CModel::Bind_Material(CShader* pShader, const _char* pConstantName, _uin
 	return m_Materials[iMaterialIndex]->Bind_ShaderResource(pShader, pConstantName, eType, iTextureIndex);	
 }
 
-HRESULT CModel::Initialize_Prototype(const _char* pModelFilePath)
-{
-	_uint		iFlag = aiProcess_PreTransformVertices | aiProcess_ConvertToLeftHanded | aiProcessPreset_TargetRealtime_Fast;
+HRESULT CModel::Initialize_Prototype(MODEL eType, const _char* pModelFilePath, _fmatrix PreTransformMatrix)
+{	
+
+	_uint		iFlag = aiProcess_ConvertToLeftHanded | aiProcessPreset_TargetRealtime_Fast;
+	
+	if (MODEL::NONANIM == eType)
+		iFlag |= aiProcess_PreTransformVertices;
 
 	m_pAIScene = m_Importer.ReadFile(pModelFilePath, iFlag);
 
+	
+
 	if (nullptr == m_pAIScene)
 		return E_FAIL;
+
+	XMStoreFloat4x4(&m_PreTransformMatrix, PreTransformMatrix);
+
+	m_eType = eType;
 
 	if (FAILED(Ready_Meshes()))
 		return E_FAIL;
@@ -82,7 +94,7 @@ HRESULT CModel::Ready_Meshes()
 
 	for (size_t i = 0; i < m_iNumMeshes; i++)
 	{
-		CMesh* pMesh = CMesh::Create(m_pDevice, m_pContext, m_pAIScene->mMeshes[i]);
+		CMesh* pMesh = CMesh::Create(m_pDevice, m_pContext, m_eType, m_pAIScene->mMeshes[i], XMLoadFloat4x4(&m_PreTransformMatrix));
 		if (nullptr == pMesh)
 			return E_FAIL;
 
@@ -107,11 +119,11 @@ HRESULT CModel::Ready_Materials(const _char* pModelFilePath)
 	return S_OK;
 }
 
-CModel* CModel::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, const _char* pModelFilePath)
+CModel* CModel::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, MODEL eType, const _char* pModelFilePath, _fmatrix PreTransformMatrix)
 {
 	CModel* pInstance = new CModel(pDevice, pContext);
 
-	if (FAILED(pInstance->Initialize_Prototype(pModelFilePath)))
+	if (FAILED(pInstance->Initialize_Prototype(eType, pModelFilePath, PreTransformMatrix)))
 	{
 		MSG_BOX("Failed to Created : CModel");
 		Safe_Release(pInstance);

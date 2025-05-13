@@ -17,14 +17,18 @@ public:
 	}
 
 public:
-	virtual HRESULT Initialize_Prototype(const aiMesh* pAIMesh);
+	virtual HRESULT Initialize_Prototype(MODEL eType, const aiMesh* pAIMesh, _fmatrix PreTransformMatrix);
 	virtual HRESULT Initialize(void* pArg);
 
 private:
 	_uint			m_iMaterialIndex = {};
 
+private:
+	HRESULT Ready_NonAnim_Mesh(const aiMesh* pAIMesh, _fmatrix PreTransformMatrix);
+	HRESULT Ready_Anim_Mesh(const aiMesh* pAIMesh);
+
 public:
-	static CMesh* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, const aiMesh* pAIMesh);
+	static CMesh* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, MODEL eType, const aiMesh* pAIMesh, _fmatrix PreTransformMatrix);
 	virtual CComponent* Clone(void* pArg) override;
 	virtual void Free() override;
 

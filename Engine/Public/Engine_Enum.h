@@ -2,7 +2,7 @@
 
 namespace Engine
 {
-	
+	enum class MODEL { NONANIM, ANIM };
 	enum class DIM { LBUTTON, RBUTTON, WHEELBUTTON };
 	enum class DIMM { X, Y, WHEEL };
 	enum class D3DTS { VIEW, PROJ, END };

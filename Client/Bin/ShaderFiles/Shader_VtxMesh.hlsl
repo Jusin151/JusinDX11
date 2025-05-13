@@ -1,7 +1,7 @@
 
 matrix g_WorldMatrix, g_ViewMatrix, g_ProjMatrix;
 
-texture2D g_Texture;
+texture2D g_DiffuseTexture;
 
 sampler DefaultSampler = sampler_state
 {
@@ -56,7 +56,10 @@ PS_OUT PS_MAIN(PS_IN In)
 {
     PS_OUT Out;    
     
-    Out.vColor = 1.f;
+    Out.vColor = g_DiffuseTexture.Sample(DefaultSampler, In.vTexcoord);
+    
+    if(Out.vColor.a < 0.3f)
+        discard;
     
     return Out;    
 }
