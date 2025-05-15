@@ -23,6 +23,9 @@ public:
 	virtual HRESULT Initialize(void* pArg);
 	virtual HRESULT Render(_uint iMeshIndex);
 
+public:
+	HRESULT Play_Animation(_float fTimeDelta);
+
 private:
 	Assimp::Importer		m_Importer;	
 
@@ -37,7 +40,11 @@ private:
 	_uint						m_iNumMaterials = {};
 	vector<class CMaterial*>	m_Materials;
 
+	vector<class CBone*>			m_Bones;
+
+
 public:
+	HRESULT Ready_Bones(const aiNode* pAINode, _int iParentBoneIndex);
 	HRESULT Ready_Meshes();
 	HRESULT Ready_Materials(const _char* pModelFilePath);
 public:

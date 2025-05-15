@@ -3,6 +3,7 @@
 #include "Material.h"
 #include "Model.h"
 #include "Mesh.h"
+#include "Bone.h"
 
 CModel::CModel(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CComponent{ pDevice, pContext }
@@ -19,7 +20,11 @@ CModel::CModel(const CModel& Prototype)
 	, m_Materials { Prototype.m_Materials }
 	, m_eType { Prototype.m_eType }
 	, m_PreTransformMatrix { Prototype.m_PreTransformMatrix }
+	, m_Bones { Prototype.m_Bones }
 {
+	for (auto& pBone : m_Bones)
+		Safe_AddRef(pBone);
+
 	for (auto& pMaterial : m_Materials)
 		Safe_AddRef(pMaterial);
 
@@ -51,8 +56,6 @@ HRESULT CModel::Initialize_Prototype(MODEL eType, const _char* pModelFilePath, _
 
 	m_pAIScene = m_Importer.ReadFile(pModelFilePath, iFlag);
 
-	
-
 	if (nullptr == m_pAIScene)
 		return E_FAIL;
 
@@ -60,15 +63,14 @@ HRESULT CModel::Initialize_Prototype(MODEL eType, const _char* pModelFilePath, _
 
 	m_eType = eType;
 
+	if (FAILED(Ready_Bones(m_pAIScene->mRootNode, -1)))
+		return E_FAIL;
+
 	if (FAILED(Ready_Meshes()))
 		return E_FAIL;
 
 	if (FAILED(Ready_Materials(pModelFilePath)))
 		return E_FAIL;
-
-	
-
-
 
 	return S_OK;
 }
@@ -86,7 +88,38 @@ HRESULT CModel::Render(_uint iMeshIndex)
 	return S_OK;
 }
 
+HRESULT CModel::Play_Animation(_float fTimeDelta)
+{
+	/* 1. ㅎ녀재 애니메이션에 맞는 뼈의 상태를 읽어와서 뼈의 TrnasformationMatrix를 갱신해준다. */
 
+
+	/* 2. 전체 뼐르 순회하면서 뼈들의 ColmbinedTransformationMatixf를 부모에서부터 자식으로 갱신해주낟. */
+	for (auto& pBone : m_Bones)
+	{
+		pBone->Update_CombinedTransformationMatrix(m_Bones);
+	}
+
+	return S_OK;
+}
+
+
+
+HRESULT CModel::Ready_Bones(const aiNode* pAINode, _int iParentBoneIndex)
+{	
+	CBone* pBone = CBone::Create(pAINode, iParentBoneIndex);
+	if (nullptr == pBone)
+		return E_FAIL;
+
+	m_Bones.push_back(pBone);	
+
+	_int		iParentIndex = m_Bones.size() - 1;
+
+	for (size_t i = 0; i < pAINode->mNumChildren; i++)
+	{
+		Ready_Bones(pAINode->mChildren[i], iParentIndex);
+	}
+	return S_OK;
+}
 
 HRESULT CModel::Ready_Meshes()
 {

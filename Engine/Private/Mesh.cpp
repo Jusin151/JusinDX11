@@ -141,6 +141,53 @@ HRESULT CMesh::Ready_Anim_Mesh(const aiMesh* pAIMesh)
 		memcpy(&pVertices[i].vTexcoord, &pAIMesh->mTextureCoords[0][i], sizeof(_float2));
 	}
 
+	/* 이 정점이 영향을 받는 뼈의 정보를 저장할 때? */
+	/* 뭔말인지 알지? */
+
+
+
+	m_iNumBones = pAIMesh->mNumBones;
+
+	for (size_t i = 0; i < m_iNumBones; i++)
+	{
+		/* 부모ㅗ 자식등의 뼈의 관계성을 표현(x) -> aiNode */
+		/* 이 메시에 어떤 정점들게 영향을 줍니다. and 얼마나 영향을 줍니다. */
+		aiBone* pAIBone = pAIMesh->mBones[i];
+
+		/* i번째 뼈가 몇개 정점에게 영향을 주는데?*/
+		_uint		iNumWeights = pAIBone->mNumWeights;
+		
+		for (size_t j = 0; j < iNumWeights; j++)
+		{
+			/* i번째 뼈가 영향ㅇ르 주는 j번째 정점의 정보 */
+			aiVertexWeight	AIWeight = pAIBone->mWeights[j];
+
+			if (0.f == pVertices[AIWeight.mVertexId].vBlendWeights.x)
+			{
+				pVertices[AIWeight.mVertexId].vBlendIndices.x = i;
+				pVertices[AIWeight.mVertexId].vBlendWeights.x = AIWeight.mWeight;
+			}
+
+			else if (0.f == pVertices[AIWeight.mVertexId].vBlendWeights.y)
+			{
+				pVertices[AIWeight.mVertexId].vBlendIndices.y = i;
+				pVertices[AIWeight.mVertexId].vBlendWeights.y = AIWeight.mWeight;
+			}
+
+			else if (0.f == pVertices[AIWeight.mVertexId].vBlendWeights.z)
+			{
+				pVertices[AIWeight.mVertexId].vBlendIndices.z = i;
+				pVertices[AIWeight.mVertexId].vBlendWeights.z = AIWeight.mWeight;
+			}
+
+			else if (0.f == pVertices[AIWeight.mVertexId].vBlendWeights.w)
+			{
+				pVertices[AIWeight.mVertexId].vBlendIndices.w = i;
+				pVertices[AIWeight.mVertexId].vBlendWeights.w = AIWeight.mWeight;
+			}
+		}
+	}
+
 	for (_uint i = 0; i < m_iNumVertices; ++i)
 		m_pVertexPositions[i] = pVertices[i].vPosition;
 
@@ -153,7 +200,7 @@ HRESULT CMesh::Ready_Anim_Mesh(const aiMesh* pAIMesh)
 
 	return S_OK;
 
-	return S_OK;
+	
 }
 
 CMesh* CMesh::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, MODEL eType, const aiMesh* pAIMesh, _fmatrix PreTransformMatrix)
