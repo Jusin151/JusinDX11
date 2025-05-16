@@ -14,9 +14,17 @@ private:
 	virtual ~CBone() = default;
 
 public:
+	const _float4x4* Get_CombinedTransformationMatrix() const {
+		return &m_CombinedTransformationMatrix;
+	}
+
+public:
 	HRESULT Initialize(const aiNode* pAINode, _int iParentBoneIndex);
 	void Update_TransformationMatrix(_fmatrix TransformationMatrix);
-	void Update_CombinedTransformationMatrix(const vector<CBone*>& Bones);
+	void Update_CombinedTransformationMatrix(const vector<CBone*>& Bones, _fmatrix PreTransformMatrix);
+	_bool Compare_Name(const _char* pName) {
+		return !strcmp(m_szName, pName);
+	}
 
 private:
 	_char					m_szName[MAX_PATH] = {};
