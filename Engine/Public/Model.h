@@ -28,26 +28,31 @@ public:
 	HRESULT Play_Animation(_float fTimeDelta);
 
 private:
-	Assimp::Importer		m_Importer;	
+	Assimp::Importer			m_Importer;	
 
 	/* 모델에 대한 모든 정보르,ㄹ 담고 있는 구조체. */
-	const aiScene*			m_pAIScene = { nullptr };
+	const aiScene*				m_pAIScene = { nullptr };
 
-	MODEL					m_eType = {};
-	_float4x4				m_PreTransformMatrix = {};
-	_uint					m_iNumMeshes = {};
-	vector<class CMesh*>	m_Meshes;
+	MODEL						m_eType = {};
+	_float4x4					m_PreTransformMatrix = {};
+	_uint						m_iNumMeshes = {};
+	vector<class CMesh*>		m_Meshes;
 
 	_uint						m_iNumMaterials = {};
 	vector<class CMaterial*>	m_Materials;
 
-	vector<class CBone*>			m_Bones;
+	vector<class CBone*>		m_Bones;
+
+
+	_uint						m_iNumAnimations = {};
+	vector<class CAnimation*>	m_Animations;
 
 
 public:
 	HRESULT Ready_Bones(const aiNode* pAINode, _int iParentBoneIndex);
 	HRESULT Ready_Meshes();
 	HRESULT Ready_Materials(const _char* pModelFilePath);
+	HRESULT Ready_Animations();
 public:
 	static CModel* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, MODEL eType, const _char* pModelFilePath, _fmatrix PreTransformMatrix = XMMatrixIdentity());
 	virtual CComponent* Clone(void* pArg) override;
