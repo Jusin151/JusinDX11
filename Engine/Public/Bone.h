@@ -18,6 +18,10 @@ public:
 		return &m_CombinedTransformationMatrix;
 	}
 
+	void Set_TransformationMatrix(_fmatrix TransformationMatrix) {
+		XMStoreFloat4x4(&m_TransformationMatrix, TransformationMatrix);
+	}
+
 public:
 	HRESULT Initialize(const aiNode* pAINode, _int iParentBoneIndex);
 	void Update_TransformationMatrix(_fmatrix TransformationMatrix);

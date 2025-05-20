@@ -16,6 +16,13 @@ public:
 		return m_iNumMeshes;
 	}
 
+	void Set_Animation(_uint iIndex, _bool isLoop = true) {
+		m_iCurrentAnimIndex = iIndex;
+		m_isLoop = isLoop;
+	}
+
+public:
+
 	HRESULT Bind_Material(class CShader* pShader, const _char* pConstantName, _uint iMeshIndex, aiTextureType eType, _uint iTextureIndex = 0);
 	HRESULT Bind_Bone_Matrices(class CShader* pShader, const _char* pConstantName, _uint iMeshIndex);
 
@@ -43,10 +50,10 @@ private:
 
 	vector<class CBone*>		m_Bones;
 
-
+	_bool						m_isLoop{};
+	_uint						m_iCurrentAnimIndex = { };
 	_uint						m_iNumAnimations = {};
 	vector<class CAnimation*>	m_Animations;
-
 
 public:
 	HRESULT Ready_Bones(const aiNode* pAINode, _int iParentBoneIndex);
