@@ -32,7 +32,7 @@ public:
 	virtual HRESULT Render(_uint iMeshIndex);
 
 public:
-	HRESULT Play_Animation(_float fTimeDelta);
+	_bool Play_Animation(_float fTimeDelta);
 
 private:
 	Assimp::Importer			m_Importer;	
@@ -53,7 +53,7 @@ private:
 	_bool						m_isLoop{};
 	_uint						m_iCurrentAnimIndex = { };
 	_uint						m_iNumAnimations = {};
-	vector<class CAnimation*>	m_Animations;
+	vector<class CAnimation*>	m_Animations;	
 
 public:
 	HRESULT Ready_Bones(const aiNode* pAINode, _int iParentBoneIndex);

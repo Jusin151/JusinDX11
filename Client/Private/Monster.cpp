@@ -33,6 +33,17 @@ HRESULT CMonster::Initialize(void* pArg)
 	if (FAILED(Ready_Components()))
 		return E_FAIL;
 
+	/* 1. 서로 다른 애니메이션을 셋팅했음에도 같은 동작이 재생된다. : 뼈가 공유되기때문에. */
+	/* 2. 같은 애니메이션을 셋했다면 재생속도가 빨라진다. : */
+	m_pModelCom->Set_Animation(0, true);
+
+	m_pTransformCom->Set_State(STATE::POSITION, XMVectorSet(
+		m_pGameInstance->Compute_Random(0.f, 20.f), 
+		3.f,
+		m_pGameInstance->Compute_Random(0.f, 20.f),
+		1.f
+	));
+
 	return S_OK;
 }
 
@@ -43,7 +54,8 @@ void CMonster::Priority_Update(_float fTimeDelta)
 
 void CMonster::Update(_float fTimeDelta)
 {
-	m_pModelCom->Play_Animation(fTimeDelta);
+	if (true == m_pModelCom->Play_Animation(fTimeDelta))
+		int a = 10;
 }
 
 void CMonster::Late_Update(_float fTimeDelta)

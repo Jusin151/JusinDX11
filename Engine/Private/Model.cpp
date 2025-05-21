@@ -20,12 +20,12 @@ CModel::CModel(const CModel& Prototype)
 	, m_Materials { Prototype.m_Materials }
 	, m_eType { Prototype.m_eType }
 	, m_PreTransformMatrix { Prototype.m_PreTransformMatrix }
-	, m_Bones { Prototype.m_Bones }
+	//, m_Bones { Prototype.m_Bones }
 	, m_iNumAnimations { Prototype.m_iNumAnimations }
-	, m_Animations { Prototype.m_Animations }
+	// , m_Animations { Prototype.m_Animations }
 {
-	for (auto& pBone : m_Bones)
-		Safe_AddRef(pBone);
+	for (auto& pPrototypeBone : Prototype.m_Bones)
+		m_Bones.push_back(pPrototypeBone->Clone());		
 
 	for (auto& pMaterial : m_Materials)
 		Safe_AddRef(pMaterial);
@@ -33,8 +33,8 @@ CModel::CModel(const CModel& Prototype)
 	for (auto& pMesh : m_Meshes)
 		Safe_AddRef(pMesh);
 
-	for (auto& pAnimation : m_Animations)
-		Safe_AddRef(pAnimation);
+	for (auto& pPrototypeAnim: Prototype.m_Animations)
+		m_Animations.push_back(pPrototypeAnim->Clone());
 
 }
 
@@ -102,11 +102,11 @@ HRESULT CModel::Render(_uint iMeshIndex)
 	return S_OK;
 }
 
-HRESULT CModel::Play_Animation(_float fTimeDelta)
+_bool CModel::Play_Animation(_float fTimeDelta)
 {
-	/* 1. ㅎ녀재 애니메이션에 맞는 뼈의 상태를 읽어와서 뼈의 TrnasformationMatrix를 갱신해준다. */
-	m_Animations[m_iCurrentAnimIndex]->Update_Bones(fTimeDelta, m_Bones, m_isLoop);
-
+	_bool		isFinished = { false };
+	/* 1. 현재 애니메이션에 맞는 뼈의 상태를 읽어와서 뼈의 TrnasformationMatrix를 갱신해준다. */
+	isFinished  = m_Animations[m_iCurrentAnimIndex]->Update_Bones(fTimeDelta, m_Bones, m_isLoop);
 
 	/* 2. 전체 뼐르 순회하면서 뼈들의 ColmbinedTransformationMatixf를 부모에서부터 자식으로 갱신해주낟. */
 	for (auto& pBone : m_Bones)
@@ -114,7 +114,9 @@ HRESULT CModel::Play_Animation(_float fTimeDelta)
 		pBone->Update_CombinedTransformationMatrix(m_Bones, XMLoadFloat4x4(&m_PreTransformMatrix));
 	}
 
-	return S_OK;
+	/*XMMatrixDecompose()*/
+
+	return isFinished;
 }
 
 
