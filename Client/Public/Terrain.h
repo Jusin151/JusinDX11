@@ -33,6 +33,7 @@ private:
 
 private:
 	HRESULT Ready_Components();
+	HRESULT Bind_ShaderResources();
 
 public:
 	static CTerrain* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

@@ -9,6 +9,9 @@ CLevel_GamePlay::CLevel_GamePlay(ID3D11Device* pDevice, ID3D11DeviceContext* pCo
 
 HRESULT CLevel_GamePlay::Initialize()
 {
+	if (FAILED(Ready_Lights()))
+		return E_FAIL;
+
 	if (FAILED(Ready_Layer_BackGround(TEXT("Layer_BackGround"))))
 		return E_FAIL;
 
@@ -29,6 +32,22 @@ void CLevel_GamePlay::Update(_float fTimeDelta)
 HRESULT CLevel_GamePlay::Render()
 {
 	SetWindowText(g_hWnd, TEXT("게임플레이 레벨입니다."));
+
+	return S_OK;
+}
+
+HRESULT CLevel_GamePlay::Ready_Lights()
+{
+	LIGHT_DESC			LightDesc{};
+
+	LightDesc.eType = LIGHT_DESC::TYPE_DIRECTIONAL;
+	LightDesc.vDirection = _float4(1.f, -1.f, 1.f, 0.f);	
+	LightDesc.vDiffuse = _float4(1.f, 1.f, 1.f, 1.f);
+	LightDesc.vAmbient = _float4(1.f, 1.f, 1.f, 1.f);
+	LightDesc.vSpecular = _float4(1.f, 1.f, 1.f, 1.f);
+
+	if (FAILED(m_pGameInstance->Add_Light(LightDesc)))
+		return E_FAIL;
 
 	return S_OK;
 }

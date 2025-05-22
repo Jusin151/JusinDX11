@@ -65,6 +65,12 @@ public:
 	_byte	Get_DIMouseState(DIM eMouse);	
 	_long	Get_DIMouseMove(DIMM eMouseState);
 #pragma endregion
+
+#pragma region LIGHT_MANAGER
+	const LIGHT_DESC* Get_Light(_uint iIndex);
+	HRESULT Add_Light(const LIGHT_DESC& LightDesc);
+#pragma endregion
+
 //
 //#pragma region PICKING
 //	void Transform_Picking_ToLocalSpace(const _float4x4& WorldMatrixInverse);
@@ -81,7 +87,7 @@ private:
 	class CRenderer*			m_pRenderer = { nullptr };
 	class CTimer_Manager*		m_pTimer_Manager = { nullptr };
 	class CPipeLine*			m_pPipeLine = { nullptr };
-	// class CPicking*				m_pPicking = { nullptr };
+	class CLight_Manager*		m_pLight_Manager = { nullptr };
 
 public:
 	void Release_Engine();

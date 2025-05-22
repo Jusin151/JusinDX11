@@ -75,11 +75,6 @@ HRESULT CVIBuffer_Terrain::Initialize_Prototype(const _tchar* pHeightMapFilePath
 
 	VBInitialData.pSysMem = pVertices;
 
-	if (FAILED(m_pDevice->CreateBuffer(&VBBufferDesc, &VBInitialData, &m_pVB)))
-		return E_FAIL;
-
-	Safe_Delete_Array(pVertices);
-
 	D3D11_BUFFER_DESC			IBBufferDesc{};
 	IBBufferDesc.ByteWidth = m_iNumIndices * m_iIndexStride;
 	IBBufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
@@ -106,18 +101,55 @@ HRESULT CVIBuffer_Terrain::Initialize_Prototype(const _tchar* pHeightMapFilePath
 				iIndex
 			};
 
+			_vector		vSourDir, vDestDir, vNormal;
+
 			pIndices[iNumIndices++] = iIndices[0];
 			pIndices[iNumIndices++] = iIndices[1];
 			pIndices[iNumIndices++] = iIndices[2];
 
+			vSourDir = XMLoadFloat3(&m_pVertexPositions[iIndices[1]]) - XMLoadFloat3(&m_pVertexPositions[iIndices[0]]);
+			vDestDir = XMLoadFloat3(&m_pVertexPositions[iIndices[2]]) - XMLoadFloat3(&m_pVertexPositions[iIndices[1]]);
+			vNormal = XMVector3Normalize(XMVector3Cross(vSourDir, vDestDir));
+
+			XMStoreFloat3(&pVertices[iIndices[0]].vNormal
+				, XMLoadFloat3(&pVertices[iIndices[0]].vNormal) + vNormal);
+			XMStoreFloat3(&pVertices[iIndices[1]].vNormal
+				, XMLoadFloat3(&pVertices[iIndices[1]].vNormal) + vNormal);
+			XMStoreFloat3(&pVertices[iIndices[2]].vNormal
+				, XMLoadFloat3(&pVertices[iIndices[2]].vNormal) + vNormal);
+
 			pIndices[iNumIndices++] = iIndices[0];
 			pIndices[iNumIndices++] = iIndices[2];
 			pIndices[iNumIndices++] = iIndices[3];
+
+			vSourDir = XMLoadFloat3(&m_pVertexPositions[iIndices[2]]) - XMLoadFloat3(&m_pVertexPositions[iIndices[0]]);
+			vDestDir = XMLoadFloat3(&m_pVertexPositions[iIndices[3]]) - XMLoadFloat3(&m_pVertexPositions[iIndices[2]]);
+			vNormal = XMVector3Normalize(XMVector3Cross(vSourDir, vDestDir));
+
+			XMStoreFloat3(&pVertices[iIndices[0]].vNormal
+				, XMLoadFloat3(&pVertices[iIndices[0]].vNormal) + vNormal);
+			XMStoreFloat3(&pVertices[iIndices[2]].vNormal
+				, XMLoadFloat3(&pVertices[iIndices[2]].vNormal) + vNormal);
+			XMStoreFloat3(&pVertices[iIndices[3]].vNormal
+				, XMLoadFloat3(&pVertices[iIndices[3]].vNormal) + vNormal);
 		}
+	}
+
+	for (size_t i = 0; i < m_iNumVertices; i++)
+	{
+		XMStoreFloat3(&pVertices[i].vNormal
+			, XMVector3Normalize(XMLoadFloat3(&pVertices[i].vNormal)));	
 	}
 
 	D3D11_SUBRESOURCE_DATA		IBInitialData{};
 	IBInitialData.pSysMem = pIndices;
+
+
+	if (FAILED(m_pDevice->CreateBuffer(&VBBufferDesc, &VBInitialData, &m_pVB)))
+		return E_FAIL;
+
+	Safe_Delete_Array(pVertices);
+
 
 	if (FAILED(m_pDevice->CreateBuffer(&IBBufferDesc, &IBInitialData, &m_pIB)))
 		return E_FAIL;

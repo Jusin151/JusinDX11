@@ -3,7 +3,9 @@
 //#include "Picking.h"
 #include "Renderer.h"
 #include "PipeLine.h"
+
 #include "Input_Device.h"
+#include "Light_Manager.h"
 #include "Level_Manager.h"
 #include "Timer_Manager.h"
 #include "Graphic_Device.h"
@@ -50,6 +52,11 @@ HRESULT CGameInstance::Initialize_Engine(const ENGINE_DESC& EngineDesc, _Out_ ID
 	m_pPipeLine = CPipeLine::Create();
 	if (nullptr == m_pPipeLine)
 		return E_FAIL;
+
+	m_pLight_Manager = CLight_Manager::Create();
+	if (nullptr == m_pLight_Manager)
+		return E_FAIL;
+
 
 
 	//m_pPicking = CPicking::Create(*ppOut, EngineDesc.hWnd, EngineDesc.iWinSizeX, EngineDesc.iWinSizeY);
@@ -212,6 +219,9 @@ const _float4* CGameInstance::Get_CamPosition() const
 {
 	return m_pPipeLine->Get_CamPosition();
 }
+#pragma endregion
+
+#pragma region INPUT_DEVICE
 
 _byte CGameInstance::Get_DIKeyState(_ubyte byKeyID)
 {
@@ -226,6 +236,19 @@ _byte CGameInstance::Get_DIMouseState(DIM eMouse)
 _long CGameInstance::Get_DIMouseMove(DIMM eMouseState)
 {
 	return m_pInput_Device->Get_DIMouseMove(eMouseState);
+}
+#pragma endregion
+
+#pragma region LIGHT_MANAGER
+
+const LIGHT_DESC* CGameInstance::Get_Light(_uint iIndex)
+{
+	return m_pLight_Manager->Get_Light(iIndex);
+}
+
+HRESULT CGameInstance::Add_Light(const LIGHT_DESC& LightDesc)
+{
+	return m_pLight_Manager->Add_Light(LightDesc);
 }
 
 #pragma endregion
@@ -249,6 +272,8 @@ _long CGameInstance::Get_DIMouseMove(DIMM eMouseState)
 void CGameInstance::Release_Engine()
 {
 	//Safe_Release(m_pPicking);
+
+	Safe_Release(m_pLight_Manager);
 
 	Safe_Release(m_pPipeLine);
 
