@@ -1,33 +1,27 @@
-﻿#include "Monster.h"
+﻿#include "Body_Player.h"
 
 #include "GameInstance.h"
 
-CMonster::CMonster(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
-	: CGameObject { pDevice, pContext }
+CBody_Player::CBody_Player(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+	: CPartObject { pDevice, pContext }
 {
 
 }
 
-CMonster::CMonster(const CMonster& Prototype)
-	: CGameObject { Prototype }
+CBody_Player::CBody_Player(const CBody_Player& Prototype)
+	: CPartObject { Prototype }
 {
 
 }
 
-HRESULT CMonster::Initialize_Prototype()
+HRESULT CBody_Player::Initialize_Prototype()
 {
 	return S_OK;
 }
 
-HRESULT CMonster::Initialize(void* pArg)
+HRESULT CBody_Player::Initialize(void* pArg)
 {
-	GAMEOBJECT_DESC			Desc{};
-
-	Desc.fRotationPerSec = 0.f;
-	Desc.fSpeedPerSec = 0.f;
-	lstrcpy(Desc.szName, TEXT("Monster"));
-
-	if (FAILED(__super::Initialize(&Desc)))
+	if (FAILED(__super::Initialize(pArg)))
 		return E_FAIL;
 
 	if (FAILED(Ready_Components()))
@@ -37,33 +31,30 @@ HRESULT CMonster::Initialize(void* pArg)
 	/* 2. 같은 애니메이션을 셋했다면 재생속도가 빨라진다. : */
 	m_pModelCom->Set_Animation(3, true);
 
-	m_pTransformCom->Set_State(STATE::POSITION, XMVectorSet(
-		m_pGameInstance->Compute_Random(0.f, 20.f), 
-		3.f,
-		m_pGameInstance->Compute_Random(0.f, 20.f),
-		1.f
-	));
+
 
 	return S_OK;
 }
 
-void CMonster::Priority_Update(_float fTimeDelta)
+void CBody_Player::Priority_Update(_float fTimeDelta)
 {
 
 }
 
-void CMonster::Update(_float fTimeDelta)
+void CBody_Player::Update(_float fTimeDelta)
 {
 	if (true == m_pModelCom->Play_Animation(fTimeDelta))
 		int a = 10;
 }
 
-void CMonster::Late_Update(_float fTimeDelta)
+void CBody_Player::Late_Update(_float fTimeDelta)
 {
+	XMStoreFloat4x4(&m_CombindWorldMatrix, XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrix_Ptr()) * XMLoadFloat4x4(m_pParentMatrix));
+
 	m_pGameInstance->Add_RenderGroup(RENDERGROUP::RG_NONBLEND, this);
 }
 
-HRESULT CMonster::Render()
+HRESULT CBody_Player::Render()
 {
 
 	if (FAILED(Bind_ShaderResources()))
@@ -89,7 +80,7 @@ HRESULT CMonster::Render()
 	return S_OK;
 }
 
-HRESULT CMonster::Ready_Components()
+HRESULT CBody_Player::Ready_Components()
 {
 	/* For.Com_Shader */
 	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::STATIC), TEXT("Prototype_Component_Shader_VtxAnimMesh"),
@@ -104,9 +95,9 @@ HRESULT CMonster::Ready_Components()
 	return S_OK;
 }
 
-HRESULT CMonster::Bind_ShaderResources()
-{
-	if (FAILED(m_pTransformCom->Bind_ShaderResource(m_pShaderCom, "g_WorldMatrix")))
+HRESULT CBody_Player::Bind_ShaderResources()
+{	
+	if (FAILED(m_pShaderCom->Bind_Matrix("g_WorldMatrix", &m_CombindWorldMatrix)))
 		return E_FAIL;
 	if (FAILED(m_pShaderCom->Bind_Matrix("g_ViewMatrix", m_pGameInstance->Get_Transform_Float4x4(D3DTS::VIEW))))
 		return E_FAIL;
@@ -129,9 +120,9 @@ HRESULT CMonster::Bind_ShaderResources()
 	return S_OK;
 }
 
-CMonster* CMonster::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+CBody_Player* CBody_Player::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 {
-	CMonster* pInstance = new CMonster(pDevice, pContext);
+	CBody_Player* pInstance = new CBody_Player(pDevice, pContext);
 
 	if (FAILED(pInstance->Initialize_Prototype()))
 	{
@@ -142,20 +133,20 @@ CMonster* CMonster::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	return pInstance;
 }
 
-CGameObject* CMonster::Clone(void* pArg)
+CGameObject* CBody_Player::Clone(void* pArg)
 {
-	CMonster* pInstance = new CMonster(*this);
+	CBody_Player* pInstance = new CBody_Player(*this);
 
 	if (FAILED(pInstance->Initialize(pArg)))
 	{
-		MSG_BOX("Failed to Cloned : CMonster");
+		MSG_BOX("Failed to Cloned : CBody_Player");
 		Safe_Release(pInstance);
 	}
 
 	return pInstance;
 }
 
-void CMonster::Free()
+void CBody_Player::Free()
 {
 	__super::Free();
 

@@ -151,6 +151,7 @@
     <ClInclude Include="..\public\Camera.h" />
     <ClInclude Include="..\public\Channel.h" />
     <ClInclude Include="..\public\Component.h" />
+    <ClInclude Include="..\public\ContainerObject.h" />
     <ClInclude Include="..\Public\Engine_Defines.h" />
     <ClInclude Include="..\Public\Engine_Enum.h" />
     <ClInclude Include="..\Public\Engine_Function.h" />
@@ -170,6 +171,7 @@
     <ClInclude Include="..\public\Mesh.h" />
     <ClInclude Include="..\public\Model.h" />
     <ClInclude Include="..\Public\Object_Manager.h" />
+    <ClInclude Include="..\public\PartObject.h" />
     <ClInclude Include="..\public\PipeLine.h" />
     <ClInclude Include="..\Public\Prototype_Manager.h" />
     <ClInclude Include="..\Public\Renderer.h" />
@@ -190,6 +192,7 @@
     <ClCompile Include="..\private\Camera.cpp" />
     <ClCompile Include="..\private\Channel.cpp" />
     <ClCompile Include="..\private\Component.cpp" />
+    <ClCompile Include="..\private\ContainerObject.cpp" />
     <ClCompile Include="..\Private\Engine_Struct.cpp" />
     <ClCompile Include="..\Private\GameInstance.cpp" />
     <ClCompile Include="..\private\GameObject.cpp" />
@@ -204,6 +207,7 @@
     <ClCompile Include="..\private\Mesh.cpp" />
     <ClCompile Include="..\private\Model.cpp" />
     <ClCompile Include="..\Private\Object_Manager.cpp" />
+    <ClCompile Include="..\private\PartObject.cpp" />
     <ClCompile Include="..\private\PipeLine.cpp" />
     <ClCompile Include="..\Private\Prototype_Manager.cpp" />
     <ClCompile Include="..\Private\Renderer.cpp" />

@@ -6,9 +6,12 @@
 #include "BackGround.h"
 #include "Terrain.h"
 #include "Monster.h"
-//#include "player.h"
+#include "player.h"
 //#include "Effect.h"
 //#include "Sky.h"
+
+
+#include "Body_Player.h"
 
 CLoader::CLoader(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: m_pDevice { pDevice }
@@ -178,10 +181,14 @@ HRESULT CLoader::Loading_For_GamePlay()
 		CMonster::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
-	///* For.Prototype_GameObject_Player */
-	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Player"),
-	//	CPlayer::Create(m_pGraphic_Device))))
-	//	return E_FAIL;
+
+	/* For.Prototype_GameObject_Body_Player */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Body_Player"), CBody_Player::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* For.Prototype_GameObject_Player */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Player"),		CPlayer::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
 
 	///* For.Prototype_GameObject_Sky */
 	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Sky"),
