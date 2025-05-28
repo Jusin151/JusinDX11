@@ -12,6 +12,11 @@ class CPlayer final : public CContainerObject
 {
 public:
 	enum PART { PART_BODY, PART_WEAPON, PART_EFFECT, PART_END };
+	enum STATE { 		
+		STATE_IDLE		= 0x00000001,
+		STATE_WALK		= 0x00000002, 
+		STATE_ATTACK	= 0x00000004,
+	};
 
 private:
 	CPlayer(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
@@ -32,7 +37,7 @@ private:
 
 
 private:
-	_uint			m_iState;
+	_uint			m_iState = {};
 
 public:
 	static CPlayer* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

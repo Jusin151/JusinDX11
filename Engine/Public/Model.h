@@ -16,6 +16,8 @@ public:
 		return m_iNumMeshes;
 	}
 
+	const _float4x4* Get_BoneMatrix(const _char* pBoneName) const;
+
 	void Set_Animation(_uint iIndex, _bool isLoop = true) {
 		m_iCurrentAnimIndex = iIndex;
 		m_isLoop = isLoop;

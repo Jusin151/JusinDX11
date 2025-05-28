@@ -1,7 +1,8 @@
 ﻿#include "Player.h"
 
 #include "GameInstance.h"
-#include "PartObject.h"
+#include "Body_Player.h"
+#include "Weapon.h"
 
 CPlayer::CPlayer(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CContainerObject{ pDevice, pContext }
@@ -24,7 +25,7 @@ HRESULT CPlayer::Initialize(void* pArg)
 {
 	CONTAINEROBJECT_DESC	Desc{};
 
-	Desc.fRotationPerSec = 0.f;
+	Desc.fRotationPerSec = XMConvertToRadians(180.0f);
 	Desc.fSpeedPerSec = 5.0f;
 	Desc.iNumPartObjects = PART_END;
 	lstrcpy(Desc.szName, TEXT("Player"));
@@ -53,8 +54,40 @@ void CPlayer::Update(_float fTimeDelta)
 {
 	__super::Update(fTimeDelta);
 
+	if (GetKeyState(VK_LEFT) & 0x8000)
+	{
+
+		m_pTransformCom->Turn(XMVectorSet(0.f, 1.f, 0.f, 0.f), fTimeDelta * -1.f);
+	}
+
+	if (GetKeyState(VK_RIGHT) & 0x8000)
+	{
+		m_pTransformCom->Turn(XMVectorSet(0.f, 1.f, 0.f, 0.f), fTimeDelta);
+	}
+
+	if (GetKeyState(VK_DOWN) & 0x8000)
+	{
+		if (m_iState & STATE_IDLE)
+			m_iState ^= STATE_IDLE;
+
+		m_iState |= STATE_WALK;
+
+		m_pTransformCom->Go_Backward(fTimeDelta);
+	}
+
+
 	if (GetKeyState(VK_UP) < 0)
+	{
+		if (m_iState & STATE_IDLE)
+			m_iState ^= STATE_IDLE;
+
+		m_iState |= STATE_WALK;
 		m_pTransformCom->Go_Straight(fTimeDelta);
+	}
+	else
+		m_iState = STATE_IDLE;
+
+
 
 
 
@@ -78,11 +111,23 @@ HRESULT CPlayer::Render()
 
 HRESULT CPlayer::Ready_PartObjects()
 {
-	CPartObject::PARTOBJECT_DESC	BodyDesc{};
+	/* For.Body */
+	CBody_Player::BODY_PLAYER_DESC BodyDesc{};
 
+	BodyDesc.pParentState = &m_iState;
 	BodyDesc.pParentMatrix = m_pTransformCom->Get_WorldMatrix_Ptr();
 
 	if (FAILED(__super::Add_PartObject(PART_BODY, ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Body_Player"), &BodyDesc)))
+		return E_FAIL;
+
+	/* For.Weapon */
+	CWeapon::WEAPON_DESC	WeaponDesc{};
+
+	WeaponDesc.pSocketMatrix = dynamic_cast<CBody_Player*>(m_PartObjects[PART_BODY])->Get_SocketMatrix("SWORD");
+	WeaponDesc.pParentState = &m_iState;
+	WeaponDesc.pParentMatrix = m_pTransformCom->Get_WorldMatrix_Ptr();
+
+	if (FAILED(__super::Add_PartObject(PART_WEAPON, ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Weapon"), &WeaponDesc)))
 		return E_FAIL;
 
 

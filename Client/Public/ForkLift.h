@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include "Client_Defines.h"
-#include "PartObject.h"
+#include "GameObject.h"
 
 NS_BEGIN(Engine)
 class CShader;
@@ -10,20 +10,12 @@ NS_END
 
 NS_BEGIN(Client)
 
-class CBody_Player final : public CPartObject
+class CForkLift final : public CGameObject
 {
-public:
-	typedef struct tagBodyPlayerDesc : public CPartObject::PARTOBJECT_DESC
-	{
-		_uint* pParentState = { nullptr };
-	}BODY_PLAYER_DESC;
 private:
-	CBody_Player(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	CBody_Player(const CBody_Player& Prototype);
-	virtual ~CBody_Player() = default;
-
-public:
-	const _float4x4* Get_SocketMatrix(const _char* pBoneName);
+	CForkLift(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	CForkLift(const CForkLift& Prototype);
+	virtual ~CForkLift() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype();
@@ -38,14 +30,11 @@ private:
 	CModel*				m_pModelCom = { nullptr };
 
 private:
-	_uint* m_pParentState = { nullptr };
-
-private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();
 
 public:
-	static CBody_Player* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	static CForkLift* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual CGameObject* Clone(void* pArg) override;
 	virtual void Free() override;
 

@@ -38,6 +38,22 @@ CModel::CModel(const CModel& Prototype)
 
 }
 
+const _float4x4* CModel::Get_BoneMatrix(const _char* pBoneName) const
+{	
+	auto	iter = find_if(m_Bones.begin(), m_Bones.end(), [&](CBone* pBone)->_bool
+	{
+			if (true == pBone->Compare_Name(pBoneName))
+				return true;
+			return false;		
+	});
+
+	if (iter == m_Bones.end())
+		return nullptr;
+
+	return (*iter)->Get_CombinedTransformationMatrix();	
+	
+}
+
 HRESULT CModel::Bind_Material(CShader* pShader, const _char* pConstantName, _uint iMeshIndex, aiTextureType eType, _uint iTextureIndex)
 {
 	if (iMeshIndex >= m_iNumMeshes)
