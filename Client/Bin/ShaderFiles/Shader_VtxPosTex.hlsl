@@ -1,4 +1,4 @@
-
+#include "Shader_Defines.hlsli"
 
 /* 상수테이블 ConstantTable */
 matrix g_WorldMatrix, g_ViewMatrix, g_ProjMatrix;

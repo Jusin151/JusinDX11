@@ -1,4 +1,6 @@
 
+#include "Shader_Defines.hlsli"
+
 matrix g_WorldMatrix, g_ViewMatrix, g_ProjMatrix;
 
 texture2D g_DiffuseTexture;
@@ -96,6 +98,8 @@ technique11 DefaultTechnique
    
     pass Default
     {
+        SetRasterizerState(RS_Default);
+  
         VertexShader = compile vs_5_0 VS_MAIN();        
         PixelShader = compile ps_5_0 PS_MAIN();      
     }

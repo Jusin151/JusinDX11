@@ -118,6 +118,12 @@
     <ClInclude Include="..\public\PartObject.h">
       <Filter>01.Utility\03.GameObject\PartObject</Filter>
     </ClInclude>
+    <ClInclude Include="..\public\Font_Manager.h">
+      <Filter>01.Utility\08.Fonts\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\CustomFont.h">
+      <Filter>01.Utility\08.Fonts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Private\Timer.cpp">
@@ -221,6 +227,12 @@
     </ClCompile>
     <ClCompile Include="..\private\PartObject.cpp">
       <Filter>01.Utility\03.GameObject\PartObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Font_Manager.cpp">
+      <Filter>01.Utility\08.Fonts\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\CustomFont.cpp">
+      <Filter>01.Utility\08.Fonts</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -343,6 +355,12 @@
     </Filter>
     <Filter Include="01.Utility\07.Lights\Manager">
       <UniqueIdentifier>{2d85b3df-b571-4c12-a6d3-1e8db27cc0da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\08.Fonts">
+      <UniqueIdentifier>{e009d9c1-180c-4dcf-a27c-22ed44974681}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\08.Fonts\Manager">
+      <UniqueIdentifier>{d613160b-3dbc-4120-a0aa-e96679c5ac4a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

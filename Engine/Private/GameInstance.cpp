@@ -5,6 +5,7 @@
 #include "PipeLine.h"
 
 #include "Input_Device.h"
+#include "Font_Manager.h"
 #include "Light_Manager.h"
 #include "Level_Manager.h"
 #include "Timer_Manager.h"
@@ -57,7 +58,9 @@ HRESULT CGameInstance::Initialize_Engine(const ENGINE_DESC& EngineDesc, _Out_ ID
 	if (nullptr == m_pLight_Manager)
 		return E_FAIL;
 
-
+	m_pFont_Manager = CFont_Manager::Create(*ppDeviceOut, *ppContextOut);
+	if(nullptr == m_pFont_Manager)
+		return E_FAIL;
 
 	//m_pPicking = CPicking::Create(*ppOut, EngineDesc.hWnd, EngineDesc.iWinSizeX, EngineDesc.iWinSizeY);
 	//if (nullptr == m_pPicking)
@@ -251,6 +254,16 @@ HRESULT CGameInstance::Add_Light(const LIGHT_DESC& LightDesc)
 	return m_pLight_Manager->Add_Light(LightDesc);
 }
 
+HRESULT CGameInstance::Add_Font(const _wstring& strFontTag, const _tchar* pFontFilePath)
+{
+	return m_pFont_Manager->Add_Font(strFontTag, pFontFilePath);
+}
+
+void CGameInstance::Draw_Font(const _wstring& strFontTag, const _tchar* pText, const _float2& vPosition, _fvector vColor, _float fRotation, const _float2& vOrigin, _float fScale)
+{
+	m_pFont_Manager->Draw(strFontTag, pText, vPosition, vColor, fRotation, vOrigin, fScale);
+}
+
 #pragma endregion
 
 //#pragma region PICKING
@@ -272,6 +285,8 @@ HRESULT CGameInstance::Add_Light(const LIGHT_DESC& LightDesc)
 void CGameInstance::Release_Engine()
 {
 	//Safe_Release(m_pPicking);
+
+	Safe_Release(m_pFont_Manager);
 
 	Safe_Release(m_pLight_Manager);
 
