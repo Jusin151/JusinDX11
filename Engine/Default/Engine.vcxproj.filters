@@ -124,6 +124,18 @@
     <ClInclude Include="..\public\CustomFont.h">
       <Filter>01.Utility\08.Fonts</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\VIBuffer_Cube.h">
+      <Filter>01.Utility\04.Components\VIBuffer\Cube</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Collider.h">
+      <Filter>01.Utility\04.Components\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Bounding.h">
+      <Filter>01.Utility\04.Components\Collider\Bounding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Bounding_AABB.h">
+      <Filter>01.Utility\04.Components\Collider\Bounding\AABB</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Private\Timer.cpp">
@@ -233,6 +245,18 @@
     </ClCompile>
     <ClCompile Include="..\private\CustomFont.cpp">
       <Filter>01.Utility\08.Fonts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\VIBuffer_Cube.cpp">
+      <Filter>01.Utility\04.Components\VIBuffer\Cube</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Collider.cpp">
+      <Filter>01.Utility\04.Components\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Bounding.cpp">
+      <Filter>01.Utility\04.Components\Collider\Bounding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Bounding_AABB.cpp">
+      <Filter>01.Utility\04.Components\Collider\Bounding\AABB</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -362,5 +386,31 @@
     <Filter Include="01.Utility\08.Fonts\Manager">
       <UniqueIdentifier>{d613160b-3dbc-4120-a0aa-e96679c5ac4a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Utility\98.ShaderFiles">
+      <UniqueIdentifier>{cbc01039-d700-4961-844d-e3d63149362e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\04.Components\VIBuffer\Cube">
+      <UniqueIdentifier>{81465260-50e0-4013-b64e-fb0d5759d6ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\04.Components\Collider">
+      <UniqueIdentifier>{daeb6379-d5d1-4bf4-8d03-dacd50ed4231}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\04.Components\Collider\Bounding">
+      <UniqueIdentifier>{3983b414-33d0-43a8-850b-b46900a5539e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\04.Components\Collider\Bounding\AABB">
+      <UniqueIdentifier>{45fb8aed-b0ae-49d5-8f7c-9a1f10201426}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\04.Components\Collider\Bounding\Sphere">
+      <UniqueIdentifier>{f1dec1cb-ff3f-404a-b0bc-2ce65b341d6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\04.Components\Collider\Bounding\OBB">
+      <UniqueIdentifier>{a71e3cfd-888e-4ec8-a027-fc627b1bf8ce}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Bin\ShaderFiles\Engine_Shader_Defines.hlsli">
+      <Filter>01.Utility\98.ShaderFiles</Filter>
+    </None>
   </ItemGroup>
 </Project>

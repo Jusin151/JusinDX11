@@ -10,7 +10,7 @@
 #include "Weapon.h"
 #include "player.h"
 //#include "Effect.h"
-//#include "Sky.h"
+#include "Sky.h"
 
 
 #include "Body_Player.h"
@@ -123,10 +123,11 @@ HRESULT CLoader::Loading_For_GamePlay()
 	//	CTexture::Create(m_pGraphic_Device, CTexture::TYPE_2D, TEXT("../Bin/Resources/Textures/Player/Player0.png"), 1))))
 	//	return E_FAIL;
 
-	///* For.Prototype_Component_Texture_Sky */
-	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Sky"),
-	//	CTexture::Create(m_pGraphic_Device, CTexture::TYPE_CUBE, TEXT("../Bin/Resources/Textures/SkyBox/Sky_%d.dds"), 4))))
-	//	return E_FAIL;
+	
+	/* For.Prototype_Component_Texture_Sky */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Texture_Sky"),
+		CTexture::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/SkyBox/Sky_%d.dds"), 4))))
+		return E_FAIL;
 
 
 	///* For.Prototype_Component_Texture_Explosion */
@@ -134,16 +135,22 @@ HRESULT CLoader::Loading_For_GamePlay()
 	//	CTexture::Create(m_pGraphic_Device, CTexture::TYPE_2D, TEXT("../Bin/Resources/Textures/Explosion/Explosion%d.png"), 90))))
 	//	return E_FAIL;
 
+	lstrcpy(m_szLoadingText, TEXT("셰이더을(를) 로딩중입니다."));
+	/* For.Prototype_Component_Shader_VtxCube */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Shader_VtxCube"),
+		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_VtxCube.hlsl"), VTXCUBE::Elements, VTXCUBE::iNumElements))))
+		return E_FAIL;
+
 	lstrcpy(m_szLoadingText, TEXT("모델을(를) 로딩중입니다."));
 	/* For.Prototype_Component_VIBuffer_Terrain */
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_VIBuffer_Terrain"),
 		CVIBuffer_Terrain::Create(m_pDevice, m_pContext, TEXT("../Bin/Resources/Textures/Terrain/Height.bmp")))))
 		return E_FAIL;
 
-	///* For.Prototype_Component_VIBuffer_Cube */
-	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_VIBuffer_Cube"),
-	//	CVIBuffer_Cube::Create(m_pGraphic_Device))))
-	//	return E_FAIL;
+	/* For.Prototype_Component_VIBuffer_Cube */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_VIBuffer_Cube"),
+		CVIBuffer_Cube::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
 
 	_matrix		PreTransformMatrix = XMMatrixIdentity();
 
@@ -205,10 +212,10 @@ HRESULT CLoader::Loading_For_GamePlay()
 
 	
 
-	///* For.Prototype_GameObject_Sky */
-	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Sky"),
-	//	CSky::Create(m_pGraphic_Device))))
-	//	return E_FAIL;
+	/* For.Prototype_GameObject_Sky */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Sky"),
+		CSky::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
 
 	///* For.Prototype_GameObject_Effect */
 	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_GameObject_Effect"),

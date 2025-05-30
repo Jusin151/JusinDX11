@@ -55,6 +55,9 @@
     <Filter Include="02.GameObjects\05.ForkLift">
       <UniqueIdentifier>{ddce5cb7-75c3-4f60-992e-4e36ea58924e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\06.Sky">
+      <UniqueIdentifier>{b7d9deac-92ec-449f-b2e4-f965650e17d5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -114,6 +117,9 @@
     <ClInclude Include="..\Public\Weapon.h">
       <Filter>02.GameObjects\04.Player\Weapon</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\Sky.h">
+      <Filter>02.GameObjects\06.Sky</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Client.ico">
@@ -171,6 +177,9 @@
     <ClCompile Include="..\Private\Weapon.cpp">
       <Filter>02.GameObjects\04.Player\Weapon</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\Sky.cpp">
+      <Filter>02.GameObjects\06.Sky</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxPosTex.hlsl">
@@ -185,10 +194,8 @@
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxAnimMesh.hlsl">
       <Filter>97.ShaderFiles</Filter>
     </FxCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\Bin\ShaderFiles\Shader_Defines.hlsli">
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxCube.hlsl">
       <Filter>97.ShaderFiles</Filter>
-    </None>
+    </FxCompile>
   </ItemGroup>
 </Project>
