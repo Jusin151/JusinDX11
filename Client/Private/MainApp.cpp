@@ -83,6 +83,21 @@ HRESULT CMainApp::Ready_Gara()
 
 HRESULT CMainApp::Ready_Prototype_Component()
 {
+	/* For.Prototype_Component_Collider_AABB */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::STATIC), TEXT("Prototype_Component_Collider_AABB"),
+		CCollider::Create(m_pDevice, m_pContext, COLLIDER::AABB))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Collider_OBB */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::STATIC), TEXT("Prototype_Component_Collider_OBB"),
+		CCollider::Create(m_pDevice, m_pContext, COLLIDER::OBB))))
+		return E_FAIL;
+
+	/* For.Prototype_Component_Collider_Sphere */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::STATIC), TEXT("Prototype_Component_Collider_Sphere"),
+		CCollider::Create(m_pDevice, m_pContext, COLLIDER::SPHERE))))
+		return E_FAIL;
+
 	/* For.Prototype_Component_VIBuffer_Rect*/
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::STATIC), TEXT("Prototype_Component_VIBuffer_Rect"),
 		CVIBuffer_Rect::Create(m_pDevice, m_pContext))))

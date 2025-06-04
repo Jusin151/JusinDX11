@@ -2,6 +2,7 @@
 
 namespace Engine
 {
+	enum class COLLIDER { AABB, OBB, SPHERE, END };
 	enum class MODEL { NONANIM, ANIM };
 	enum class DIM { LBUTTON, RBUTTON, WHEELBUTTON };
 	enum class DIMM { X, Y, WHEEL };

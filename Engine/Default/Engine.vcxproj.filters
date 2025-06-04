@@ -136,6 +136,15 @@
     <ClInclude Include="..\public\Bounding_AABB.h">
       <Filter>01.Utility\04.Components\Collider\Bounding\AABB</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\DebugDraw.h">
+      <Filter>01.Utility\04.Components\Collider\DebugDraw</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Bounding_OBB.h">
+      <Filter>01.Utility\04.Components\Collider\Bounding\OBB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Bounding_Sphere.h">
+      <Filter>01.Utility\04.Components\Collider\Bounding\Sphere</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Private\Timer.cpp">
@@ -257,6 +266,15 @@
     </ClCompile>
     <ClCompile Include="..\private\Bounding_AABB.cpp">
       <Filter>01.Utility\04.Components\Collider\Bounding\AABB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\DebugDraw.cpp">
+      <Filter>01.Utility\04.Components\Collider\DebugDraw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Bounding_OBB.cpp">
+      <Filter>01.Utility\04.Components\Collider\Bounding\OBB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Bounding_Sphere.cpp">
+      <Filter>01.Utility\04.Components\Collider\Bounding\Sphere</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -406,6 +424,9 @@
     </Filter>
     <Filter Include="01.Utility\04.Components\Collider\Bounding\OBB">
       <UniqueIdentifier>{a71e3cfd-888e-4ec8-a027-fc627b1bf8ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\04.Components\Collider\DebugDraw">
+      <UniqueIdentifier>{22783d0d-9830-4767-9866-f3264cb60c20}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

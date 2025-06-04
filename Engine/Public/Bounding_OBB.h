@@ -4,16 +4,17 @@
 
 NS_BEGIN(Engine)
 
-class CBounding_AABB final : public CBounding
+class CBounding_OBB final : public CBounding
 {
 public:
-	typedef struct tagBoundingBoxDesc : public CBounding::BOUNDING_DESC
+	typedef struct tagBoundingOrientedBoxDesc : public CBounding::BOUNDING_DESC
 	{
 		_float3		vExtents;
-	}AABB_DESC;
+		_float3		vRotation;
+	}OBB_DESC;
 private:
-	CBounding_AABB(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
-	virtual ~CBounding_AABB() = default;
+	CBounding_OBB(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
+	virtual ~CBounding_OBB() = default;
 
 public:
 	HRESULT Initialize(const CBounding::BOUNDING_DESC* pDesc);
@@ -26,11 +27,11 @@ public:
 
 private:
 	/* 채워지는 초기정보는 로컬상에 상태대로 셋팅한다. */
-	BoundingBox* m_pOriginalDesc = { nullptr };
-	BoundingBox* m_pDesc = { nullptr };
+	BoundingOrientedBox* m_pOriginalDesc = { nullptr };
+	BoundingOrientedBox* m_pDesc = { nullptr };
 
 public:
-	static CBounding_AABB* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, const CBounding::BOUNDING_DESC* pDesc);
+	static CBounding_OBB* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, const CBounding::BOUNDING_DESC* pDesc);
 	virtual void Free() override;
 
 };

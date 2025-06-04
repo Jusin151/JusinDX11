@@ -2,6 +2,10 @@
 
 #include "Base.h"
 
+#ifdef _DEBUG
+#include "DebugDraw.h"
+#endif
+
 NS_BEGIN(Engine)
 
 class CBounding abstract : public CBase
@@ -17,6 +21,12 @@ protected:
 
 public:
 	HRESULT Initialize();
+	virtual void Update(_fmatrix WorldMatrix) {};
+
+#ifdef _DEBUG
+public:
+	virtual HRESULT Render(PrimitiveBatch<VertexPositionColor>* pBatch, _fvector vColor) { return S_OK; }
+#endif
 
 protected:
 	ID3D11Device*				m_pDevice = { nullptr };

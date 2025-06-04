@@ -4,6 +4,7 @@
 #include "PartObject.h"
 
 NS_BEGIN(Engine)
+class CCollider;
 class CShader;
 class CModel;
 NS_END
@@ -34,6 +35,7 @@ public:
 	virtual HRESULT Render();
 
 private:
+	CCollider*			m_pColliderCom = {nullptr};
 	CShader*			m_pShaderCom = { nullptr };
 	CModel*				m_pModelCom = { nullptr };
 

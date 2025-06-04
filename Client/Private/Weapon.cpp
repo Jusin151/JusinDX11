@@ -46,11 +46,6 @@ void CWeapon::Priority_Update(_float fTimeDelta)
 
 void CWeapon::Update(_float fTimeDelta)
 {
-	
-}
-
-void CWeapon::Late_Update(_float fTimeDelta)
-{
 	_matrix		BoneMatrix = XMLoadFloat4x4(m_pSocketMatrix);
 
 	for (size_t i = 0; i < 3; i++)
@@ -60,6 +55,13 @@ void CWeapon::Late_Update(_float fTimeDelta)
 	XMStoreFloat4x4(&m_CombinedWorldMatrix,
 		XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrix_Ptr()) * BoneMatrix * XMLoadFloat4x4(m_pParentMatrix)
 	);
+
+	m_pColliderCom->Update(XMLoadFloat4x4(&m_CombinedWorldMatrix));
+}
+
+void CWeapon::Late_Update(_float fTimeDelta)
+{
+
 
 	m_pGameInstance->Add_RenderGroup(RENDERGROUP::RG_NONBLEND, this);
 }
@@ -84,6 +86,11 @@ HRESULT CWeapon::Render()
 		if (FAILED(m_pModelCom->Render(i)))
 			return E_FAIL;
 	}
+#ifdef _DEBUG
+
+	m_pColliderCom->Render();
+
+#endif
 
 	return S_OK;
 }
@@ -99,6 +106,19 @@ HRESULT CWeapon::Ready_Components()
 	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_ForkLift"),
 		TEXT("Com_Model"), reinterpret_cast<CComponent**>(&m_pModelCom))))
 		return E_FAIL;
+
+
+	/* For.Com_Collider */
+	CBounding_OBB::OBB_DESC	OBBDesc{};
+	OBBDesc.vExtents = _float3(1.0f, 1.5f, 2.5f);
+	OBBDesc.vCenter = _float3(0.0f, OBBDesc.vExtents.y, 0.f);
+	OBBDesc.vRotation = _float3(XMConvertToRadians(0.f), XMConvertToRadians(0.f), XMConvertToRadians(0.f));
+
+	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::STATIC), TEXT("Prototype_Component_Collider_OBB"),
+		TEXT("Com_Collider"), reinterpret_cast<CComponent**>(&m_pColliderCom), &OBBDesc)))
+		return E_FAIL;
+
+
 
 	return S_OK;
 }

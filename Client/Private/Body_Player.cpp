@@ -62,12 +62,15 @@ void CBody_Player::Update(_float fTimeDelta)
 
 	if (true == m_pModelCom->Play_Animation(fTimeDelta))
 		int a = 10;
+
+	XMStoreFloat4x4(&m_CombinedWorldMatrix, XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrix_Ptr()) * XMLoadFloat4x4(m_pParentMatrix));
+
+	m_pColliderCom->Update(XMLoadFloat4x4(&m_CombinedWorldMatrix));
 }
 
 void CBody_Player::Late_Update(_float fTimeDelta)
 {
-	XMStoreFloat4x4(&m_CombinedWorldMatrix, XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrix_Ptr()) * XMLoadFloat4x4(m_pParentMatrix));
-
+	
 	m_pGameInstance->Add_RenderGroup(RENDERGROUP::RG_NONBLEND, this);
 }
 
@@ -94,6 +97,12 @@ HRESULT CBody_Player::Render()
 			return E_FAIL;
 	}
 
+#ifdef _DEBUG
+
+	m_pColliderCom->Render();
+
+#endif
+
 	return S_OK;
 }
 
@@ -108,6 +117,17 @@ HRESULT CBody_Player::Ready_Components()
 	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Fiona"),
 		TEXT("Com_Model"), reinterpret_cast<CComponent**>(&m_pModelCom))))
 		return E_FAIL;
+
+	/* For.Com_Collider */
+	CBounding_AABB::AABB_DESC	AABBDesc{};
+	AABBDesc.vExtents = _float3(0.3f, 0.8f, 0.3f);
+	AABBDesc.vCenter = _float3(0.0f, AABBDesc.vExtents.y, 0.f);
+
+	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::STATIC), TEXT("Prototype_Component_Collider_AABB"),
+		TEXT("Com_Collider"), reinterpret_cast<CComponent**>(&m_pColliderCom), &AABBDesc)))
+		return E_FAIL;
+
+	
 
 	return S_OK;
 }
@@ -167,6 +187,7 @@ void CBody_Player::Free()
 {
 	__super::Free();
 
+	Safe_Release(m_pColliderCom);
 	Safe_Release(m_pModelCom);
 	Safe_Release(m_pShaderCom);
 }
