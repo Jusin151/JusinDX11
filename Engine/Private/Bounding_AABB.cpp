@@ -1,4 +1,6 @@
 ﻿#include "Bounding_AABB.h"
+#include "Bounding_OBB.h"
+#include "Bounding_Sphere.h"
 
 CBounding_AABB::CBounding_AABB(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CBounding { pDevice, pContext }
@@ -7,6 +9,9 @@ CBounding_AABB::CBounding_AABB(ID3D11Device* pDevice, ID3D11DeviceContext* pCont
 
 HRESULT CBounding_AABB::Initialize(const CBounding::BOUNDING_DESC* pDesc)
 {
+	if (FAILED(__super::Initialize(pDesc)))
+		return E_FAIL;
+
 	const AABB_DESC* pAABBDesc = static_cast<const AABB_DESC*>(pDesc);
 
 	m_pOriginalDesc = new BoundingBox(pAABBDesc->vCenter, pAABBDesc->vExtents);
@@ -26,6 +31,30 @@ void CBounding_AABB::Update(_fmatrix WorldMatrix)
 	m_pOriginalDesc->Transform(*m_pDesc, TransformMatrix);
 }
 
+_bool CBounding_AABB::Intersect(CBounding* pTarget)
+{
+	_bool		isColl = { false };
+
+	switch (pTarget->Get_Type())
+	{
+	case COLLIDER::AABB:
+		// isColl = m_pDesc->Intersects(*static_cast<CBounding_AABB*>(pTarget)->Get_Desc());
+		isColl = Intersect_ToAABB(pTarget);
+		break;
+	case COLLIDER::OBB:
+		isColl = m_pDesc->Intersects(*static_cast<CBounding_OBB*>(pTarget)->Get_Desc());
+		break;
+	case COLLIDER::SPHERE:
+		isColl = m_pDesc->Intersects(*static_cast<CBounding_Sphere*>(pTarget)->Get_Desc());
+		break;
+
+	}
+
+	return isColl;
+}
+
+
+
 #ifdef _DEBUG
 
 HRESULT CBounding_AABB::Render(PrimitiveBatch<VertexPositionColor>* pBatch, _fvector vColor)
@@ -38,6 +67,41 @@ HRESULT CBounding_AABB::Render(PrimitiveBatch<VertexPositionColor>* pBatch, _fve
 
 #endif
 
+
+_bool CBounding_AABB::Intersect_ToAABB(CBounding* pTarget)
+{
+	_float3		vSourMin = Compute_Min();
+	_float3		vSourMax = Compute_Max();
+
+	_float3		vDestMin = static_cast<CBounding_AABB*>(pTarget)->Compute_Min();
+	_float3		vDestMax = static_cast<CBounding_AABB*>(pTarget)->Compute_Max();
+
+	/* ³Êºñ»óÀ¸·Î °ãÃÆ³Ä? */
+	if (max(vSourMin.x, vDestMin.x) > min(vSourMax.x, vDestMax.x))
+		return false;
+
+	if (max(vSourMin.y, vDestMin.y) > min(vSourMax.y, vDestMax.y))
+		return false;
+
+	if (max(vSourMin.z, vDestMin.z) > min(vSourMax.z, vDestMax.z))
+		return false;
+
+	return true;	
+}
+
+_float3 CBounding_AABB::Compute_Min()
+{
+	return _float3(m_pDesc->Center.x - m_pDesc->Extents.x, 
+		m_pDesc->Center.y - m_pDesc->Extents.y,
+		m_pDesc->Center.z - m_pDesc->Extents.	z);
+}
+
+_float3 CBounding_AABB::Compute_Max()
+{
+	return _float3(m_pDesc->Center.x + m_pDesc->Extents.x,
+		m_pDesc->Center.y + m_pDesc->Extents.y,
+		m_pDesc->Center.z + m_pDesc->Extents.z);
+}
 
 CBounding_AABB* CBounding_AABB::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, const CBounding::BOUNDING_DESC* pDesc)
 {

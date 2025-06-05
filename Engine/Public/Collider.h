@@ -14,8 +14,8 @@ private:
 public:
 	virtual HRESULT Initialize_Prototype(COLLIDER eType);
 	virtual HRESULT Initialize(void* pArg) override;
-
 	void Update(_fmatrix WorldMatrix);
+	_bool Intersect(CCollider* pTargetCollider);
 
 #ifdef _DEBUG
 	HRESULT Render();

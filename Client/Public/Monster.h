@@ -4,6 +4,7 @@
 #include "GameObject.h"
 
 NS_BEGIN(Engine)
+class CCollider;
 class CShader;
 class CModel;
 NS_END
@@ -12,6 +13,8 @@ NS_BEGIN(Client)
 
 class CMonster final : public CGameObject
 {
+public:
+	enum COLLIDER { COLLIDER_AABB, COLLIDER_OBB, COLLIDER_SPHERE, COLLIDER_END };
 private:
 	CMonster(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	CMonster(const CMonster& Prototype);
@@ -26,13 +29,14 @@ public:
 	virtual HRESULT Render();
 
 private:
+	CCollider*			m_pColliderCom[COLLIDER_END] = { nullptr };
 	CShader*			m_pShaderCom = { nullptr };
-
 	CModel*				m_pModelCom = { nullptr };
 
 private:
 	HRESULT Ready_Components();
 	HRESULT Bind_ShaderResources();
+	void Intersect_ToPlayer();
 
 public:
 	static CMonster* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

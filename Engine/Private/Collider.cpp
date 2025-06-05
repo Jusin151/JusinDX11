@@ -55,6 +55,8 @@ HRESULT CCollider::Initialize(void* pArg)
 {
 	CBounding::BOUNDING_DESC* pDesc = static_cast<CBounding::BOUNDING_DESC*>(pArg);
 
+	pDesc->eType = m_eType;
+
 	switch (m_eType)
 	{
 	case COLLIDER::AABB:
@@ -74,6 +76,13 @@ HRESULT CCollider::Initialize(void* pArg)
 void CCollider::Update(_fmatrix WorldMatrix)
 {
 	m_pBounding->Update(WorldMatrix);
+}
+
+_bool CCollider::Intersect(CCollider* pTargetCollider)
+{
+	m_isColl = m_pBounding->Intersect(pTargetCollider->m_pBounding);
+
+	return m_isColl;
 }
 
 #ifdef _DEBUG

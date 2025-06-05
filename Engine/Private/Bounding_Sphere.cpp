@@ -1,4 +1,6 @@
-﻿#include "Bounding_Sphere.h"
+﻿#include "Bounding_AABB.h"
+#include "Bounding_OBB.h"
+#include "Bounding_Sphere.h"
 
 CBounding_Sphere::CBounding_Sphere(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CBounding { pDevice, pContext }
@@ -7,6 +9,8 @@ CBounding_Sphere::CBounding_Sphere(ID3D11Device* pDevice, ID3D11DeviceContext* p
 
 HRESULT CBounding_Sphere::Initialize(const CBounding::BOUNDING_DESC* pDesc)
 {
+	if (FAILED(__super::Initialize(pDesc)))
+		return E_FAIL;
 	const SPHERE_DESC* pSphereDesc = static_cast<const SPHERE_DESC*>(pDesc);
 
 	m_pOriginalDesc = new BoundingSphere(pSphereDesc->vCenter, pSphereDesc->fRadius);
@@ -19,6 +23,27 @@ void CBounding_Sphere::Update(_fmatrix WorldMatrix)
 {
 
 	m_pOriginalDesc->Transform(*m_pDesc, WorldMatrix);
+}
+
+_bool CBounding_Sphere::Intersect(CBounding* pTarget)
+{
+	_bool		isColl = { false };
+
+	switch (pTarget->Get_Type())
+	{
+	case COLLIDER::AABB:
+		isColl = m_pDesc->Intersects(*static_cast<CBounding_AABB*>(pTarget)->Get_Desc());
+		break;
+	case COLLIDER::OBB:
+		isColl = m_pDesc->Intersects(*static_cast<CBounding_OBB*>(pTarget)->Get_Desc());
+		break;
+	case COLLIDER::SPHERE:
+		isColl = m_pDesc->Intersects(*static_cast<CBounding_Sphere*>(pTarget)->Get_Desc());
+		break;
+
+	}
+
+	return isColl;
 }
 
 #ifdef _DEBUG

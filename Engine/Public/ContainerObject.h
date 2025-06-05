@@ -15,7 +15,8 @@ protected:
 	CContainerObject(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	CContainerObject(const CContainerObject& Prototype);
 	virtual ~CContainerObject() = default;
-
+public:
+	CComponent* Get_Component(_uint iPartID, const _wstring& strComponentTag);
 public:
 	virtual HRESULT Initialize_Prototype() override;
 	virtual HRESULT Initialize(void* pArg) override;

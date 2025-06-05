@@ -13,15 +13,24 @@ class CBounding abstract : public CBase
 public:
 	typedef struct tagBoundingDesc
 	{
+		COLLIDER	eType;
 		_float3		vCenter;
 	}BOUNDING_DESC;
+
 protected:
 	CBounding(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual ~CBounding() = default;
 
 public:
-	HRESULT Initialize();
-	virtual void Update(_fmatrix WorldMatrix) {};
+	COLLIDER Get_Type() const {
+		return m_eType;
+	}
+
+
+public:
+	HRESULT Initialize(const CBounding::BOUNDING_DESC* pDesc);
+	virtual void Update(_fmatrix WorldMatrix) = 0;
+	virtual _bool Intersect(CBounding* pTarget) = 0;
 
 #ifdef _DEBUG
 public:
@@ -31,6 +40,8 @@ public:
 protected:
 	ID3D11Device*				m_pDevice = { nullptr };
 	ID3D11DeviceContext*		m_pContext = { nullptr };
+
+	COLLIDER					m_eType = { };
 
 public:
 	virtual void Free() override;

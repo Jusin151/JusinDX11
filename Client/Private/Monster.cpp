@@ -2,6 +2,8 @@
 
 #include "GameInstance.h"
 
+#include "Player.h"
+
 CMonster::CMonster(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CGameObject { pDevice, pContext }
 {
@@ -56,6 +58,11 @@ void CMonster::Update(_float fTimeDelta)
 {
 	if (true == m_pModelCom->Play_Animation(fTimeDelta))
 		int a = 10;
+
+	for (auto& pCollider : m_pColliderCom)
+		pCollider->Update(XMLoadFloat4x4(m_pTransformCom->Get_WorldMatrix_Ptr()));
+
+	Intersect_ToPlayer();
 }
 
 void CMonster::Late_Update(_float fTimeDelta)
@@ -86,6 +93,11 @@ HRESULT CMonster::Render()
 			return E_FAIL;
 	}
 
+#ifdef _DEBUG
+	for (auto& pCollider : m_pColliderCom)
+		pCollider->Render();
+#endif
+
 	return S_OK;
 }
 
@@ -99,6 +111,34 @@ HRESULT CMonster::Ready_Components()
 	/* For.Com_Model */
 	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Model_Fiona"),
 		TEXT("Com_Model"), reinterpret_cast<CComponent**>(&m_pModelCom))))
+		return E_FAIL;
+
+	/* For.Com_Collider */
+	CBounding_AABB::AABB_DESC	AABBDesc{};
+	AABBDesc.vExtents = _float3(0.3f, 0.8f, 0.3f);
+	AABBDesc.vCenter = _float3(0.0f, AABBDesc.vExtents.y, 0.f);
+
+	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::STATIC), TEXT("Prototype_Component_Collider_AABB"),
+		TEXT("Com_Collider_AABB"), reinterpret_cast<CComponent**>(&m_pColliderCom[COLLIDER_AABB]), &AABBDesc)))
+		return E_FAIL;
+
+	/* For.Com_Collider */
+	CBounding_OBB::OBB_DESC	OBBDesc{};
+	OBBDesc.vExtents = _float3(0.3f, 0.3f, 0.3f);
+	OBBDesc.vCenter = _float3(0.0f, OBBDesc.vExtents.y, 0.f);
+	OBBDesc.vRotation = _float3(XMConvertToRadians(0.f), XMConvertToRadians(45.f), XMConvertToRadians(0.f));
+
+	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::STATIC), TEXT("Prototype_Component_Collider_OBB"),
+		TEXT("Com_Collider_OBB"), reinterpret_cast<CComponent**>(&m_pColliderCom[COLLIDER_OBB]), &OBBDesc)))
+		return E_FAIL;
+
+	/* For.Com_Collider */
+	CBounding_Sphere::SPHERE_DESC	SphereDesc{};
+	SphereDesc.fRadius = 0.5f;
+	SphereDesc.vCenter = _float3(0.0f, SphereDesc.fRadius, 0.f);
+
+	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::STATIC), TEXT("Prototype_Component_Collider_Sphere"),
+		TEXT("Com_Collider_Sphere"), reinterpret_cast<CComponent**>(&m_pColliderCom[COLLIDER_SPHERE]), &SphereDesc)))
 		return E_FAIL;
 
 	return S_OK;
@@ -127,6 +167,15 @@ HRESULT CMonster::Bind_ShaderResources()
 		return E_FAIL;
 
 	return S_OK;
+}
+
+void CMonster::Intersect_ToPlayer()
+{
+	CCollider*		pTargetCollider = static_cast<CCollider*>(m_pGameInstance->Get_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Layer_Player"), CPlayer::PART_WEAPON, TEXT("Com_Collider")));
+	if (nullptr == pTargetCollider)
+		return;
+
+	m_pColliderCom[COLLIDER_OBB]->Intersect(pTargetCollider);
 }
 
 CMonster* CMonster::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
@@ -158,6 +207,9 @@ CGameObject* CMonster::Clone(void* pArg)
 void CMonster::Free()
 {
 	__super::Free();
+
+	for (auto& pCollider : m_pColliderCom)
+		Safe_Release(pCollider);
 
 	Safe_Release(m_pModelCom);
 	Safe_Release(m_pShaderCom);

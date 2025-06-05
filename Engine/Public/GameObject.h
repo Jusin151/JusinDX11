@@ -19,6 +19,7 @@ protected:
 
 public:
 	CComponent* Get_Component(const _wstring& strComponentTag);
+	
 
 public:
 	virtual HRESULT Initialize_Prototype();

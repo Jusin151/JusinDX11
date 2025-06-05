@@ -13,6 +13,14 @@ CContainerObject::CContainerObject(const CContainerObject& Prototype)
 {
 }
 
+CComponent* CContainerObject::Get_Component(_uint iPartID, const _wstring& strComponentTag)
+{
+    if (iPartID >= m_iNumPartObjects)
+        return nullptr;
+
+    return m_PartObjects[iPartID]->Get_Component(strComponentTag);    
+}
+
 HRESULT CContainerObject::Initialize_Prototype()
 {
     return S_OK;

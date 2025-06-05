@@ -14,11 +14,14 @@ public:
 private:
 	CBounding_Sphere(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	virtual ~CBounding_Sphere() = default;
-
+public:
+	const BoundingSphere* Get_Desc() const {
+		return m_pDesc;
+	}
 public:
 	HRESULT Initialize(const CBounding::BOUNDING_DESC* pDesc);
 	virtual void Update(_fmatrix WorldMatrix) override;
-
+	virtual _bool Intersect(CBounding* pTarget) override;
 #ifdef _DEBUG
 public:
 	virtual HRESULT Render(PrimitiveBatch<VertexPositionColor>* pBatch, _fvector vColor) override;
