@@ -4,6 +4,7 @@
 #include "ContainerObject.h"
 
 NS_BEGIN(Engine)
+class CNavigation;
 NS_END
 
 NS_BEGIN(Client)
@@ -38,6 +39,7 @@ private:
 
 private:
 	_uint			m_iState = {};
+	CNavigation* m_pNavigationCom = { nullptr };
 
 public:
 	static CPlayer* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);

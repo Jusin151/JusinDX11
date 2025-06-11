@@ -167,7 +167,13 @@ HRESULT CLoader::Loading_For_GamePlay()
 		CModel::Create(m_pDevice, m_pContext, MODEL::NONANIM, "../Bin/Resources/Models/ForkLift/ForkLift.fbx", PreTransformMatrix))))
 		return E_FAIL;
 
-	
+	lstrcpy(m_szLoadingText, TEXT("네비게이션을(를) 로딩중입니다."));
+
+	/* Prototype_Component_Navigation */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Navigation"),
+		CNavigation::Create(m_pDevice, m_pContext, TEXT("../Bin/DataFiles/Navigation.dat")))))
+		return E_FAIL;
+
 
 
 	lstrcpy(m_szLoadingText, TEXT("사운드을(를) 로딩중입니다."));

@@ -77,6 +77,33 @@ HRESULT CMainApp::Ready_Gara()
 	if (FAILED(m_pGameInstance->Add_Font(TEXT("Font_151"), TEXT("../Bin/Resources/Fonts/151ex.spritefont"))))
 		return E_FAIL;
 
+	_float3		vPoints[3] = {};
+
+	_ulong		dwByte = {};
+	HANDLE		hFile = CreateFile(TEXT("../Bin/DataFiles/Navigation.dat"), GENERIC_WRITE, 0, nullptr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, 0);
+
+	vPoints[0] = _float3(0.0f, 0.f, 10.f);
+	vPoints[1] = _float3(10.f, 0.f, 0.f);
+	vPoints[2] = _float3(0.f, 0.f, 0.f);
+	WriteFile(hFile, vPoints, sizeof(_float3) * 3, &dwByte, nullptr);
+
+	vPoints[0] = _float3(0.0f, 0.f, 10.f);
+	vPoints[1] = _float3(10.f, 0.f, 10.f);
+	vPoints[2] = _float3(10.f, 0.f, 0.f);
+	WriteFile(hFile, vPoints, sizeof(_float3) * 3, &dwByte, nullptr);
+
+	vPoints[0] = _float3(0.0f, 0.f, 20.f);
+	vPoints[1] = _float3(10.f, 0.f, 10.f);
+	vPoints[2] = _float3(0.f, 0.f, 10.f);
+	WriteFile(hFile, vPoints, sizeof(_float3) * 3, &dwByte, nullptr);
+
+
+	vPoints[0] = _float3(10.f, 0.f, 10.f);
+	vPoints[1] = _float3(20.f, 0.f, 0.f);
+	vPoints[2] = _float3(10.f, 0.f, 0.f);
+	WriteFile(hFile, vPoints, sizeof(_float3) * 3, &dwByte, nullptr);
+
+	CloseHandle(hFile);
 
 	return S_OK;
 }

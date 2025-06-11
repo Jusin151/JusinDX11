@@ -122,6 +122,12 @@
       <AdditionalDependencies>d3d11.lib;dinput8.lib;dxguid.lib;DirectXTKd.lib;Effects11d.lib;assimp-vc143-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>../ThirdPartyLib/</AdditionalLibraryDirectories>
     </Link>
+    <FxCompile>
+      <ShaderType>Effect</ShaderType>
+    </FxCompile>
+    <FxCompile>
+      <ShaderModel>5.0</ShaderModel>
+    </FxCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -143,6 +149,12 @@
       <AdditionalDependencies>d3d11.lib;dinput8.lib;dxguid.lib;DirectXTK.lib;Effects11.lib;assimp-vc143-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>../ThirdPartyLib/</AdditionalLibraryDirectories>
     </Link>
+    <FxCompile>
+      <ShaderType>Effect</ShaderType>
+    </FxCompile>
+    <FxCompile>
+      <ShaderModel>5.0</ShaderModel>
+    </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\public\Animation.h" />
@@ -153,6 +165,7 @@
     <ClInclude Include="..\Public\Bounding_OBB.h" />
     <ClInclude Include="..\Public\Bounding_Sphere.h" />
     <ClInclude Include="..\public\Camera.h" />
+    <ClInclude Include="..\public\Cell.h" />
     <ClInclude Include="..\public\Channel.h" />
     <ClInclude Include="..\public\Collider.h" />
     <ClInclude Include="..\public\Component.h" />
@@ -178,6 +191,7 @@
     <ClInclude Include="..\public\Material.h" />
     <ClInclude Include="..\public\Mesh.h" />
     <ClInclude Include="..\public\Model.h" />
+    <ClInclude Include="..\public\Navigation.h" />
     <ClInclude Include="..\Public\Object_Manager.h" />
     <ClInclude Include="..\public\PartObject.h" />
     <ClInclude Include="..\public\PipeLine.h" />
@@ -190,6 +204,7 @@
     <ClInclude Include="..\public\Transform.h" />
     <ClInclude Include="..\public\UIObject.h" />
     <ClInclude Include="..\public\VIBuffer.h" />
+    <ClInclude Include="..\Public\VIBuffer_Cell.h" />
     <ClInclude Include="..\Public\VIBuffer_Cube.h" />
     <ClInclude Include="..\public\VIBuffer_Rect.h" />
     <ClInclude Include="..\Public\VIBuffer_Terrain.h" />
@@ -203,6 +218,7 @@
     <ClCompile Include="..\Private\Bounding_OBB.cpp" />
     <ClCompile Include="..\Private\Bounding_Sphere.cpp" />
     <ClCompile Include="..\private\Camera.cpp" />
+    <ClCompile Include="..\private\Cell.cpp" />
     <ClCompile Include="..\private\Channel.cpp" />
     <ClCompile Include="..\private\Collider.cpp" />
     <ClCompile Include="..\private\Component.cpp" />
@@ -223,6 +239,7 @@
     <ClCompile Include="..\private\Material.cpp" />
     <ClCompile Include="..\private\Mesh.cpp" />
     <ClCompile Include="..\private\Model.cpp" />
+    <ClCompile Include="..\private\Navigation.cpp" />
     <ClCompile Include="..\Private\Object_Manager.cpp" />
     <ClCompile Include="..\private\PartObject.cpp" />
     <ClCompile Include="..\private\PipeLine.cpp" />
@@ -235,12 +252,16 @@
     <ClCompile Include="..\private\Transform.cpp" />
     <ClCompile Include="..\private\UIObject.cpp" />
     <ClCompile Include="..\private\VIBuffer.cpp" />
+    <ClCompile Include="..\Private\VIBuffer_Cell.cpp" />
     <ClCompile Include="..\Private\VIBuffer_Cube.cpp" />
     <ClCompile Include="..\private\VIBuffer_Rect.cpp" />
     <ClCompile Include="..\Private\VIBuffer_Terrain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Bin\ShaderFiles\Engine_Shader_Defines.hlsli" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Cell.hlsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -40,7 +40,7 @@ private:
 	CModel*				m_pModelCom = { nullptr };
 
 private:
-	_uint* m_pParentState = { nullptr };
+	_uint*				m_pParentState = { nullptr };
 
 private:
 	HRESULT Ready_Components();

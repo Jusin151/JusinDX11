@@ -145,6 +145,15 @@
     <ClInclude Include="..\Public\Bounding_Sphere.h">
       <Filter>01.Utility\04.Components\Collider\Bounding\Sphere</Filter>
     </ClInclude>
+    <ClInclude Include="..\public\Navigation.h">
+      <Filter>01.Utility\04.Components\Navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Cell.h">
+      <Filter>01.Utility\04.Components\Navigation\Cell</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\VIBuffer_Cell.h">
+      <Filter>01.Utility\04.Components\VIBuffer\Cell</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Private\Timer.cpp">
@@ -275,6 +284,15 @@
     </ClCompile>
     <ClCompile Include="..\Private\Bounding_Sphere.cpp">
       <Filter>01.Utility\04.Components\Collider\Bounding\Sphere</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Navigation.cpp">
+      <Filter>01.Utility\04.Components\Navigation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Cell.cpp">
+      <Filter>01.Utility\04.Components\Navigation\Cell</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\VIBuffer_Cell.cpp">
+      <Filter>01.Utility\04.Components\VIBuffer\Cell</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -428,10 +446,24 @@
     <Filter Include="01.Utility\04.Components\Collider\DebugDraw">
       <UniqueIdentifier>{22783d0d-9830-4767-9866-f3264cb60c20}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Utility\04.Components\Navigation">
+      <UniqueIdentifier>{aabcd7e1-7981-42c0-b9f7-0a701effdbf1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\04.Components\Navigation\Cell">
+      <UniqueIdentifier>{6fc15aff-1255-4f01-b441-b65eb86560c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\04.Components\VIBuffer\Cell">
+      <UniqueIdentifier>{5977d892-4ec0-484f-9f9c-60254053e28c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Bin\ShaderFiles\Engine_Shader_Defines.hlsli">
       <Filter>01.Utility\98.ShaderFiles</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Cell.hlsl">
+      <Filter>01.Utility\98.ShaderFiles</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

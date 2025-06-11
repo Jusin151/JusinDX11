@@ -49,8 +49,6 @@ void CPlayer::Priority_Update(_float fTimeDelta)
 {
 	__super::Priority_Update(fTimeDelta);
 
-	
-
 }
 
 void CPlayer::Update(_float fTimeDelta)
@@ -90,16 +88,13 @@ void CPlayer::Update(_float fTimeDelta)
 	else
 		m_iState = STATE_IDLE;
 
-
-
-
-
 }
 
 void CPlayer::Late_Update(_float fTimeDelta)
 {
 	__super::Late_Update(fTimeDelta);
 
+	m_pGameInstance->Add_RenderGroup(RENDERGROUP::RG_NONBLEND, this);
 
 	
 }
@@ -107,6 +102,7 @@ void CPlayer::Late_Update(_float fTimeDelta)
 HRESULT CPlayer::Render()
 {
 
+	m_pNavigationCom->Render();
 
 
 	return S_OK;
@@ -139,7 +135,10 @@ HRESULT CPlayer::Ready_PartObjects()
 
 HRESULT CPlayer::Ready_Components()
 {
-
+	/* For.Com_Navigation */
+	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Navigation"),
+		TEXT("Com_Navigation"), reinterpret_cast<CComponent**>(&m_pNavigationCom))))
+		return E_FAIL;
 
 	return S_OK;
 }
@@ -174,4 +173,5 @@ void CPlayer::Free()
 {
 	__super::Free();
 
+	Safe_Release(m_pNavigationCom);
 }
