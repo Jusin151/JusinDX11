@@ -40,7 +40,7 @@ HRESULT CPlayer::Initialize(void* pArg)
 		return E_FAIL;	
 
 	m_pTransformCom->Set_State(Engine::STATE::POSITION,
-		XMVectorSet(0.f, 3.f, 0.f, 1.f));
+		XMVectorSet(0.f, 0.f, 0.f, 1.f));
 
 	return S_OK;
 }
@@ -83,10 +83,12 @@ void CPlayer::Update(_float fTimeDelta)
 			m_iState ^= STATE_IDLE;
 
 		m_iState |= STATE_WALK;
-		m_pTransformCom->Go_Straight(fTimeDelta);
+		m_pTransformCom->Go_Straight(fTimeDelta, m_pNavigationCom);
 	}
 	else
 		m_iState = STATE_IDLE;
+
+	m_pTransformCom->Set_State(Engine::STATE::POSITION, m_pNavigationCom->SetUp_Height(m_pTransformCom->Get_State(Engine::STATE::POSITION)));
 
 }
 
@@ -102,7 +104,7 @@ void CPlayer::Late_Update(_float fTimeDelta)
 HRESULT CPlayer::Render()
 {
 
-	m_pNavigationCom->Render();
+
 
 
 	return S_OK;
@@ -136,8 +138,11 @@ HRESULT CPlayer::Ready_PartObjects()
 HRESULT CPlayer::Ready_Components()
 {
 	/* For.Com_Navigation */
+	CNavigation::NAVIGATION_DESC		NaviDesc{};
+	NaviDesc.iIndex = 0;
+
 	if (FAILED(__super::Add_Component(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Navigation"),
-		TEXT("Com_Navigation"), reinterpret_cast<CComponent**>(&m_pNavigationCom))))
+		TEXT("Com_Navigation"), reinterpret_cast<CComponent**>(&m_pNavigationCom), &NaviDesc)))
 		return E_FAIL;
 
 	return S_OK;

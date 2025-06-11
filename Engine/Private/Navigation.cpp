@@ -3,20 +3,23 @@
 #include "Cell.h"
 #include "GameInstance.h"
 
+_float4x4		CNavigation::m_WorldMatrix = {};
+
 CNavigation::CNavigation(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CComponent { pDevice, pContext }		
 {
-	
+	XMStoreFloat4x4(&m_WorldMatrix, XMMatrixIdentity());
 }
 
 CNavigation::CNavigation(const CNavigation& Prototype)
 	: CComponent { Prototype }
 	, m_Cells { Prototype.m_Cells }
-	, m_iIndex { Prototype.m_iIndex } 
+	, m_iIndex { Prototype.m_iIndex } 	
 #ifdef _DEBUG
 	, m_pShader { Prototype.m_pShader }
 #endif
-{
+{	 
+
 	for (auto& pCell : m_Cells)
 		Safe_AddRef(pCell);
 
@@ -45,7 +48,7 @@ HRESULT CNavigation::Initialize_Prototype(const _tchar* pNavigationDataFile)
 		if (0 == dwByte)
 			break;
 
-		CCell* pCell = CCell::Create(m_pDevice, m_pContext, vPoints);
+		CCell* pCell = CCell::Create(m_pDevice, m_pContext, vPoints, m_Cells.size());
 		if (nullptr == pCell)
 			return E_FAIL;
 
@@ -53,6 +56,9 @@ HRESULT CNavigation::Initialize_Prototype(const _tchar* pNavigationDataFile)
 	}
 
 	CloseHandle(hFile);
+
+	if (FAILED(SetUp_Neighbors()))
+		return E_FAIL;
 
 
 #ifdef _DEBUG
@@ -77,15 +83,58 @@ HRESULT CNavigation::Initialize(void* pArg)
 	return S_OK;
 }
 
+void CNavigation::Update(_fmatrix WorldMatrix)
+{
+	XMStoreFloat4x4(&m_WorldMatrix, WorldMatrix);
+}
+
+_bool CNavigation::isMove(_fvector vWorldPos)
+{
+	_vector		vLocalPos = XMVector3TransformCoord(vWorldPos, XMMatrixInverse(nullptr, XMLoadFloat4x4(&m_WorldMatrix)));
+
+	_int		iNeighborIndex = { -1 };
+
+	if (true == m_Cells[m_iIndex]->isIn(vLocalPos, &iNeighborIndex))
+		return true;
+
+	else
+	{
+		if(-1 == iNeighborIndex)
+		/* 이웃이 없다면 */
+			return false;
+
+		else
+		{
+			while (true)
+			{
+				if (true == m_Cells[iNeighborIndex]->isIn(vLocalPos, &iNeighborIndex))
+					break;
+
+				if (-1 == iNeighborIndex)
+					return false;
+			}
+
+			m_iIndex = iNeighborIndex;
+
+			/* 이웃이 있다면 */
+			return true;
+		}
+	}	
+}
+
+_vector CNavigation::SetUp_Height(_fvector vWorldPos)
+{
+	_vector		vLocalPos = XMVector3TransformCoord(vWorldPos, XMMatrixInverse(nullptr, XMLoadFloat4x4(&m_WorldMatrix)));
+
+	vLocalPos = XMVectorSetY(vLocalPos, m_Cells[m_iIndex]->Compute_Height(vLocalPos));
+
+	return XMVector3TransformCoord(vLocalPos, XMLoadFloat4x4(&m_WorldMatrix));
+}
+
 #ifdef _DEBUG
 HRESULT CNavigation::Render()
 {
-	_float4x4		WorldMatrix;
-
-	XMStoreFloat4x4(&WorldMatrix, XMMatrixIdentity());
-	;
-
-	m_pShader->Bind_Matrix("g_WorldMatrix", &WorldMatrix);
+	m_pShader->Bind_Matrix("g_WorldMatrix", &m_WorldMatrix);
 	m_pShader->Bind_Matrix("g_ViewMatrix", m_pGameInstance->Get_Transform_Float4x4(D3DTS::VIEW));
 	m_pShader->Bind_Matrix("g_ProjMatrix", m_pGameInstance->Get_Transform_Float4x4(D3DTS::PROJ));
 
@@ -98,6 +147,35 @@ HRESULT CNavigation::Render()
 }
 #endif
 
+
+HRESULT CNavigation::SetUp_Neighbors()
+{
+	for (auto& pSourCell : m_Cells)
+	{
+		for (auto& pDestCell : m_Cells)
+		{
+			if (pSourCell == pDestCell)
+				continue;
+
+			if (true == pDestCell->Compare(pSourCell->Get_Point(CCell::POINT_A), pSourCell->Get_Point(CCell::POINT_B)))
+			{
+				pSourCell->Set_Neighbor(CCell::LINE_AB, pDestCell);
+			}
+
+			if (true == pDestCell->Compare(pSourCell->Get_Point(CCell::POINT_B), pSourCell->Get_Point(CCell::POINT_C)))
+			{
+				pSourCell->Set_Neighbor(CCell::LINE_BC, pDestCell);
+			}
+
+			if (true == pDestCell->Compare(pSourCell->Get_Point(CCell::POINT_C), pSourCell->Get_Point(CCell::POINT_A)))
+			{
+				pSourCell->Set_Neighbor(CCell::LINE_CA, pDestCell);
+			}
+		}
+	}
+
+	return S_OK;
+}
 
 CNavigation* CNavigation::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, const _tchar* pNavigationDataFile)
 {

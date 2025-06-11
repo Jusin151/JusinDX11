@@ -22,6 +22,10 @@ public:
 	HRESULT Initialize_Prototype(const _tchar* pNavigationDataFile);
 	HRESULT Initialize(void* pArg);
 
+	void Update(_fmatrix WorldMatrix);
+	_bool isMove(_fvector vWorldPos);
+	_vector SetUp_Height(_fvector vWorldPos);
+
 #ifdef _DEBUG
 public:
 	HRESULT Render();
@@ -32,9 +36,14 @@ private:
 	vector<class CCell*>				m_Cells;
 	_int								m_iIndex = {};
 
+	static _float4x4					m_WorldMatrix;
+
 #ifdef _DEBUG
 	class CShader* m_pShader = { nullptr };
 #endif
+
+private:
+	HRESULT SetUp_Neighbors();
 
 public:
 	static CNavigation* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, const _tchar* pNavigationDataFile);

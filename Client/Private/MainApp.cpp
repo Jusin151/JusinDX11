@@ -84,7 +84,7 @@ HRESULT CMainApp::Ready_Gara()
 
 	vPoints[0] = _float3(0.0f, 0.f, 10.f);
 	vPoints[1] = _float3(10.f, 0.f, 0.f);
-	vPoints[2] = _float3(0.f, 0.f, 0.f);
+	vPoints[2] = _float3(0.f, 3.f, 0.f);
 	WriteFile(hFile, vPoints, sizeof(_float3) * 3, &dwByte, nullptr);
 
 	vPoints[0] = _float3(0.0f, 0.f, 10.f);
