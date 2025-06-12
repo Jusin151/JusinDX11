@@ -1,7 +1,8 @@
 #include "Engine_Shader_Defines.hlsli"
 matrix g_WorldMatrix, g_ViewMatrix, g_ProjMatrix;
 
-texture2D g_DiffuseTexture;
+texture2D g_DiffuseTexture[2];
+texture2D g_MaskTexture;
 
 float4 g_vLightDir;
 float4 g_vLightDiffuse;
@@ -63,9 +64,15 @@ struct PS_OUT
 
 PS_OUT PS_MAIN(PS_IN In)
 {
+    
     PS_OUT Out;    
     
-    vector      vMtrlDiffuse = g_DiffuseTexture.Sample(DefaultSampler, In.vTexcoord * 50.f);
+    vector vSourMtrlDiffuse = g_DiffuseTexture[0].Sample(DefaultSampler, In.vTexcoord * 50.f);
+    vector vDestMtrlDiffuse = g_DiffuseTexture[1].Sample(DefaultSampler, In.vTexcoord * 50.f);
+    
+    vector vMask = g_MaskTexture.Sample(DefaultSampler, In.vTexcoord);
+    
+    vector vMtrlDiffuse = vDestMtrlDiffuse * vMask + vSourMtrlDiffuse * (1.f - vMask);
     
     float4 vShade = max(dot(normalize(g_vLightDir) * -1.f, In.vNormal), 0.f) + 
         (g_vLightAmbient * g_vMtrlAmibient);

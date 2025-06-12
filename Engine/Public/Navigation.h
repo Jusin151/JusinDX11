@@ -11,7 +11,7 @@ class ENGINE_DLL CNavigation final : public CComponent
 public:
 	typedef struct tagNavigationDesc
 	{
-		_int			iIndex = {};
+		_int			iIndex = { -1 };
 	}NAVIGATION_DESC;
 private:
 	CNavigation(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
@@ -34,7 +34,7 @@ public:
 
 private:	
 	vector<class CCell*>				m_Cells;
-	_int								m_iIndex = {};
+	_int								m_iIndex = { -1 };
 
 	static _float4x4					m_WorldMatrix;
 

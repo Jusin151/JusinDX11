@@ -16,6 +16,7 @@
 #include "DirectXTK/SpriteFont.h"
 #include "DirectXTK/PrimitiveBatch.h"
 #include "DirectXTK/Effects.h"
+#include "DirectXTK/ScreenGrab.h"
 
 #include "Fx11/d3dx11effect.h"
 

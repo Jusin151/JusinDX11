@@ -133,15 +133,42 @@ _vector CNavigation::SetUp_Height(_fvector vWorldPos)
 
 #ifdef _DEBUG
 HRESULT CNavigation::Render()
-{
-	m_pShader->Bind_Matrix("g_WorldMatrix", &m_WorldMatrix);
+{	
 	m_pShader->Bind_Matrix("g_ViewMatrix", m_pGameInstance->Get_Transform_Float4x4(D3DTS::VIEW));
 	m_pShader->Bind_Matrix("g_ProjMatrix", m_pGameInstance->Get_Transform_Float4x4(D3DTS::PROJ));
 
-	m_pShader->Begin(0);
+	_float4		vColor = {};
 
-	for (auto& pCell : m_Cells)
-		pCell->Render();
+	if (-1 == m_iIndex)
+	{
+		m_pShader->Bind_Matrix("g_WorldMatrix", &m_WorldMatrix);
+
+		vColor = _float4(0.f, 1.f, 0.f, 1.f);		
+
+		m_pShader->Bind_RawValue("g_vColor", &vColor, sizeof(_float4));
+
+		m_pShader->Begin(0);
+
+		for (auto& pCell : m_Cells)
+			pCell->Render();
+	}
+	else
+	{
+		_float4x4		WorldMatrix = m_WorldMatrix;
+		WorldMatrix.m[3][1] += 0.1f;
+
+		m_pShader->Bind_Matrix("g_WorldMatrix", &WorldMatrix);
+
+		vColor = _float4(1.f, 0.f, 0.f, 1.f);
+
+		m_pShader->Bind_RawValue("g_vColor", &vColor, sizeof(_float4));
+
+		m_pShader->Begin(0);
+		
+		m_Cells[m_iIndex]->Render();
+	}
+
+	
 
 	return S_OK;
 }

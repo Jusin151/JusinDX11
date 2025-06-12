@@ -18,6 +18,7 @@ public:
 public:
 	/* 쉐이더에 텍스쳐를 셋한다. */
 	HRESULT Bind_ShaderResource(class CShader* pShader, const _char* pConstantName, _uint iTextureIndex);
+	HRESULT Bind_ShaderResources(class CShader* pShader, const _char* pConstantName);
 
 private:	
 	vector<ID3D11ShaderResourceView*>				m_SRVs;
