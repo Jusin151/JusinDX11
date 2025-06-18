@@ -43,6 +43,7 @@ HRESULT CVIBuffer::Bind_Buffers()
 
 	_uint		iVertexStrides[] = {
 		m_iVertexStride, 
+
 	};
 
 	_uint		iOffsets[] = {
@@ -80,6 +81,7 @@ HRESULT CVIBuffer::Bind_Buffers()
 HRESULT CVIBuffer::Render()
 {
 	m_pContext->DrawIndexed(m_iNumIndices, 0, 0);
+	
 
 	return S_OK;
 }

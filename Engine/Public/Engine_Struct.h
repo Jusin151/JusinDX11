@@ -99,4 +99,20 @@ namespace Engine
 		static const D3D11_INPUT_ELEMENT_DESC		Elements[iNumElements];
 	}VTXANIMMESH;
 
+	typedef struct tagVertexMatrix
+	{
+		XMFLOAT4		vRight;
+		XMFLOAT4		vUp;
+		XMFLOAT4		vLook;
+		XMFLOAT4		vTranslation;		
+	}VTXMATRIX;
+
+	typedef struct ENGINE_DLL tagVertexParticleInstance
+	{
+		/* VTXPOSTEX + VTXMATRIX */
+		static const unsigned int					iNumElements = { 6 };
+		static const D3D11_INPUT_ELEMENT_DESC		Elements[iNumElements];
+	}VTXPARTICLE;
+
+
 }
