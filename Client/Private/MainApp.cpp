@@ -5,24 +5,7 @@
 CMainApp::CMainApp()
 	: m_pGameInstance { CGameInstance::Get_Instance() }
 {
-	// D3D11_RASTERIZER_DESC
-	// D3D11_DEPTH_STENCIL_DESC
-	//D3D11_RASTERIZER_DESC RSDesc{};
-	//RSDesc.CullMode = D3D11_CULL_BACK;
-
-		
-
-	//ID3D11RasterizerState* pRSState = { nullptr };
-	//m_pDevice->CreateRasterizerState(&RSDesc, &pRSState);
-
-	//m_pContext->RSSetState(pRSState);
-
-	//m_pContext->OMSetBlendState();
-
-	//m_pContext->OMSetDepthStencilState();
-
-	//D3D11_BLEND_DESC
-
+	
 
 	Safe_AddRef(m_pGameInstance);
 }

@@ -473,6 +473,9 @@
     <Filter Include="01.Utility\04.Components\VIBuffer\Instance\Rect">
       <UniqueIdentifier>{27cfe740-c05e-441f-a0ae-592daf3a56f4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Utility\04.Components\VIBuffer\Instance\Point">
+      <UniqueIdentifier>{241b4917-c8b4-487b-9a2a-b7435a63ea05}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Bin\ShaderFiles\Engine_Shader_Defines.hlsli">

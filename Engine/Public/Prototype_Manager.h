@@ -1,5 +1,6 @@
 ﻿#pragma once
 
+#include "VIBuffer_Rect_Instance.h"
 #include "VIBuffer_Terrain.h"
 #include "VIBuffer_Cell.h"
 #include "VIBuffer_Cube.h"
