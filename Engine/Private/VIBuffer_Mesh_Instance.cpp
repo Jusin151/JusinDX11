@@ -1,26 +1,23 @@
-﻿#include "VIBuffer_Rect_Instance.h"
+﻿#include "VIBuffer_Mesh_Instance.h"
 
 #include "GameInstance.h"
 
-CVIBuffer_Rect_Instance::CVIBuffer_Rect_Instance(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+CVIBuffer_Mesh_Instance::CVIBuffer_Mesh_Instance(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	: CVIBuffer_Instance{ pDevice, pContext }
 {
 }
 
-CVIBuffer_Rect_Instance::CVIBuffer_Rect_Instance(const CVIBuffer_Rect_Instance& Prototype)
+CVIBuffer_Mesh_Instance::CVIBuffer_Mesh_Instance(const CVIBuffer_Mesh_Instance& Prototype)
 	: CVIBuffer_Instance{ Prototype }
 	, m_pVertexInstances { Prototype.m_pVertexInstances }
-	, m_pSpeeds{ Prototype.m_pSpeeds }	
-	, m_isLoop { Prototype.m_isLoop }
 {
 	
 }
 
-HRESULT CVIBuffer_Rect_Instance::Initialize_Prototype(const INSTANCE_DESC* pArg)
+HRESULT CVIBuffer_Mesh_Instance::Initialize_Prototype(const INSTANCE_DESC* pArg)
 {
-	const RECT_INSTANCE_DESC* pDesc = static_cast<const RECT_INSTANCE_DESC*>(pArg);
+	const MESH_INSTANCE_DESC* pDesc = static_cast<const MESH_INSTANCE_DESC*>(pArg);
 
-	m_isLoop = pDesc->isLoop;
 	m_iNumIndexPerInstance = 6;
 	m_iVertexInstanceStride = sizeof(VTXRECT_PARTICLE_INSTANCE);
 	m_iNumInstance = pDesc->iNumInstance;
@@ -118,11 +115,9 @@ HRESULT CVIBuffer_Rect_Instance::Initialize_Prototype(const INSTANCE_DESC* pArg)
 	m_VBInstanceDesc.MiscFlags = 0;
 
 	m_pVertexInstances = new VTXRECT_PARTICLE_INSTANCE[m_iNumInstance];
-	m_pSpeeds = new _float[m_iNumInstance];
 
 	for (size_t i = 0; i < m_iNumInstance; i++)
 	{
-		m_pSpeeds[i] = m_pGameInstance->Compute_Random(pDesc->vSpeed.x, pDesc->vSpeed.y);
 		_float	fSize = m_pGameInstance->Compute_Random(pDesc->vSize.x, pDesc->vSize.y);
 
 		m_pVertexInstances[i].vRight = _float4(fSize, 0.f, 0.f, 0.f);
@@ -155,7 +150,7 @@ HRESULT CVIBuffer_Rect_Instance::Initialize_Prototype(const INSTANCE_DESC* pArg)
 	return S_OK;
 }
 
-HRESULT CVIBuffer_Rect_Instance::Initialize(void* pArg)
+HRESULT CVIBuffer_Mesh_Instance::Initialize(void* pArg)
 {
 	if (FAILED(m_pDevice->CreateBuffer(&m_VBInstanceDesc, &m_VBInstanceSubresourceData, &m_pVBInstance)))
 		return E_FAIL;
@@ -165,64 +160,41 @@ HRESULT CVIBuffer_Rect_Instance::Initialize(void* pArg)
 
 
 
-void CVIBuffer_Rect_Instance::Drop(_float fTimeDelta)
+void CVIBuffer_Mesh_Instance::Drop(_float fTimeDelta)
 {
-	D3D11_MAPPED_SUBRESOURCE	SubResource{};
 
-	m_pContext->Map(m_pVBInstance, 0, D3D11_MAP_WRITE_NO_OVERWRITE, 0, &SubResource);
-
-	VTXRECT_PARTICLE_INSTANCE* pVertices = static_cast<VTXRECT_PARTICLE_INSTANCE*>(SubResource.pData);
-
-	for (size_t i = 0; i < m_iNumInstance; i++)
-	{
-		pVertices[i].vLifeTime.y += fTimeDelta;
-
-		pVertices[i].vTranslation.y -= m_pSpeeds[i] * fTimeDelta;
-
-		if (true == m_isLoop && 
-			pVertices[i].vLifeTime.y >= pVertices[i].vLifeTime.x)
-		{
-			pVertices[i].vLifeTime.y = 0.f;
-			pVertices[i].vTranslation.y = m_pVertexInstances[i].vTranslation.y;
-		}
-	}
-
-	m_pContext->Unmap(m_pVBInstance, 0);
 }
 
-CVIBuffer_Rect_Instance* CVIBuffer_Rect_Instance::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, const INSTANCE_DESC* pArg)
+CVIBuffer_Mesh_Instance* CVIBuffer_Mesh_Instance::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, const INSTANCE_DESC* pArg)
 {
-	CVIBuffer_Rect_Instance* pInstance = new CVIBuffer_Rect_Instance(pDevice, pContext);
+	CVIBuffer_Mesh_Instance* pInstance = new CVIBuffer_Mesh_Instance(pDevice, pContext);
 
 	if (FAILED(pInstance->Initialize_Prototype(pArg)))
 	{
-		MSG_BOX("Failed to Created : CVIBuffer_Rect_Instance");
+		MSG_BOX("Failed to Created : CVIBuffer_Mesh_Instance");
 		Safe_Release(pInstance);
 	}
 
 	return pInstance;
 }
 
-CComponent* CVIBuffer_Rect_Instance::Clone(void* pArg)
+CComponent* CVIBuffer_Mesh_Instance::Clone(void* pArg)
 {
-	CVIBuffer_Rect_Instance* pInstance = new CVIBuffer_Rect_Instance(*this);
+	CVIBuffer_Mesh_Instance* pInstance = new CVIBuffer_Mesh_Instance(*this);
 
 	if (FAILED(pInstance->Initialize(pArg)))
 	{
-		MSG_BOX("Failed to Cloned : CVIBuffer_Rect_Instance");
+		MSG_BOX("Failed to Cloned : CVIBuffer_Mesh_Instance");
 		Safe_Release(pInstance);
 	}
 
 	return pInstance;
 }
 
-void CVIBuffer_Rect_Instance::Free()
+void CVIBuffer_Mesh_Instance::Free()
 {
 	__super::Free();
 
 	if(false == m_isCloned)
-	{
 		Safe_Delete_Array(m_pVertexInstances);
-		Safe_Delete_Array(m_pSpeeds);
-	}
 }

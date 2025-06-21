@@ -39,7 +39,7 @@ protected:
 	ID3D11Buffer*			m_pVBInstance = { nullptr };
 	D3D11_BUFFER_DESC		m_VBInstanceDesc = {};
 	D3D11_SUBRESOURCE_DATA	m_VBInstanceSubresourceData = {};
-	VTXMATRIX*				m_pVertexInstances = { nullptr };
+	
 
 	_uint					m_iNumIndexPerInstance = {};
 	_uint					m_iNumInstance = {};

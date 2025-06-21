@@ -149,7 +149,7 @@ HRESULT CLoader::Loading_For_GamePlay()
 
 	/* For.Prototype_Component_Shader_VtxRectInstance */
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Shader_VtxRectInstance"),
-		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_VtxRectInstance.hlsl"), VTXRECT_PARTICLE::Elements, VTXRECT_PARTICLE::iNumElements))))
+		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_VtxRectInstance.hlsl"), VTXRECT_PARTICLE_INSTANCE::Elements, VTXRECT_PARTICLE_INSTANCE::iNumElements))))
 		return E_FAIL;
 
 	lstrcpy(m_szLoadingText, TEXT("모델을(를) 로딩중입니다."));
@@ -165,11 +165,12 @@ HRESULT CLoader::Loading_For_GamePlay()
 
 	/* For.Prototype_Component_VIBuffer_Snow */
 	CVIBuffer_Rect_Instance::RECT_INSTANCE_DESC		SnowDesc{};
-	SnowDesc.iNumInstance = 3000;
+	SnowDesc.iNumInstance = 5000;
 	SnowDesc.vCenter = _float3(64.f, 30.f, 64.0f);
 	SnowDesc.vRange = _float3(128.f, 3.0f, 128.f);
 	SnowDesc.vSize = _float2(0.1f, 0.4f);
-	SnowDesc.vLifeTime = _float2(1.f, 3.f);
+	SnowDesc.vLifeTime = _float2(5.f, 8.f);
+	SnowDesc.vSpeed = _float2(3.f, 5.f);
 	SnowDesc.isLoop = true;	
 
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_VIBuffer_Snow"),

@@ -2,7 +2,6 @@
 
 matrix g_WorldMatrix, g_ViewMatrix, g_ProjMatrix;
 
-
 texture2D g_DiffuseTexture;
 
 float4 g_vLightDir;
@@ -86,12 +85,8 @@ PS_OUT PS_MAIN(PS_IN In)
     return Out;
 }
 
-
-
-
 technique11 DefaultTechnique
-{
-   
+{   
     pass Default
     {
         SetRasterizerState(RS_Default);

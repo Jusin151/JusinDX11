@@ -46,6 +46,12 @@ namespace Engine
 		static const D3D11_INPUT_ELEMENT_DESC		Elements[iNumElements];
 	}VTXPOS;
 
+	typedef struct ENGINE_DLL tagVertexPoint
+	{
+		XMFLOAT3		vPosition;
+		XMFLOAT2		vPSize;		
+	}VTXPOINT;
+
 
 	typedef struct ENGINE_DLL tagVertexPositionTexcoord
 	{
@@ -99,25 +105,39 @@ namespace Engine
 		static const D3D11_INPUT_ELEMENT_DESC		Elements[iNumElements];
 	}VTXANIMMESH;
 
-	typedef struct tagVertexMatrix
+	typedef struct ENGINE_DLL tagVertexMeshInstance
 	{
 		XMFLOAT4		vRight;
 		XMFLOAT4		vUp;
 		XMFLOAT4		vLook;
 		XMFLOAT4		vTranslation;		
-	}VTXMATRIX;
 
-	typedef struct tagVertexParticle
+		static const unsigned int					iNumElements = { 8 };
+		static const D3D11_INPUT_ELEMENT_DESC		Elements[iNumElements];
+	}VTXMESH_INSTANCE;
+
+	typedef struct ENGINE_DLL tagVertexRectParticleInstance
 	{
+		XMFLOAT4		vRight;
+		XMFLOAT4		vUp;
+		XMFLOAT4		vLook;
+		XMFLOAT4		vTranslation;		
 		XMFLOAT2		vLifeTime;		
-	}VTXPARTICLE;
 
-	typedef struct ENGINE_DLL tagVertexParticleInstance
-	{
-		/* VTXPOSTEX + VTXMATRIX */
 		static const unsigned int					iNumElements = { 7 };
 		static const D3D11_INPUT_ELEMENT_DESC		Elements[iNumElements];
-	}VTXRECT_PARTICLE;	
+	}VTXRECT_PARTICLE_INSTANCE;
 
+	typedef struct ENGINE_DLL tagVertexPointParticleInstance
+	{
+		XMFLOAT4		vRight;
+		XMFLOAT4		vUp;
+		XMFLOAT4		vLook;
+		XMFLOAT4		vTranslation;
+		XMFLOAT2		vLifeTime;
+
+		static const unsigned int					iNumElements = { 7 };
+		static const D3D11_INPUT_ELEMENT_DESC		Elements[iNumElements];
+	}VTXPOINT_PARTICLE_INSTANCE;
 
 }

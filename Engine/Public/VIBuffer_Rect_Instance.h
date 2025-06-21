@@ -10,6 +10,7 @@ public:
 	typedef struct tagRectInstance : public CVIBuffer_Instance::INSTANCE_DESC
 	{
 		_float2		vLifeTime;
+		_float2		vSpeed;
 		_bool		isLoop;
 
 	}RECT_INSTANCE_DESC;
@@ -22,25 +23,19 @@ private:
 public:
 	virtual HRESULT Initialize_Prototype(const INSTANCE_DESC* pDesc);
 	virtual HRESULT Initialize(void* pArg);
-
-	virtual HRESULT Bind_Buffers() override;
-
-	virtual void Drop(_float fTimeDelta);
+	
+	virtual void Drop(_float fTimeDelta)override;
 
 
 protected:
-	ID3D11Buffer*			m_pVBParticle = { nullptr };
-	D3D11_BUFFER_DESC		m_VBParticleDesc = {};
-	D3D11_SUBRESOURCE_DATA	m_VBParticleSubresourceData = {};
-	VTXPARTICLE*			m_pVertexParticles = { nullptr };
-
-	_uint					m_iVertexParticleStride = {};
+	VTXRECT_PARTICLE_INSTANCE*	m_pVertexInstances = { nullptr };
+	_float*						m_pSpeeds = { nullptr };
+	_bool						m_isLoop = { false };
 
 public:
 	static CVIBuffer_Rect_Instance* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, const INSTANCE_DESC* pDesc);
 	virtual CComponent* Clone(void* pArg) override;
 	virtual void Free() override;
-
 };
 
 NS_END
