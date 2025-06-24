@@ -2,6 +2,7 @@
 
 #include "GameInstance.h"
 #include "Body_Player.h"
+#include "Explosion.h"
 #include "Weapon.h"
 
 CPlayer::CPlayer(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
@@ -132,6 +133,16 @@ HRESULT CPlayer::Ready_PartObjects()
 	WeaponDesc.pParentMatrix = m_pTransformCom->Get_WorldMatrix_Ptr();
 
 	if (FAILED(__super::Add_PartObject(PART_WEAPON, ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Weapon"), &WeaponDesc)))
+		return E_FAIL;
+
+	/* For.Effect */
+	CExplosion::EXPLOSION_DESC ExploDesc{};
+
+	ExploDesc.pSocketMatrix = dynamic_cast<CBody_Player*>(m_PartObjects[PART_BODY])->Get_SocketMatrix("SWORD");
+	ExploDesc.pParentState = &m_iState;
+	ExploDesc.pParentMatrix = m_pTransformCom->Get_WorldMatrix_Ptr();
+
+	if (FAILED(__super::Add_PartObject(PART_EFFECT, ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Explosion"), &ExploDesc)))
 		return E_FAIL;
 
 

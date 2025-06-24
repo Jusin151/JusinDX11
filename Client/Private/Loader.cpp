@@ -4,6 +4,7 @@
 
 #include "Camera_Free.h"
 #include "BackGround.h"
+#include "Explosion.h"
 #include "ForkLift.h"
 #include "Terrain.h"
 #include "Monster.h"
@@ -152,6 +153,11 @@ HRESULT CLoader::Loading_For_GamePlay()
 		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_VtxRectInstance.hlsl"), VTXRECT_PARTICLE_INSTANCE::Elements, VTXRECT_PARTICLE_INSTANCE::iNumElements))))
 		return E_FAIL;
 
+	/* For.Prototype_Component_Shader_VtxPosInstance */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_Shader_VtxPosInstance"),
+		CShader::Create(m_pDevice, m_pContext, TEXT("../Bin/ShaderFiles/Shader_VtxPosInstance.hlsl"), VTXPOS_PARTICLE_INSTANCE::Elements, VTXPOS_PARTICLE_INSTANCE::iNumElements))))
+		return E_FAIL;
+
 	lstrcpy(m_szLoadingText, TEXT("모델을(를) 로딩중입니다."));
 	/* For.Prototype_Component_VIBuffer_Terrain */
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_VIBuffer_Terrain"),
@@ -176,6 +182,22 @@ HRESULT CLoader::Loading_For_GamePlay()
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_VIBuffer_Snow"),
 		CVIBuffer_Rect_Instance::Create(m_pDevice, m_pContext, &SnowDesc))))
 		return E_FAIL;
+
+	/* For.Prototype_Component_VIBuffer_Explosion*/
+	CVIBuffer_Point_Instance::POINT_INSTANCE_DESC		ExploDesc{};
+	ExploDesc.iNumInstance = 500;
+	ExploDesc.vCenter = _float3(0.f, 0.f, 0.0f);
+	ExploDesc.vRange = _float3(0.2f, 0.2f, 0.2f);
+	ExploDesc.vSize = _float2(0.05f, 0.1f);
+	ExploDesc.vLifeTime = _float2(0.5f, 2.f);
+	ExploDesc.vSpeed = _float2(1.f, 2.f);
+	ExploDesc.vPivot = ExploDesc.vCenter;
+	ExploDesc.isLoop = true;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_Component_VIBuffer_Explosion"),
+		CVIBuffer_Point_Instance::Create(m_pDevice, m_pContext, &ExploDesc))))
+		return E_FAIL;
+
 
 	_matrix		PreTransformMatrix = XMMatrixIdentity();
 
@@ -251,6 +273,11 @@ HRESULT CLoader::Loading_For_GamePlay()
 	/* For.Prototype_GameObject_Snow */
 	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Snow"),
 		CSnow::Create(m_pDevice, m_pContext))))
+		return E_FAIL;
+
+	/* For.Prototype_GameObject_Explosion */
+	if (FAILED(m_pGameInstance->Add_Prototype(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Explosion"),
+		CExplosion::Create(m_pDevice, m_pContext))))
 		return E_FAIL;
 
 	///* For.Prototype_GameObject_Effect */

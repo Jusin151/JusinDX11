@@ -9,6 +9,7 @@ class ENGINE_DLL CVIBuffer_Point_Instance final : public CVIBuffer_Instance
 public:
 	typedef struct tagPointInstance : public CVIBuffer_Instance::INSTANCE_DESC
 	{
+		_float3		vPivot;
 		_float2		vLifeTime;
 		_float2		vSpeed;
 		_bool		isLoop;
@@ -25,11 +26,13 @@ public:
 	virtual HRESULT Initialize(void* pArg);
 	
 	virtual void Drop(_float fTimeDelta)override;
+	virtual void Spread(_float fTimeDelta)override;
 
 
 protected:
-	VTXPOINT_PARTICLE_INSTANCE*	m_pVertexInstances = { nullptr };
+	VTXPOS_PARTICLE_INSTANCE*	m_pVertexInstances = { nullptr };
 	_float*						m_pSpeeds = { nullptr };
+	_float3						m_vPivot = {};
 	_bool						m_isLoop = { false };
 
 public:

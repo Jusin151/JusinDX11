@@ -70,6 +70,9 @@
     <Filter Include="02.GameObjects\07.Effect\Particle\Snow">
       <UniqueIdentifier>{66c43bd3-d80f-48d0-a2fe-e225254515c1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\07.Effect\Particle\Explosion">
+      <UniqueIdentifier>{bc5eb1b7-60bc-4699-a4fe-4b7b555d9aad}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -135,6 +138,9 @@
     <ClInclude Include="..\Public\Snow.h">
       <Filter>02.GameObjects\07.Effect\Particle\Snow</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\Explosion.h">
+      <Filter>02.GameObjects\07.Effect\Particle\Explosion</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Client.ico">
@@ -198,6 +204,9 @@
     <ClCompile Include="..\Private\Snow.cpp">
       <Filter>02.GameObjects\07.Effect\Particle\Snow</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\Explosion.cpp">
+      <Filter>02.GameObjects\07.Effect\Particle\Explosion</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxPosTex.hlsl">
@@ -218,7 +227,7 @@
     <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxRectInstance.hlsl">
       <Filter>97.ShaderFiles</Filter>
     </FxCompile>
-    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxPointInstance.hlsl">
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_VtxPosInstance.hlsl">
       <Filter>97.ShaderFiles</Filter>
     </FxCompile>
   </ItemGroup>
