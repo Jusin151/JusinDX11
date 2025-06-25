@@ -87,6 +87,9 @@ HRESULT CMainApp::Ready_Gara()
 
 	}
 
+	/*m_pDevice->CreateRenderTargetView();
+	m_pDevice->CreateShaderResourceView();*/
+
 	/*m_pContext->CopyResource(동적, 정적)*/
 	
 

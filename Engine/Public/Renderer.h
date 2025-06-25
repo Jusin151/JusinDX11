@@ -11,12 +11,15 @@ private:
 	virtual ~CRenderer() = default;
 
 public:
+	HRESULT Initialize();
 	HRESULT Add_RenderGroup(RENDERGROUP eRenderGroup, class CGameObject* pRenderObject);
 	HRESULT Draw();
 
 private:
 	ID3D11Device*				m_pDevice = { nullptr };
 	ID3D11DeviceContext*		m_pContext = { nullptr };
+
+	class CGameInstance*		m_pGameInstance = { nullptr };
 
 private:
 	list<class CGameObject*>	m_RenderObjects[ENUM_CLASS(RENDERGROUP::RG_END)];

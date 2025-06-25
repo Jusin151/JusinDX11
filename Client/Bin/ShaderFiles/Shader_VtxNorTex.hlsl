@@ -4,18 +4,6 @@ matrix g_WorldMatrix, g_ViewMatrix, g_ProjMatrix;
 texture2D g_DiffuseTexture[2];
 texture2D g_MaskTexture;
 
-float4 g_vLightDir;
-float4 g_vLightDiffuse;
-float4 g_vLightAmbient;
-float4 g_vLightSpecular;
-
-float4 g_vCamPosition;
-
-float4 g_vMtrlAmibient = float4(0.4f, 0.4f, 0.4f, 1.f);
-float4 g_vMtrlSpecular = float4(1.f, 1.f, 1.f, 1.f);
-
-
-
 struct VS_IN
 {
     float3 vPosition : POSITION;
@@ -59,7 +47,8 @@ struct PS_IN
 
 struct PS_OUT
 {
-    vector vColor : SV_TARGET0;
+    vector vDiffuse : SV_TARGET0;
+    vector vNormal : SV_TARGET1;
 };
 
 PS_OUT PS_MAIN(PS_IN In)
@@ -74,18 +63,8 @@ PS_OUT PS_MAIN(PS_IN In)
     
     vector vMtrlDiffuse = vDestMtrlDiffuse * vMask + vSourMtrlDiffuse * (1.f - vMask);
     
-    float4 vShade = max(dot(normalize(g_vLightDir) * -1.f, In.vNormal), 0.f) + 
-        (g_vLightAmbient * g_vMtrlAmibient);
-    
-    float4 vLook = In.vWorldPos - g_vCamPosition;    
-    
-    float4 vReflect = reflect(normalize(g_vLightDir), normalize(In.vNormal));
-    
-    
-    float4 vSpecular = pow(max(dot(normalize(vLook) * -1.f, vReflect), 0.f), 50.f);
-        
-    
-    Out.vColor = g_vLightDiffuse * vMtrlDiffuse * vShade + (g_vLightSpecular * g_vMtrlSpecular) * vSpecular;
+    Out.vDiffuse = vMtrlDiffuse;
+    Out.vNormal = In.vNormal;
     
     return Out;    
 }

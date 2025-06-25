@@ -11,6 +11,7 @@
 #include "Timer_Manager.h"
 #include "Graphic_Device.h"
 #include "Object_Manager.h"
+#include "Target_Manager.h"
 #include "Prototype_Manager.h"
 
 IMPLEMENT_SINGLETON(CGameInstance);
@@ -44,6 +45,10 @@ HRESULT CGameInstance::Initialize_Engine(const ENGINE_DESC& EngineDesc, _Out_ ID
 
 	m_pObject_Manager = CObject_Manager::Create(EngineDesc.iNumLevels);
 	if (nullptr == m_pObject_Manager)
+		return E_FAIL;
+
+	m_pTarget_Manager = CTarget_Manager::Create(*ppDeviceOut, *ppContextOut);
+	if (nullptr == m_pTarget_Manager)
 		return E_FAIL;
 
 	m_pRenderer = CRenderer::Create(*ppDeviceOut, *ppContextOut);
@@ -268,8 +273,34 @@ void CGameInstance::Draw_Font(const _wstring& strFontTag, const _tchar* pText, c
 {
 	m_pFont_Manager->Draw(strFontTag, pText, vPosition, vColor, fRotation, vOrigin, fScale);
 }
+#pragma endregion
+
+#pragma region TARGET_MANAGER
+HRESULT CGameInstance::Add_RenderTarget(const _wstring& strTargetTag, _uint iWidth, _uint iHeight, DXGI_FORMAT ePixelFormat, const _float4& vClearColor)
+{
+	return m_pTarget_Manager->Add_RenderTarget(strTargetTag, iWidth, iHeight, ePixelFormat, vClearColor);
+}
+
+HRESULT CGameInstance::Add_MRT(const _wstring& strMRTTag, const _wstring& strTargetTag)
+{
+	return m_pTarget_Manager->Add_MRT(strMRTTag, strTargetTag);
+}
+
+HRESULT CGameInstance::Begin_MRT(const _wstring& strMRTTag)
+{
+	return m_pTarget_Manager->Begin_MRT(strMRTTag);
+}
+
+HRESULT CGameInstance::End_MRT()
+{
+	return m_pTarget_Manager->End_MRT();
+}
 
 #pragma endregion
+
+
+
+
 
 //#pragma region PICKING
 //void CGameInstance::Transform_Picking_ToLocalSpace(const _float4x4& WorldMatrixInverse)
@@ -289,7 +320,7 @@ void CGameInstance::Draw_Font(const _wstring& strFontTag, const _tchar* pText, c
 
 void CGameInstance::Release_Engine()
 {
-	//Safe_Release(m_pPicking);
+	Safe_Release(m_pTarget_Manager);
 
 	Safe_Release(m_pFont_Manager);
 
