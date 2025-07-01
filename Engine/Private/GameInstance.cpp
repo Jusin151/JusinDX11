@@ -191,6 +191,13 @@ HRESULT CGameInstance::Add_RenderGroup(RENDERGROUP eRenderGroup, CGameObject* pR
 	return m_pRenderer->Add_RenderGroup(eRenderGroup, pRenderObject);
 }
 
+#ifdef _DEBUG
+HRESULT CGameInstance::Add_DebugComponent(CComponent* pDebugCom)
+{
+	return m_pRenderer->Add_DebugComponent(pDebugCom);
+}
+#endif
+
 #pragma endregion
 
 #pragma region TIMER_MANAGER

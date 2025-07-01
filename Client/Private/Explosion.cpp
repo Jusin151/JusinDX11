@@ -61,7 +61,7 @@ void CExplosion::Update(_float fTimeDelta)
 void CExplosion::Late_Update(_float fTimeDelta)
 {
 	/* WeightBlend */	
-	m_pGameInstance->Add_RenderGroup(RENDERGROUP::RG_NONBLEND, this); 
+	m_pGameInstance->Add_RenderGroup(RENDERGROUP::RG_NONLIGHT, this); 
 }
 
 HRESULT CExplosion::Render()

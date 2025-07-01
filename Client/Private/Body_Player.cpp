@@ -72,6 +72,10 @@ void CBody_Player::Late_Update(_float fTimeDelta)
 {
 	
 	m_pGameInstance->Add_RenderGroup(RENDERGROUP::RG_NONBLEND, this);
+
+#ifdef _DEBUG
+	m_pGameInstance->Add_DebugComponent(m_pColliderCom);
+#endif
 }
 
 HRESULT CBody_Player::Render()
@@ -97,11 +101,7 @@ HRESULT CBody_Player::Render()
 			return E_FAIL;
 	}
 
-#ifdef _DEBUG
 
-	m_pColliderCom->Render();
-
-#endif
 
 	return S_OK;
 }

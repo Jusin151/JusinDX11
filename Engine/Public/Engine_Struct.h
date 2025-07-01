@@ -33,7 +33,7 @@ namespace Engine
 		float				fRange;
 
 		XMFLOAT4			vDiffuse;
-		XMFLOAT4			vAmbient;
+		float				fAmbient;
 		XMFLOAT4			vSpecular;
 	}LIGHT_DESC;
 

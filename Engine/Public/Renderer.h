@@ -12,8 +12,13 @@ private:
 
 public:
 	HRESULT Initialize();
-	HRESULT Add_RenderGroup(RENDERGROUP eRenderGroup, class CGameObject* pRenderObject);
+	HRESULT Add_RenderGroup(RENDERGROUP eRenderGroup, class CGameObject* pRenderObject);	
 	HRESULT Draw();
+
+#ifdef _DEBUG
+public:
+	HRESULT Add_DebugComponent(class CComponent* pDebugCom);
+#endif
 
 private:
 	ID3D11Device*				m_pDevice = { nullptr };
@@ -29,13 +34,19 @@ private:
 private:
 	list<class CGameObject*>	m_RenderObjects[ENUM_CLASS(RENDERGROUP::RG_END)];
 
+#ifdef _DEBUG
+private:
+	list<class CComponent*>		m_DebugComponent;
+#endif
+
 private:
 	HRESULT Render_Priority();
 	HRESULT Render_NonBlend();
 	HRESULT Render_Blend();
 	HRESULT Render_UI();
-
 	HRESULT Render_Lights();
+	HRESULT Render_BackBuffer();
+	HRESULT Render_NonLight();
 
 #ifdef _DEBUG
 private:

@@ -98,18 +98,15 @@ void CPlayer::Late_Update(_float fTimeDelta)
 	__super::Late_Update(fTimeDelta);
 
 	m_pGameInstance->Add_RenderGroup(RENDERGROUP::RG_NONBLEND, this);
-
+#ifdef _DEBUG
+	m_pGameInstance->Add_DebugComponent(m_pNavigationCom);
+#endif
 	
 }
 
 HRESULT CPlayer::Render()
 {
 
-#ifdef _DEBUG
-
-	m_pNavigationCom->Render();
-
-#endif
 
 	return S_OK;
 }

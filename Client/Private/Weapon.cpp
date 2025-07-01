@@ -64,6 +64,10 @@ void CWeapon::Late_Update(_float fTimeDelta)
 
 
 	m_pGameInstance->Add_RenderGroup(RENDERGROUP::RG_NONBLEND, this);
+
+#ifdef _DEBUG
+	m_pGameInstance->Add_DebugComponent(m_pColliderCom);
+#endif
 }
 
 HRESULT CWeapon::Render()
@@ -86,11 +90,7 @@ HRESULT CWeapon::Render()
 		if (FAILED(m_pModelCom->Render(i)))
 			return E_FAIL;
 	}
-#ifdef _DEBUG
 
-	m_pColliderCom->Render();
-
-#endif
 
 	return S_OK;
 }
