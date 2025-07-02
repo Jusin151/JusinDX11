@@ -19,6 +19,17 @@ _matrix CPipeLine::Get_Transform_Matrix(D3DTS eState) const
 	return XMLoadFloat4x4(&m_TransformationMatrices[ENUM_CLASS(eState)]);
 }
 
+const _float4x4* CPipeLine::Get_Transform_Float4x4_Inv(D3DTS eState) const
+{
+
+	return &m_TransformationMatrixInverse[ENUM_CLASS(eState)];
+}
+
+_matrix CPipeLine::Get_Transform_Matrix_Inv(D3DTS eState) const
+{
+	return XMLoadFloat4x4(&m_TransformationMatrixInverse[ENUM_CLASS(eState)]);
+}
+
 const _float4* CPipeLine::Get_CamPosition() const
 {
 	return &m_vCamPosition;

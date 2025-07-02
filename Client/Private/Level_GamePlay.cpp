@@ -48,9 +48,30 @@ HRESULT CLevel_GamePlay::Ready_Lights()
 
 	LightDesc.eType = LIGHT_DESC::TYPE_DIRECTIONAL;
 	LightDesc.vDirection = _float4(1.f, -1.f, 1.f, 0.f);	
-	LightDesc.vDiffuse = _float4(1.f, 1.f, 1.f, 1.f);
-	LightDesc.fAmbient = 0.4f;
+	LightDesc.vDiffuse = _float4(0.6f, 0.6f, 0.6f, 1.f);
+	LightDesc.fAmbient = 0.2f;
 	LightDesc.vSpecular = _float4(1.f, 1.f, 1.f, 1.f);
+
+	if (FAILED(m_pGameInstance->Add_Light(LightDesc)))
+		return E_FAIL;
+
+
+	LightDesc.eType = LIGHT_DESC::TYPE_POINT;
+	LightDesc.vPosition = _float4(10.f, 5.0f, 10.f, 1.f);
+	LightDesc.fRange = 10.f;
+	LightDesc.vDiffuse = _float4(1.f, 0.f, 0.f, 1.f);
+	LightDesc.fAmbient = 0.4f;
+	LightDesc.vSpecular = _float4(1.f, 0.f, 0.f, 1.f);
+
+	if (FAILED(m_pGameInstance->Add_Light(LightDesc)))
+		return E_FAIL;
+
+	LightDesc.eType = LIGHT_DESC::TYPE_POINT;
+	LightDesc.vPosition = _float4(15.f, 5.0f, 10.f, 1.f);
+	LightDesc.fRange = 10.f;
+	LightDesc.vDiffuse = _float4(0.f, 1.f, 0.f, 1.f);
+	LightDesc.fAmbient = 0.4f;
+	LightDesc.vSpecular = _float4(0.f, 1.f, 0.f, 1.f);
 
 	if (FAILED(m_pGameInstance->Add_Light(LightDesc)))
 		return E_FAIL;
