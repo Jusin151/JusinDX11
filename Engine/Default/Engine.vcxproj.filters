@@ -169,6 +169,12 @@
     <ClInclude Include="..\public\Target_Manager.h">
       <Filter>01.Utility\09.RenderTargets\Manager</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\BlendObject.h">
+      <Filter>01.Utility\03.GameObject\BlendObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Picking.h">
+      <Filter>01.Utility\10.Picking</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Private\Timer.cpp">
@@ -324,6 +330,12 @@
     <ClCompile Include="..\private\Target_Manager.cpp">
       <Filter>01.Utility\09.RenderTargets\Manager</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\BlendObject.cpp">
+      <Filter>01.Utility\03.GameObject\BlendObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\Picking.cpp">
+      <Filter>01.Utility\10.Picking</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="00.System">
@@ -394,9 +406,6 @@
     </Filter>
     <Filter Include="01.Utility\04.Components\VIBuffer\Terrain">
       <UniqueIdentifier>{9ddf86be-2abe-4eef-85e6-440fb5c17013}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01.Utility\03.GameObject\AlphaObject">
-      <UniqueIdentifier>{ef57a2eb-e00e-4060-9ac7-b37657577e39}</UniqueIdentifier>
     </Filter>
     <Filter Include="01.Utility\03.GameObject\ContainerObject">
       <UniqueIdentifier>{0cd9f2b4-9f44-40c6-aae6-17dcdf0a1551}</UniqueIdentifier>
@@ -499,6 +508,12 @@
     </Filter>
     <Filter Include="01.Utility\09.RenderTargets\Manager">
       <UniqueIdentifier>{8c54a38f-1404-4fb7-be1c-6b391e6d09cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\03.GameObject\BlendObject">
+      <UniqueIdentifier>{ef57a2eb-e00e-4060-9ac7-b37657577e39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\10.Picking">
+      <UniqueIdentifier>{811241ec-7bee-4ac9-bae6-67f2ea51a5ed}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

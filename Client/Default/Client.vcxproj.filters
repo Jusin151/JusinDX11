@@ -141,6 +141,9 @@
     <ClInclude Include="..\Public\Explosion.h">
       <Filter>02.GameObjects\07.Effect\Particle\Explosion</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\Effect.h">
+      <Filter>02.GameObjects\07.Effect\Sprite</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Client.ico">
@@ -206,6 +209,9 @@
     </ClCompile>
     <ClCompile Include="..\Private\Explosion.cpp">
       <Filter>02.GameObjects\07.Effect\Particle\Explosion</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Effect.cpp">
+      <Filter>02.GameObjects\07.Effect\Sprite</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -136,6 +136,14 @@ HRESULT CLevel_GamePlay::Ready_Layer_Effect(const _wstring strLayerTag)
 		ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))
 		return E_FAIL;
 
+	for (size_t i = 0; i < 50; i++)
+	{
+		if (FAILED(m_pGameInstance->Add_GameObject(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Effect"),
+			ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))
+			return E_FAIL;
+	}
+	
+
 
 	return S_OK;
 }

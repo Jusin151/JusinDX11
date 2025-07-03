@@ -5,7 +5,6 @@
 CMainApp::CMainApp()
 	: m_pGameInstance { CGameInstance::Get_Instance() }
 {
-	
 
 	Safe_AddRef(m_pGameInstance);
 }
@@ -79,19 +78,9 @@ HRESULT CMainApp::Ready_Gara()
 		for (size_t j = 0; j < 256; j++)
 		{
 			_uint iIndex = i * 256 + j;
-
-			/* a b g r */
-			pPixel[iIndex] = D3DCOLOR_ARGB(255, 0, 0, 0);/*0xff000000*//*0b00000000000000000000000011111111*/;
-
+			pPixel[iIndex] = D3DCOLOR_ARGB(255, 0, 0, 0);
 		}
-
 	}
-
-	/*m_pDevice->CreateRenderTargetView();
-	m_pDevice->CreateShaderResourceView();*/
-
-	/*m_pContext->CopyResource(동적, 정적)*/
-	
 
 	D3D11_SUBRESOURCE_DATA		InitialDesc{};
 	InitialDesc.pSysMem = pPixel;
@@ -112,28 +101,14 @@ HRESULT CMainApp::Ready_Gara()
 		{
 			_uint iIndex = i * 256 + j;
 
-			if(j < 128)
-			/* a b g r */
+			if(j < 128)			
 				pPixels[iIndex] = D3DCOLOR_ARGB(255, 0, 0, 0);/*0xff000000*//*0b00000000000000000000000011111111*/
 			else
-				pPixels[iIndex] = D3DCOLOR_ARGB(255, 255, 255, 255);/*0xff000000*//*0b00000000000000000000000011111111*/;
-
-
+				pPixels[iIndex] = D3DCOLOR_ARGB(255, 255, 255, 255);/*0xff000000*//*0b00000000000000000000000011111111*/;		
 		}
-
 	}
 
 	m_pContext->Unmap(pTexture2D, 0);
-
-	/*m_pVB->Lock(0, 0, void**, 0);
-
-	m_pVB->unlock();
-
-	m_pTexture->LockRect();*/
-
-	
-
-
 
 	if (FAILED(DirectX::SaveDDSTextureToFile(m_pContext, pTexture2D, TEXT("../Bin/Resources/Textures/Terrain/Mask.dds"))))
 		return E_FAIL;
@@ -165,7 +140,6 @@ HRESULT CMainApp::Ready_Gara()
 	vPoints[1] = _float3(10.f, 0.f, 10.f);
 	vPoints[2] = _float3(0.f, 2.f, 10.f);
 	WriteFile(hFile, vPoints, sizeof(_float3) * 3, &dwByte, nullptr);
-
 
 	vPoints[0] = _float3(10.f, 0.f, 10.f);
 	vPoints[1] = _float3(20.f, 0.f, 0.f);
