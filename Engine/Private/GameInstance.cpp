@@ -1,6 +1,6 @@
 ﻿#include "GameInstance.h"
 
-//#include "Picking.h"
+#include "Picking.h"
 #include "Renderer.h"
 #include "PipeLine.h"
 
@@ -67,18 +67,17 @@ HRESULT CGameInstance::Initialize_Engine(const ENGINE_DESC& EngineDesc, _Out_ ID
 	if(nullptr == m_pFont_Manager)
 		return E_FAIL;
 
-	//m_pPicking = CPicking::Create(*ppOut, EngineDesc.hWnd, EngineDesc.iWinSizeX, EngineDesc.iWinSizeY);
-	//if (nullptr == m_pPicking)
-	//	return E_FAIL;
-
-
-
+	m_pPicking = CPicking::Create(EngineDesc.hWnd, *ppDeviceOut, *ppContextOut);
+	if (nullptr == m_pPicking)
+		return E_FAIL;
 
 	return S_OK;
 }
 
 void CGameInstance::Update_Engine(_float fTimeDelta)
 {
+	m_pPicking->Update();
+
 	m_pInput_Device->Update();
 
 	m_pObject_Manager->Priority_Update(fTimeDelta);
@@ -109,6 +108,8 @@ HRESULT CGameInstance::Draw()
 		return E_FAIL;
 
 	m_pRenderer->Draw();
+
+	
 
 	m_pLevel_Manager->Render();
 
@@ -324,6 +325,11 @@ HRESULT CGameInstance::Bind_RT_ShaderResource(const _wstring& strTargetTag, CSha
 	return m_pTarget_Manager->Bind_ShaderResource(strTargetTag, pShader, pContantName);
 }
 
+HRESULT CGameInstance::Copy_RT_Resource(const _wstring& strTargetTag, ID3D11Texture2D* pDest)
+{
+	return m_pTarget_Manager->Copy_Resource(strTargetTag, pDest);
+}
+
 #ifdef _DEBUG
 
 HRESULT CGameInstance::Ready_RT_Debug(const _wstring& strTargetTag, _float fX, _float fY, _float fSizeX, _float fSizeY)
@@ -335,33 +341,20 @@ HRESULT CGameInstance::Render_MRT_Debug(const _wstring& strMRTTag, CShader* pSha
 {
 	return m_pTarget_Manager->Render_Debug(strMRTTag, pShader, pVIBuffer);
 }
-
 #endif
-
 #pragma endregion
 
-
-
-
-
-//#pragma region PICKING
-//void CGameInstance::Transform_Picking_ToLocalSpace(const _float4x4& WorldMatrixInverse)
-//{
-//	m_pPicking->Transform_ToLocalSpace(WorldMatrixInverse);
-//}
-//_bool CGameInstance::Picking_InWorld(_float3& vPickedPos, const _float3& vPointA, const _float3& vPointB, const _float3& vPointC)
-//{
-//	return m_pPicking->Picking_InWorld(vPickedPos, vPointA, vPointB, vPointC);
-//}
-//_bool CGameInstance::Picking_InLocal(_float3& vPickedPos, const _float3& vPointA, const _float3& vPointB, const _float3& vPointC)
-//{
-//	return m_pPicking->Picking_InLocal(vPickedPos, vPointA, vPointB, vPointC);
-//}
-//
-//#pragma endregion
+#pragma region PICKING
+_bool CGameInstance::Picking(_float4* pOut)
+{
+	return m_pPicking->Picking(pOut);
+}
+#pragma endregion
 
 void CGameInstance::Release_Engine()
 {
+	Safe_Release(m_pPicking);
+
 	Safe_Release(m_pTarget_Manager);
 
 	Safe_Release(m_pFont_Manager);

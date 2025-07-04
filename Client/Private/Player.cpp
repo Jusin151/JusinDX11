@@ -89,7 +89,16 @@ void CPlayer::Update(_float fTimeDelta)
 	else
 		m_iState = STATE_IDLE;
 
-	m_pTransformCom->Set_State(Engine::STATE::POSITION, m_pNavigationCom->SetUp_Height(m_pTransformCom->Get_State(Engine::STATE::POSITION)));
+	/*m_pTransformCom->Set_State(Engine::STATE::POSITION, m_pNavigationCom->SetUp_Height(m_pTransformCom->Get_State(Engine::STATE::POSITION)));*/
+
+	if (GetKeyState(VK_LBUTTON) & 0x8000)
+	{
+		_float4			vPickPos{};
+		if (true == m_pGameInstance->Picking(&vPickPos))
+		{
+			m_pTransformCom->Set_State(Engine::STATE::POSITION, XMLoadFloat4(&vPickPos));
+		}
+	}
 
 }
 

@@ -96,6 +96,15 @@ HRESULT CTarget_Manager::Bind_ShaderResource(const _wstring& strTargetTag, CShad
 	return pRenderTarget->Bind_ShaderResource(pShader, pContantName);	
 }
 
+HRESULT CTarget_Manager::Copy_Resource(const _wstring& strTargetTag, ID3D11Texture2D* pDest)
+{
+	CRenderTarget* pRenderTarget = Find_RenderTarget(strTargetTag);
+	if (nullptr == pRenderTarget)
+		return E_FAIL;
+
+	return pRenderTarget->Copy_Resource(pDest);	
+}
+
 #ifdef _DEBUG
 
 HRESULT CTarget_Manager::Ready_Debug(const _wstring& strTargetTag, _float fX, _float fY, _float fSizeX, _float fSizeY)

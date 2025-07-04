@@ -53,6 +53,14 @@ HRESULT CRenderTarget::Bind_ShaderResource(CShader* pShader, const _char* pConta
 	return pShader->Bind_SRV(pContantName, m_pSRV);
 }
 
+HRESULT CRenderTarget::Copy_Resource(ID3D11Texture2D* pDest)
+{
+	
+	m_pContext->CopyResource(pDest, m_pTexture2D);
+
+	return S_OK;
+}
+
 #ifdef _DEBUG
 
 HRESULT CRenderTarget::Ready_Debug(_float fX, _float fY, _float fSizeX, _float fSizeY)

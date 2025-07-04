@@ -121,7 +121,7 @@ PS_OUT PS_MAIN_BLEND(PS_IN_BLEND In)
     
     float fOldViewZ = vDepthDesc.y * 500.f;
     
-    Out.vColor.a = Out.vColor.a * (fOldViewZ - In.vProjPos.w);
+    Out.vColor.a = Out.vColor.a * saturate(fOldViewZ - In.vProjPos.w);
     
     return Out;
 }
