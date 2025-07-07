@@ -201,6 +201,7 @@
     <ClInclude Include="..\Public\Renderer.h" />
     <ClInclude Include="..\public\RenderTarget.h" />
     <ClInclude Include="..\public\Shader.h" />
+    <ClInclude Include="..\public\Shadow.h" />
     <ClInclude Include="..\public\Target_Manager.h" />
     <ClInclude Include="..\public\Texture.h" />
     <ClInclude Include="..\Public\Timer.h" />
@@ -256,6 +257,7 @@
     <ClCompile Include="..\Private\Renderer.cpp" />
     <ClCompile Include="..\private\RenderTarget.cpp" />
     <ClCompile Include="..\private\Shader.cpp" />
+    <ClCompile Include="..\private\Shadow.cpp" />
     <ClCompile Include="..\private\Target_Manager.cpp" />
     <ClCompile Include="..\private\Texture.cpp" />
     <ClCompile Include="..\Private\Timer.cpp" />
