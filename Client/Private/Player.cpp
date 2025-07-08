@@ -99,7 +99,6 @@ void CPlayer::Update(_float fTimeDelta)
 			m_pTransformCom->Set_State(Engine::STATE::POSITION, XMLoadFloat4(&vPickPos));
 		}
 	}
-
 }
 
 void CPlayer::Late_Update(_float fTimeDelta)
@@ -115,8 +114,6 @@ void CPlayer::Late_Update(_float fTimeDelta)
 
 HRESULT CPlayer::Render()
 {
-
-
 	return S_OK;
 }
 

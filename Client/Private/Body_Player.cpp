@@ -71,6 +71,7 @@ void CBody_Player::Update(_float fTimeDelta)
 void CBody_Player::Late_Update(_float fTimeDelta)
 {
 	
+	m_pGameInstance->Add_RenderGroup(RENDERGROUP::RG_SHADOW, this);
 	m_pGameInstance->Add_RenderGroup(RENDERGROUP::RG_NONBLEND, this);
 
 #ifdef _DEBUG
@@ -101,6 +102,31 @@ HRESULT CBody_Player::Render()
 			return E_FAIL;
 	}
 
+
+
+	return S_OK;
+}
+
+HRESULT CBody_Player::Render_Shadow()
+{
+	if (FAILED(m_pShaderCom->Bind_Matrix("g_WorldMatrix", &m_CombinedWorldMatrix)))
+		return E_FAIL;
+	if (FAILED(m_pShaderCom->Bind_Matrix("g_ViewMatrix", m_pGameInstance->Get_Light_ViewMatrix())))
+		return E_FAIL;
+	if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", m_pGameInstance->Get_Light_ProjMatrix())))
+		return E_FAIL;
+	_uint		iNumMesh = m_pModelCom->Get_NumMeshes();
+
+	for (size_t i = 0; i < iNumMesh; i++)
+	{
+		m_pModelCom->Bind_Bone_Matrices(m_pShaderCom, "g_BoneMatrices", i);
+
+		if (FAILED(m_pShaderCom->Begin(2)))
+			return E_FAIL;
+
+		if (FAILED(m_pModelCom->Render(i)))
+			return E_FAIL;
+	}
 
 
 	return S_OK;

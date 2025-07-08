@@ -35,6 +35,8 @@ HRESULT CRenderer::Initialize()
 		return E_FAIL;
 	if (FAILED(m_pGameInstance->Add_RenderTarget(TEXT("Target_PickPos"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_R32G32B32A32_FLOAT, _float4(0.0f, 0.f, 0.f, 0.f))))
 		return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_RenderTarget(TEXT("Target_Shadow"), ViewportDesc.Width, ViewportDesc.Height, DXGI_FORMAT_R32G32B32A32_FLOAT, _float4(1.0f, 1.0f, 1.0f, 1.0f))))
+		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_MRT(TEXT("MRT_GameObjects"), TEXT("Target_Diffuse"))))
 		return E_FAIL;
@@ -45,10 +47,12 @@ HRESULT CRenderer::Initialize()
 	if (FAILED(m_pGameInstance->Add_MRT(TEXT("MRT_GameObjects"), TEXT("Target_PickPos"))))
 		return E_FAIL;
 
-
 	if (FAILED(m_pGameInstance->Add_MRT(TEXT("MRT_Lights"), TEXT("Target_Shade"))))
 		return E_FAIL;
 	if (FAILED(m_pGameInstance->Add_MRT(TEXT("MRT_Lights"), TEXT("Target_Specular"))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_MRT(TEXT("MRT_ShadowObjects"), TEXT("Target_Shadow"))))
 		return E_FAIL;
 
 	m_pVIBuffer = CVIBuffer_Rect::Create(m_pDevice, m_pContext);
@@ -73,6 +77,8 @@ HRESULT CRenderer::Initialize()
 	if (FAILED(m_pGameInstance->Ready_RT_Debug(TEXT("Target_Shade"), 300.f, 100.0f, 200.0f, 200.0f)))
 		return E_FAIL;
 	if (FAILED(m_pGameInstance->Ready_RT_Debug(TEXT("Target_Specular"), 300.f, 300.0f, 200.0f, 200.0f)))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Ready_RT_Debug(TEXT("Target_Shadow"), ViewportDesc.Width - 150.f, 150.0f, 300.0f, 300.0f)))
 		return E_FAIL;
 	
 
@@ -100,6 +106,9 @@ HRESULT CRenderer::Draw()
 	
 	if (FAILED(Render_Priority()))
 		return E_FAIL;	
+	if (FAILED(Render_Shadow()))
+		return E_FAIL;
+	
 	if (FAILED(Render_NonBlend()))
 		return E_FAIL;
 	if (FAILED(Render_Lights()))
@@ -154,10 +163,28 @@ HRESULT CRenderer::Render_Priority()
 	return S_OK;
 }
 
+HRESULT CRenderer::Render_Shadow()
+{
+	m_pGameInstance->Begin_MRT(TEXT("MRT_ShadowObjects"));
+
+	for (auto& pGameObject : m_RenderObjects[ENUM_CLASS(RENDERGROUP::RG_SHADOW)])
+	{
+		if (nullptr != pGameObject)
+			pGameObject->Render_Shadow();
+
+		Safe_Release(pGameObject);
+	}
+	m_RenderObjects[ENUM_CLASS(RENDERGROUP::RG_SHADOW)].clear();
+
+	m_pGameInstance->End_MRT();
+
+	return S_OK;
+}
+
 HRESULT CRenderer::Render_NonBlend()
 {
 	/* Diffuse + Normal */
-	m_pGameInstance->Begin_MRT(TEXT("MRT_GameObjects"));
+	m_pGameInstance->Begin_MRT(TEXT("MRT_GameObjects"), true);
 
 	for (auto& pGameObject : m_RenderObjects[ENUM_CLASS(RENDERGROUP::RG_NONBLEND)])
 	{
@@ -254,12 +281,27 @@ HRESULT CRenderer::Render_BackBuffer()
 		return E_FAIL;
 	if (FAILED(m_pGameInstance->Bind_RT_ShaderResource(TEXT("Target_Specular"), m_pShader, "g_SpecularTexture")))
 		return E_FAIL;
+	if (FAILED(m_pGameInstance->Bind_RT_ShaderResource(TEXT("Target_Depth"), m_pShader, "g_DepthTexture")))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Bind_RT_ShaderResource(TEXT("Target_Shadow"), m_pShader, "g_ShadowTexture")))
+		return E_FAIL;
 
 	if (FAILED(m_pShader->Bind_Matrix("g_WorldMatrix", &m_WorldMatrix)))
 		return E_FAIL;
 	if (FAILED(m_pShader->Bind_Matrix("g_ViewMatrix", &m_ViewMatrix)))
 		return E_FAIL;
 	if (FAILED(m_pShader->Bind_Matrix("g_ProjMatrix", &m_ProjMatrix)))
+		return E_FAIL;
+
+
+	if (FAILED(m_pShader->Bind_Matrix("g_ViewMatrixInv", m_pGameInstance->Get_Transform_Float4x4_Inv(D3DTS::VIEW))))
+		return E_FAIL;
+	if (FAILED(m_pShader->Bind_Matrix("g_ProjMatrixInv", m_pGameInstance->Get_Transform_Float4x4_Inv(D3DTS::PROJ))))
+		return E_FAIL;
+
+	if (FAILED(m_pShader->Bind_Matrix("g_LightViewMatrix", m_pGameInstance->Get_Light_ViewMatrix())))
+		return E_FAIL;
+	if (FAILED(m_pShader->Bind_Matrix("g_LightProjMatrix", m_pGameInstance->Get_Light_ProjMatrix())))
 		return E_FAIL;
 
 	m_pShader->Begin(3);
@@ -300,6 +342,7 @@ HRESULT CRenderer::Render_Debug()
 
 	m_pGameInstance->Render_MRT_Debug(TEXT("MRT_GameObjects"), m_pShader, m_pVIBuffer);
 	m_pGameInstance->Render_MRT_Debug(TEXT("MRT_Lights"), m_pShader, m_pVIBuffer);
+	m_pGameInstance->Render_MRT_Debug(TEXT("MRT_ShadowObjects"), m_pShader, m_pVIBuffer);
 	
 
 	return S_OK;

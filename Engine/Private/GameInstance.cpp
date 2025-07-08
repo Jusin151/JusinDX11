@@ -1,5 +1,6 @@
 ﻿#include "GameInstance.h"
 
+#include "Shadow.h"
 #include "Picking.h"
 #include "Renderer.h"
 #include "PipeLine.h"
@@ -69,6 +70,10 @@ HRESULT CGameInstance::Initialize_Engine(const ENGINE_DESC& EngineDesc, _Out_ ID
 
 	m_pPicking = CPicking::Create(EngineDesc.hWnd, *ppDeviceOut, *ppContextOut);
 	if (nullptr == m_pPicking)
+		return E_FAIL;
+
+	m_pShadow = CShadow::Create(*ppDeviceOut, *ppContextOut);
+	if (nullptr == m_pShadow)
 		return E_FAIL;
 
 	return S_OK;
@@ -310,9 +315,9 @@ HRESULT CGameInstance::Add_MRT(const _wstring& strMRTTag, const _wstring& strTar
 	return m_pTarget_Manager->Add_MRT(strMRTTag, strTargetTag);
 }
 
-HRESULT CGameInstance::Begin_MRT(const _wstring& strMRTTag)
+HRESULT CGameInstance::Begin_MRT(const _wstring& strMRTTag, _bool isDepthClear)
 {
-	return m_pTarget_Manager->Begin_MRT(strMRTTag);
+	return m_pTarget_Manager->Begin_MRT(strMRTTag, isDepthClear);
 }
 
 HRESULT CGameInstance::End_MRT()
@@ -349,10 +354,30 @@ _bool CGameInstance::Picking(_float4* pOut)
 {
 	return m_pPicking->Picking(pOut);
 }
+
+#pragma endregion
+
+#pragma region SHADOW
+
+HRESULT CGameInstance::Ready_Light_For_Shadow(const CShadow::SHADOW_DESC& Desc)
+{
+	return m_pShadow->Ready_Light_For_Shadow(Desc);
+}
+
+const _float4x4* CGameInstance::Get_Light_ViewMatrix()
+{
+	return m_pShadow->Get_Light_ViewMatrix();
+}
+const _float4x4* CGameInstance::Get_Light_ProjMatrix()
+{
+	return m_pShadow->Get_Light_ProjMatrix();
+}
 #pragma endregion
 
 void CGameInstance::Release_Engine()
 {
+	Safe_Release(m_pShadow);
+
 	Safe_Release(m_pPicking);
 
 	Safe_Release(m_pTarget_Manager);
