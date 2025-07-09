@@ -4,8 +4,8 @@ sampler DefaultSampler = sampler_state
     filter = min_mag_mip_linear;
     AddressU = wrap;
     AddressV = wrap;
-
 };
+
 
 sampler PointSampler = sampler_state
 {
@@ -19,6 +19,13 @@ sampler LinearClampSampler = sampler_state
     filter = min_mag_mip_linear;
     AddressU = clamp;
     AddressV = clamp;
+};
+
+sampler MirrorSampler = sampler_state
+{
+    filter = min_mag_mip_linear;
+    AddressU = mirror;
+    AddressV = mirror;
 };
 
 RasterizerState RS_Default
@@ -60,3 +67,12 @@ BlendState BS_AlphaBlend
     DestBlend = Inv_Src_Alpha;
     BlendOp = Add;
 };
+BlendState BS_OneBlend
+{
+    BlendEnable[0] = true;
+    BlendEnable[1] = true;
+    SrcBlend = one;
+    DestBlend = one;
+    BlendOp = Add;
+};
+
