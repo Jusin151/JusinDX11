@@ -11,6 +11,7 @@ struct VS_IN
     float3 vPosition : POSITION;
     float3 vNormal : NORMAL;
     float3 vTangent : TANGENT;
+    float3 vBinormal : BINORMAL;
     float2 vTexcoord : TEXCOORD0;
 };
 
@@ -19,7 +20,7 @@ struct VS_OUT
     float4 vPosition : SV_POSITION;
     float4 vNormal : NORMAL;
     float4 vTangent : TANGENT;
-    float3 vBinormal : BINORMAL;
+    float4 vBinormal : BINORMAL;
     float2 vTexcoord : TEXCOORD0;    
     float4 vWorldPos : TEXCOORD1;
     float4 vProjPos : TEXCOORD2;
@@ -38,7 +39,7 @@ VS_OUT VS_MAIN(VS_IN In)
     Out.vPosition = mul(vector(In.vPosition, 1.f), matWVP);    
     Out.vNormal = normalize(mul(vector(In.vNormal, 0.f), g_WorldMatrix));
     Out.vTangent = normalize(mul(vector(In.vTangent, 0.f), g_WorldMatrix));
-    Out.vBinormal = normalize(cross(Out.vNormal.xyz, Out.vTangent.xyz));
+    Out.vBinormal = normalize(mul(vector(In.vBinormal, 0.f), g_WorldMatrix)) * -1.f;
     Out.vTexcoord = In.vTexcoord;
     Out.vWorldPos = mul(vector(In.vPosition, 1.f), g_WorldMatrix);
     Out.vProjPos = Out.vPosition;
@@ -50,7 +51,7 @@ struct PS_IN
     float4 vPosition : SV_POSITION;
     float4 vNormal : NORMAL;
     float4 vTangent : TANGENT;
-    float3 vBinormal : BINORMAL;
+    float4 vBinormal : BINORMAL;
     float2 vTexcoord : TEXCOORD0;
     float4 vWorldPos : TEXCOORD1;
     float4 vProjPos : TEXCOORD2;
@@ -72,10 +73,10 @@ PS_OUT PS_MAIN(PS_IN In)
     if (vMtrlDiffuse.a < 0.3f)
         discard;
     
-    vector vNormalDesc = g_NormalTexture.Sample(DefaultSampler, In.vTexcoord);    
+    vector vNormalDesc = g_NormalTexture.Sample(DefaultSampler, In.vTexcoord);
     float3 vNormal = vNormalDesc.xyz * 2.f - 1.f;
     
-    float3x3 WorldMatrix = float3x3(In.vTangent.xyz, In.vBinormal, In.vNormal.xyz);
+    float3x3 WorldMatrix = float3x3(In.vTangent.xyz, In.vBinormal.xyz, In.vNormal.xyz);
     
     vNormal = mul(vNormal, WorldMatrix);    
     

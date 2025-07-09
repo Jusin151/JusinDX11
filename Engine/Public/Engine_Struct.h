@@ -79,9 +79,10 @@ namespace Engine
 		XMFLOAT3		vPosition;
 		XMFLOAT3		vNormal;
 		XMFLOAT3		vTangent;
+		XMFLOAT3		vBinormal;
 		XMFLOAT2		vTexcoord;
 
-		static const unsigned int					iNumElements = { 4 };
+		static const unsigned int					iNumElements = { 5 };
 		static const D3D11_INPUT_ELEMENT_DESC		Elements[iNumElements];
 	}VTXMESH;
 
