@@ -89,7 +89,7 @@ public:
 #pragma region TARGET_MANAGER
 	HRESULT Add_RenderTarget(const _wstring& strTargetTag, _uint iWidth, _uint iHeight, DXGI_FORMAT ePixelFormat, const _float4& vClearColor);
 	HRESULT Add_MRT(const _wstring& strMRTTag, const _wstring& strTargetTag);	
-	HRESULT Begin_MRT(const _wstring& strMRTTag, ID3D11DepthStencilView* pDSV = nullptr, _bool isDepthClear = false);
+	HRESULT Begin_MRT(const _wstring& strMRTTag, ID3D11DepthStencilView* pDSV = nullptr, _bool isTargetClear = true, _bool isDepthClear = false);
 	HRESULT End_MRT();
 	HRESULT Bind_RT_ShaderResource(const _wstring& strTargetTag, class CShader* pShader, const _char* pContantName);
 	HRESULT Copy_RT_Resource(const _wstring& strTargetTag, ID3D11Texture2D* pDest);
@@ -111,6 +111,10 @@ public:
 	const _float4x4* Get_Light_ProjMatrix();
 #pragma region
 
+#pragma region FRUSTUM	
+	_bool isIn_Frustum_WorldSpace(_fvector vWorldPos, _float fRange = 0.f);
+#pragma region
+
 private:
 	class CGraphic_Device*		m_pGraphic_Device = { nullptr };
 	class CInput_Device*		m_pInput_Device = { nullptr };
@@ -125,6 +129,7 @@ private:
 	class CTarget_Manager*		m_pTarget_Manager = { nullptr };
 	class CPicking*				m_pPicking = { nullptr };
 	class CShadow*				m_pShadow = { nullptr };
+	class CFrustum*				m_pFrustum = { nullptr };
 
 public:
 	void Release_Engine();

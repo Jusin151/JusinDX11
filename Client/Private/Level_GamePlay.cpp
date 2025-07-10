@@ -121,7 +121,7 @@ HRESULT CLevel_GamePlay::Ready_Layer_Camera(const _wstring strLayerTag)
 
 HRESULT CLevel_GamePlay::Ready_Layer_Monster(const _wstring strLayerTag)
 {
-	for (size_t i = 0; i < 10; i++)
+	for (size_t i = 0; i < 1; i++)
 	{
 		if (FAILED(m_pGameInstance->Add_GameObject(ENUM_CLASS(LEVEL::GAMEPLAY), TEXT("Prototype_GameObject_Monster"),
 			ENUM_CLASS(LEVEL::GAMEPLAY), strLayerTag)))

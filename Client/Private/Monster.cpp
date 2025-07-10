@@ -67,12 +67,17 @@ void CMonster::Update(_float fTimeDelta)
 
 void CMonster::Late_Update(_float fTimeDelta)
 {
-	m_pGameInstance->Add_RenderGroup(RENDERGROUP::RG_NONBLEND, this);
+	if (m_pGameInstance->isIn_Frustum_WorldSpace(m_pTransformCom->Get_State(STATE::POSITION), 2.f))
+	{
+	
+
+		m_pGameInstance->Add_RenderGroup(RENDERGROUP::RG_NONBLEND, this);
 
 #ifdef _DEBUG
-	for (auto& pCollider : m_pColliderCom)
-		m_pGameInstance->Add_DebugComponent(pCollider);
+		for (auto& pCollider : m_pColliderCom)
+			m_pGameInstance->Add_DebugComponent(pCollider);
 #endif
+	}
 }
 
 HRESULT CMonster::Render()

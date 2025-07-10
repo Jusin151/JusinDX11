@@ -1,6 +1,7 @@
 ﻿#include "GameInstance.h"
 
 #include "Shadow.h"
+#include "Frustum.h"
 #include "Picking.h"
 #include "Renderer.h"
 #include "PipeLine.h"
@@ -76,6 +77,10 @@ HRESULT CGameInstance::Initialize_Engine(const ENGINE_DESC& EngineDesc, _Out_ ID
 	if (nullptr == m_pShadow)
 		return E_FAIL;
 
+	m_pFrustum = CFrustum::Create();
+	if (nullptr == m_pFrustum)
+		return E_FAIL;
+
 	return S_OK;
 }
 
@@ -88,6 +93,8 @@ void CGameInstance::Update_Engine(_float fTimeDelta)
 	m_pObject_Manager->Priority_Update(fTimeDelta);
 
 	m_pPipeLine->Update();
+
+	m_pFrustum->Transform_ToWorldSpace();
 
 	m_pObject_Manager->Update(fTimeDelta);	
 
@@ -113,8 +120,6 @@ HRESULT CGameInstance::Draw()
 		return E_FAIL;
 
 	m_pRenderer->Draw();
-
-	
 
 	m_pLevel_Manager->Render();
 
@@ -315,9 +320,9 @@ HRESULT CGameInstance::Add_MRT(const _wstring& strMRTTag, const _wstring& strTar
 	return m_pTarget_Manager->Add_MRT(strMRTTag, strTargetTag);
 }
 
-HRESULT CGameInstance::Begin_MRT(const _wstring& strMRTTag, ID3D11DepthStencilView* pDSV, _bool isDepthClear)
+HRESULT CGameInstance::Begin_MRT(const _wstring& strMRTTag, ID3D11DepthStencilView* pDSV, _bool isTargetClear, _bool isDepthClear)
 {
-	return m_pTarget_Manager->Begin_MRT(strMRTTag, pDSV, isDepthClear);
+	return m_pTarget_Manager->Begin_MRT(strMRTTag, pDSV, isTargetClear, isDepthClear);
 }
 
 HRESULT CGameInstance::End_MRT()
@@ -354,11 +359,9 @@ _bool CGameInstance::Picking(_float4* pOut)
 {
 	return m_pPicking->Picking(pOut);
 }
-
 #pragma endregion
 
 #pragma region SHADOW
-
 HRESULT CGameInstance::Ready_Light_For_Shadow(const CShadow::SHADOW_DESC& Desc)
 {
 	return m_pShadow->Ready_Light_For_Shadow(Desc);
@@ -374,8 +377,18 @@ const _float4x4* CGameInstance::Get_Light_ProjMatrix()
 }
 #pragma endregion
 
+#pragma region FRUSTUM
+
+_bool CGameInstance::isIn_Frustum_WorldSpace(_fvector vWorldPos, _float fRange)
+{
+	return m_pFrustum->isIn_WorldSpace(vWorldPos, fRange);
+}
+#pragma endregion
+
 void CGameInstance::Release_Engine()
 {
+	Safe_Release(m_pFrustum);
+
 	Safe_Release(m_pShadow);
 
 	Safe_Release(m_pPicking);
