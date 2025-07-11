@@ -42,6 +42,15 @@ void CFrustum::Transform_ToWorldSpace()
 
 void CFrustum::Transform_ToLocalSpace(_fmatrix WorldMatrix)
 {
+	_matrix		WorldMatrixInverse = XMMatrixInverse(nullptr, WorldMatrix);
+	_float4		vPoints[8];
+
+	for (size_t i = 0; i < 8; i++)
+	{
+		XMStoreFloat4(&vPoints[i], XMVector3TransformCoord(XMLoadFloat4(&m_vWorldPoints[i]), WorldMatrixInverse));
+	}
+
+	Make_Plane(vPoints, m_vLocalPlanes);
 
 }
 
@@ -52,6 +61,19 @@ _bool CFrustum::isIn_WorldSpace(_fvector vWorldPos, _float fRange)
 	for (size_t i = 0; i < 6; i++)
 	{
 		if (fRange < XMVectorGetX(XMPlaneDotCoord(XMLoadFloat4(&m_vWorldPlanes[i]), vWorldPos)))
+			return false;
+	}
+
+	return true;
+}
+
+_bool CFrustum::isIn_LocalSpace(_fvector vLocalPos, _float fRange)
+{
+	/*ax+ by + cz + d > 0*/
+
+	for (size_t i = 0; i < 6; i++)
+	{
+		if (fRange < XMVectorGetX(XMPlaneDotCoord(XMLoadFloat4(&m_vLocalPlanes[i]), vLocalPos)))
 			return false;
 	}
 

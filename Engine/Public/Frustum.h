@@ -17,7 +17,7 @@ public:
 
 public:
 	_bool isIn_WorldSpace(_fvector vWorldPos, _float fRange);
-
+	_bool isIn_LocalSpace(_fvector vLocalPos, _float fRange);
 private:
 	class CGameInstance*	m_pGameInstance = { nullptr };
 	_float4					m_vOriginalPoints[8] = { };

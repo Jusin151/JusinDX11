@@ -37,6 +37,10 @@ HRESULT CMainApp::Initialize()
 
 void CMainApp::Update(_float fTimeDelta)
 {
+#ifdef _DEBUG
+	m_fTimeAcc += fTimeDelta;
+#endif
+
 	m_pGameInstance->Update_Engine(fTimeDelta);
 }
 
@@ -46,9 +50,25 @@ HRESULT CMainApp::Render()
 
 	m_pGameInstance->Draw();
 
-	m_pGameInstance->Draw_Font(TEXT("Font_151"), TEXT("배가 고파요"), _float2(0.f, 0.f), XMVectorSet(1.f, 0.f, 0.f, 1.f));
+#ifdef _DEBUG
+	++m_iRenderCount;
+
+	if (m_fTimeAcc >= 1.f)
+	{
+		wsprintf(m_szFPS, TEXT("FPS:%d"), m_iRenderCount);
+		m_fTimeAcc = 0.f;
+		m_iRenderCount = 0;
+	}
+#endif
+
+	m_pGameInstance->Draw_Font(TEXT("Font_151"), m_szFPS, _float2(0.f, 0.f), XMVectorSet(1.f, 0.f, 0.f, 1.f));
 
 	m_pGameInstance->End_Draw();
+
+
+	
+
+
 
     return S_OK;
 }
@@ -117,7 +137,7 @@ HRESULT CMainApp::Ready_Gara()
 
 	Safe_Release(pTexture2D);
 
-	/*MakeSpriteFont "배찌체" /FontSize:20 /FastPack /CharacterRegion:0x0020-0x00FF /CharacterRegion:0x3131-0x3163 /CharacterRegion:0xAC00-0xD800 /DefaultCharacter:0xAC00 151ex.spritefont */
+	/*MakeSpriteFont "¹èÂîÃ¼" /FontSize:20 /FastPack /CharacterRegion:0x0020-0x00FF /CharacterRegion:0x3131-0x3163 /CharacterRegion:0xAC00-0xD800 /DefaultCharacter:0xAC00 151ex.spritefont */
 	if (FAILED(m_pGameInstance->Add_Font(TEXT("Font_151"), TEXT("../Bin/Resources/Fonts/151ex.spritefont"))))
 		return E_FAIL;
 

@@ -1,5 +1,7 @@
 ﻿#include "VIBuffer_Terrain.h"
 
+#include "GameInstance.h"
+#include "QuadTree.h"
 CVIBuffer_Terrain::CVIBuffer_Terrain(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
     : CVIBuffer { pDevice, pContext }
 {
@@ -9,7 +11,9 @@ CVIBuffer_Terrain::CVIBuffer_Terrain(const CVIBuffer_Terrain& Prototype)
     : CVIBuffer{ Prototype }
 	, m_iNumVerticesX { Prototype.m_iNumVerticesX }
 	, m_iNumVerticesZ { Prototype.m_iNumVerticesZ }
+	, m_pQuadTree{ Prototype.m_pQuadTree }
 {
+	Safe_AddRef(m_pQuadTree);
 }
 
 HRESULT CVIBuffer_Terrain::Initialize_Prototype(const _tchar* pHeightMapFilePath)
@@ -78,8 +82,8 @@ HRESULT CVIBuffer_Terrain::Initialize_Prototype(const _tchar* pHeightMapFilePath
 	D3D11_BUFFER_DESC			IBBufferDesc{};
 	IBBufferDesc.ByteWidth = m_iNumIndices * m_iIndexStride;
 	IBBufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
-	IBBufferDesc.Usage = D3D11_USAGE_DEFAULT;
-	IBBufferDesc.CPUAccessFlags = /*D3D11_CPU_ACCESS_READ | D3D11_CPU_ACCESS_WRITE*/0;
+	IBBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
+	IBBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 	IBBufferDesc.StructureByteStride = m_iIndexStride;
 	IBBufferDesc.MiscFlags = 0;
 
@@ -160,12 +164,79 @@ HRESULT CVIBuffer_Terrain::Initialize_Prototype(const _tchar* pHeightMapFilePath
 	CloseHandle(hFile);
 	Safe_Delete_Array(pPixels);
 
+	m_pQuadTree = CQuadTree::Create(m_iNumVerticesX * m_iNumVerticesZ - m_iNumVerticesX, m_iNumVerticesX * m_iNumVerticesZ - 1, m_iNumVerticesX - 1, 0);
+	if (nullptr == m_pQuadTree)
+		return E_FAIL;
+
     return S_OK;
 }
 
 HRESULT CVIBuffer_Terrain::Initialize(void* pArg)
 {
     return S_OK;
+}
+
+void CVIBuffer_Terrain::Culling(_fmatrix WorldMatrix)
+{
+	m_pGameInstance->Transform_Frustum_ToLocalSpace(WorldMatrix);
+
+	_uint*				pIndices = { nullptr };
+	D3D11_MAPPED_SUBRESOURCE		SubResource{};
+
+	m_pContext->Map(m_pIB, 0, D3D11_MAP_WRITE_DISCARD, 0, &SubResource);
+
+	pIndices = static_cast<_uint*>(SubResource.pData);
+
+	_uint				iNumIndices = {};
+
+	m_pQuadTree->Culling(m_pGameInstance, m_pVertexPositions, pIndices, &iNumIndices);
+
+	/*
+	for (size_t i = 0; i < m_iNumVerticesZ - 1; i++)
+	{
+		for (size_t j = 0; j < m_iNumVerticesX - 1; j++)
+		{
+			_uint		iIndex = i * m_iNumVerticesX + j;
+
+			_uint		iIndices[4] = {
+				iIndex + m_iNumVerticesX,
+				iIndex + m_iNumVerticesX + 1,
+				iIndex + 1,
+				iIndex
+			};
+
+			_bool		isIn[4] = {
+				m_pGameInstance->isIn_Frustum_LocalSpace(XMLoadFloat3(&m_pVertexPositions[iIndices[0]]), 0.0f),
+				m_pGameInstance->isIn_Frustum_LocalSpace(XMLoadFloat3(&m_pVertexPositions[iIndices[1]]), 0.0f),
+				m_pGameInstance->isIn_Frustum_LocalSpace(XMLoadFloat3(&m_pVertexPositions[iIndices[2]]), 0.0f),
+				m_pGameInstance->isIn_Frustum_LocalSpace(XMLoadFloat3(&m_pVertexPositions[iIndices[3]]), 0.0f),
+			};
+
+			if (true == isIn[0] &&
+				true == isIn[1] &&
+				true == isIn[2])
+			{
+				pIndices[iNumIndices++] = iIndices[0];
+				pIndices[iNumIndices++] = iIndices[1];
+				pIndices[iNumIndices++] = iIndices[2];
+			}
+
+			if (true == isIn[0] &&
+				true == isIn[2] &&
+				true == isIn[3])
+			{
+				pIndices[iNumIndices++] = iIndices[0];
+				pIndices[iNumIndices++] = iIndices[2];
+				pIndices[iNumIndices++] = iIndices[3];
+			}
+		}
+	}
+
+	*/
+
+	m_pContext->Unmap(m_pIB, 0);
+
+	m_iNumIndices = iNumIndices;	
 }
 
 CVIBuffer_Terrain* CVIBuffer_Terrain::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext, const _tchar* pHeightMapFilePath)
@@ -199,6 +270,8 @@ CComponent* CVIBuffer_Terrain::Clone(void* pArg)
 void CVIBuffer_Terrain::Free()
 {
     __super::Free();
+
+	Safe_Release(m_pQuadTree);
 
 
 }

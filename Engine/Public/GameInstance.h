@@ -112,7 +112,9 @@ public:
 #pragma region
 
 #pragma region FRUSTUM	
+	void Transform_Frustum_ToLocalSpace(_fmatrix WorldMatrix);
 	_bool isIn_Frustum_WorldSpace(_fvector vWorldPos, _float fRange = 0.f);
+	_bool isIn_Frustum_LocalSpace(_fvector vLocalPos, _float fRange);
 #pragma region
 
 private:

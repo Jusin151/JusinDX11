@@ -379,10 +379,21 @@ const _float4x4* CGameInstance::Get_Light_ProjMatrix()
 
 #pragma region FRUSTUM
 
+void CGameInstance::Transform_Frustum_ToLocalSpace(_fmatrix WorldMatrix)
+{
+	m_pFrustum->Transform_ToLocalSpace(WorldMatrix);
+}
+
 _bool CGameInstance::isIn_Frustum_WorldSpace(_fvector vWorldPos, _float fRange)
 {
 	return m_pFrustum->isIn_WorldSpace(vWorldPos, fRange);
 }
+
+_bool CGameInstance::isIn_Frustum_LocalSpace(_fvector vLocalPos, _float fRange)
+{
+	return m_pFrustum->isIn_LocalSpace(vLocalPos, fRange);
+}
+
 #pragma endregion
 
 void CGameInstance::Release_Engine()
