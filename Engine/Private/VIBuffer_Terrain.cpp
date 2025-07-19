@@ -168,6 +168,8 @@ HRESULT CVIBuffer_Terrain::Initialize_Prototype(const _tchar* pHeightMapFilePath
 	if (nullptr == m_pQuadTree)
 		return E_FAIL;
 
+	m_pQuadTree->Make_Neighbors();
+
     return S_OK;
 }
 
